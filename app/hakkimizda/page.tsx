@@ -9,7 +9,7 @@ import AboutTrustBento from "@/components/about/AboutTrustBento";
 export const metadata: Metadata = {
   title: "Hakkımızda",
   description:
-    "Bonero’nun vizyonu, misyonu ve kuruluş hikayesi. Dijital ajanslar için yapay zeka destekli sosyal medya operasyonu.",
+    "Dijital ajansların operasyonel kaosunu yapay zeka ile şeffaf bir başarı hikayesine dönüştürüyoruz. Bonero misyonu, vizyonu ve güven altyapısı.",
   alternates: { canonical: "/hakkimizda" },
 };
 
@@ -19,8 +19,8 @@ export default function AboutPage() {
       <Header />
       <main className="flex-1 bg-background">
         <AboutHero />
-        <AboutMissionVision />
         <AboutStory />
+        <AboutMissionVision />
         <AboutTrustBento />
       </main>
       <Footer />
