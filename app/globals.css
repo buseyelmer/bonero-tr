@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
-
 html {
   scroll-behavior: smooth;
 }
+
 :root {
-  --background: #ffffff;
-  --foreground: #1c2a2b;
+  --background: #f9fafb;
+  --foreground: #1e293b;
   --bonero-green: #188347;
-  --bonero-dark: #1c2a2b;
+  --bonero-dark: #1e293b;
+  --surface: #ffffff;
+  --surface-glass: rgba(255, 255, 255, 0.7);
 }
 
 @theme inline {
@@ -16,14 +18,66 @@ html {
   --color-foreground: var(--foreground);
   --color-bonero-green: var(--bonero-green);
   --color-bonero-dark: var(--bonero-dark);
-  --font-sans: var(--font-geist-sans);
+  --color-surface: var(--surface);
+  --font-sans: var(--font-plus-jakarta);
+  --font-heading: var(--font-plus-jakarta);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: var(--background);
+  background: #f9fafb;
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-heading {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  letter-spacing: 0.015em;
+  font-weight: 600;
+}
+
+.page-pad {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .page-pad {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-pad {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Glassmorphism cards — consistent across all pages */
+.glass-panel {
+  border: 1px solid color-mix(in srgb, var(--bonero-dark) 10%, transparent);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 1px 2px rgba(30, 41, 59, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-nav {
+  border-bottom: 1px solid color-mix(in srgb, var(--bonero-dark) 8%, transparent);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 1px 2px rgba(30, 41, 59, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 @keyframes float {
@@ -68,3 +122,111 @@ body {
 .animate-orbit {
   animation: orbit 28s linear infinite;
 }
+
+.grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+  opacity: 0.28;
+}
+
+.bg-grid {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--bonero-dark) 12%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 48s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 52s linear infinite;
+  will-change: transform;
+}
+
+.mask-marquee {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none;
+  }
+}
+
+/* Efficiency calculator range slider */
+.bonero-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bonero-dark) 12%, transparent);
+  outline: none;
+  cursor: pointer;
+}
+
+.bonero-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--bonero-green);
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(30, 41, 59, 0.25);
+  cursor: pointer;
+}
+
+.bonero-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--bonero-green);
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(30, 41, 59, 0.25);
+  cursor: pointer;
+}
+
+.bonero-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bonero-dark) 12%, transparent);
+}
+
