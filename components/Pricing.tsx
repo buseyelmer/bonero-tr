@@ -152,11 +152,11 @@ export default function Pricing() {
                     )}
                   </div>
 
-                  <h3 className="font-heading text-2xl tracking-wide sm:text-[1.75rem]">
+                  <h3 className="font-heading text-2xl tracking-wide break-words sm:text-[1.75rem]">
                     {plan.name[locale]}
                   </h3>
                   <p
-                    className={`mt-2 text-sm leading-snug ${
+                    className={`mt-2 text-sm leading-snug break-words ${
                       featured ? "text-white/50" : "text-bonero-dark/50"
                     }`}
                   >
@@ -164,7 +164,7 @@ export default function Pricing() {
                   </p>
 
                   <p
-                    className={`font-heading mt-6 text-xl tracking-wide ${
+                    className={`font-heading mt-6 text-xl tracking-wide break-words ${
                       featured ? "text-bonero-green" : "text-bonero-dark"
                     }`}
                   >
@@ -175,7 +175,7 @@ export default function Pricing() {
                     {plan.features[locale].map((f) => (
                       <li
                         key={f}
-                        className={`flex items-start gap-2.5 text-sm leading-snug ${
+                        className={`flex items-start gap-2.5 text-sm leading-snug break-words ${
                           featured ? "text-white/75" : "text-bonero-dark/65"
                         }`}
                       >

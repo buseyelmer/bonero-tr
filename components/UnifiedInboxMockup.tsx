@@ -384,7 +384,7 @@ export default function UnifiedInboxMockup() {
     <section
       ref={sectionRef}
       id="birlesik-inbox"
-      className="relative overflow-hidden py-16 sm:py-24"
+      className="relative overflow-x-clip py-16 sm:py-24"
       aria-labelledby="birlesik-inbox-baslik"
       style={{
         background:

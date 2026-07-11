@@ -60,7 +60,7 @@ export default function Hero() {
   const t = copy[locale];
 
   return (
-    <section className="relative bg-background pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pb-20">
+    <section className="relative overflow-x-clip bg-background pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pb-20">
       <div
         className="pointer-events-none absolute inset-0 overflow-hidden"
         aria-hidden="true"
@@ -74,23 +74,23 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto grid max-w-6xl items-start gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-10 lg:px-8 xl:gap-14">
-        <div className="max-w-xl pt-2">
+      <div className="relative mx-auto grid max-w-6xl min-w-0 items-start gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-10 lg:px-8 xl:gap-14">
+        <div className="max-w-xl min-w-0 pt-2">
           <motion.p
-            className="inline-flex items-center gap-2 rounded-full border border-bonero-dark/10 bg-white/80 px-3 py-1 text-xs font-medium tracking-wide text-bonero-dark/55 backdrop-blur-sm"
+            className="inline-flex max-w-full items-center gap-2 rounded-full border border-bonero-dark/10 bg-white/80 px-3 py-1 text-xs font-medium tracking-wide text-bonero-dark/55 backdrop-blur-sm"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="relative flex h-1.5 w-1.5">
+            <span className="relative flex h-1.5 w-1.5 shrink-0">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-bonero-green opacity-60" />
               <span className="relative h-1.5 w-1.5 rounded-full bg-bonero-green" />
             </span>
-            {t.badge}
+            <span className="min-w-0">{t.badge}</span>
           </motion.p>
 
           <motion.h1
-            className="font-heading mt-4 text-[2rem] leading-[1.15] tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.75rem]"
+            className="font-heading mt-4 text-[1.75rem] leading-[1.2] tracking-wide break-words text-bonero-dark sm:text-4xl lg:text-[2.75rem]"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
@@ -199,7 +199,7 @@ export default function Hero() {
         </div>
 
         <motion.div
-          className="relative w-full overflow-visible lg:pl-4 lg:pr-2"
+          className="relative w-full min-w-0 overflow-x-clip lg:pl-4 lg:pr-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{

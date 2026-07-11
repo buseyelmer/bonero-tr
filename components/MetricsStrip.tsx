@@ -140,7 +140,7 @@ export default function MetricsStrip() {
       ref={ref}
       id="metrikler"
       aria-label="Bonero’nun sağladığı verim"
-      className="relative overflow-hidden py-16 sm:py-24"
+      className="relative overflow-x-clip py-16 sm:py-24"
       style={{
         background:
           "linear-gradient(145deg, #0a1210 0%, #122018 45%, #0b1411 100%)",

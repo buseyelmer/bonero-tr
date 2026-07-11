@@ -129,7 +129,7 @@ export default function PainPoints() {
   return (
     <section
       id="cozumler"
-      className="relative overflow-hidden py-16 sm:py-24"
+      className="relative overflow-x-clip py-16 sm:py-24"
       style={{ background: "#0b1210" }}
     >
       <motion.div

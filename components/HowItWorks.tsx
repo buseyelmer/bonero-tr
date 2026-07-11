@@ -313,7 +313,7 @@ export default function HowItWorks() {
   return (
     <section
       id="nasil-calisir"
-      className="relative overflow-hidden bg-background py-16 sm:py-24"
+      className="relative overflow-x-clip bg-background py-16 sm:py-24"
     >
       <div
         className="pointer-events-none absolute top-0 right-0 h-[420px] w-[420px] rounded-full opacity-60"

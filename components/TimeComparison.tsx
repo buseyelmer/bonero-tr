@@ -90,7 +90,7 @@ export default function TimeComparison() {
     <section
       ref={ref}
       id="zaman-karsilastirma"
-      className="relative overflow-hidden bg-[#f0f3f1] py-16 sm:py-24"
+      className="relative overflow-x-clip bg-[#f0f3f1] py-16 sm:py-24"
     >
       {/* Soft grid */}
       <div
@@ -153,7 +153,7 @@ export default function TimeComparison() {
 
           {/* Big day number */}
           <Reveal delay={0.08} className="lg:col-span-7">
-            <div className="relative overflow-hidden rounded-[1.75rem] border border-bonero-dark/8 bg-white p-8 shadow-[0_24px_60px_rgba(30,41,59,0.08)] sm:p-10">
+            <div className="relative overflow-hidden rounded-[1.75rem] border border-bonero-dark/8 bg-white p-5 shadow-[0_24px_60px_rgba(30,41,59,0.08)] sm:p-10">
               <div className="flex items-start justify-between gap-4">
                 <p
                   className={`text-xs font-semibold tracking-[0.16em] uppercase transition-colors ${

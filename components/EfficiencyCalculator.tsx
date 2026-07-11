@@ -85,7 +85,7 @@ function RecoveryRing({ pct }: { pct: number }) {
   const offset = c * (1 - Math.min(pct, 100) / 100);
 
   return (
-    <div className="relative h-[132px] w-[132px] shrink-0">
+    <div className="relative mx-auto h-[120px] w-[120px] shrink-0 sm:mx-0 sm:h-[132px] sm:w-[132px]">
       <svg viewBox="0 0 128 128" className="h-full w-full -rotate-90">
         <defs>
           <linearGradient id={`ring-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
@@ -147,8 +147,7 @@ export default function EfficiencyCalculator() {
       workDays,
       burnPct: (hours / MAX) * 100,
       savePct: hours > 0 ? (week / hours) * 100 : 0,
-      hero:
-        period === "week" ? week : period === "month" ? month : year,
+      hero: period === "week" ? week : period === "month" ? month : year,
     };
   }, [hours, period]);
 
@@ -164,7 +163,7 @@ export default function EfficiencyCalculator() {
   return (
     <section
       id="verim-hesaplama"
-      className="relative overflow-hidden py-16 sm:py-24"
+      className="relative overflow-x-clip py-16 sm:py-24"
       style={{
         background:
           "linear-gradient(155deg, #070b09 0%, #0c1410 42%, #0a1012 100%)",
@@ -190,13 +189,13 @@ export default function EfficiencyCalculator() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-6xl min-w-0 px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-10">
-          <Reveal className="lg:col-span-5">
+          <Reveal className="min-w-0 lg:col-span-5">
             <p className="text-sm font-medium tracking-[0.2em] text-bonero-green uppercase">
               {t.eyebrow}
             </p>
-            <h2 className="font-heading mt-4 text-3xl tracking-wide text-white sm:text-4xl lg:text-[2.85rem]">
+            <h2 className="font-heading mt-4 text-3xl tracking-wide break-words text-white sm:text-4xl lg:text-[2.85rem]">
               {t.title}
               <span className="mt-1 block text-bonero-green">
                 {t.titleAccent}
@@ -207,10 +206,10 @@ export default function EfficiencyCalculator() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.08} className="lg:col-span-7">
+          <Reveal delay={0.08} className="min-w-0 lg:col-span-7">
             <div className="flex flex-col items-start gap-4 lg:items-end">
               <div
-                className="inline-flex rounded-full border border-white/10 bg-white/[0.04] p-1"
+                className="inline-flex flex-wrap rounded-full border border-white/10 bg-white/[0.04] p-1"
                 role="tablist"
                 aria-label={t.saved}
               >
@@ -223,7 +222,7 @@ export default function EfficiencyCalculator() {
                       role="tab"
                       aria-selected={on}
                       onClick={() => setPeriod(p.id)}
-                      className={`rounded-full px-4 py-1.5 text-xs font-bold tracking-wide uppercase transition-colors ${
+                      className={`rounded-full px-3 py-1.5 text-[11px] font-bold tracking-wide uppercase transition-colors sm:px-4 sm:text-xs ${
                         on
                           ? "bg-bonero-green text-white"
                           : "text-white/40 hover:text-white/70"
@@ -235,21 +234,21 @@ export default function EfficiencyCalculator() {
                 })}
               </div>
 
-              <div className="w-full lg:text-right">
+              <div className="w-full min-w-0 lg:text-right">
                 <p className="text-[11px] font-bold tracking-[0.22em] text-white/30 uppercase">
                   {t.saved} · {periods.find((p) => p.id === period)?.label}
                 </p>
-                <div className="mt-2 flex items-baseline gap-2 lg:justify-end">
+                <div className="mt-2 flex flex-wrap items-baseline gap-2 lg:justify-end">
                   <BigNum
                     value={stats.hero}
-                    className="font-heading text-[clamp(4.5rem,14vw,7.5rem)] leading-none !font-extrabold tracking-tight text-white tabular-nums"
+                    className="font-heading text-[clamp(2.75rem,12vw,7.5rem)] leading-none !font-extrabold tracking-tight text-white tabular-nums"
                   />
-                  <span className="pb-2 text-lg font-semibold text-bonero-green sm:text-xl">
+                  <span className="pb-2 text-base font-semibold text-bonero-green sm:text-xl">
                     {locale === "tr" ? "saat" : "hrs"}
                   </span>
                 </div>
-                <p className="mt-2 inline-flex items-center gap-2 text-sm text-white/40 lg:justify-end">
-                  <CalendarDays size={14} className="text-bonero-green" />
+                <p className="mt-2 inline-flex flex-wrap items-center gap-2 text-sm text-white/40">
+                  <CalendarDays size={14} className="shrink-0 text-bonero-green" />
                   ≈ {stats.workDays} {t.workDays}
                 </p>
               </div>
@@ -258,9 +257,8 @@ export default function EfficiencyCalculator() {
         </div>
 
         <Reveal delay={0.12}>
-          <div className="mt-12 grid overflow-hidden rounded-[1.75rem] border border-white/10 lg:grid-cols-12">
-            {/* Control */}
-            <div className="border-b border-white/8 bg-white/[0.03] p-6 sm:p-8 lg:col-span-5 lg:border-r lg:border-b-0">
+          <div className="mt-12 grid min-w-0 overflow-hidden rounded-[1.75rem] border border-white/10 lg:grid-cols-12">
+            <div className="min-w-0 border-b border-white/8 bg-white/[0.03] p-5 sm:p-8 lg:col-span-5 lg:border-r lg:border-b-0">
               <label
                 htmlFor="approval-hours"
                 className="block text-sm font-semibold text-white/70"
@@ -271,7 +269,7 @@ export default function EfficiencyCalculator() {
               <div className="mt-7 flex items-end gap-3">
                 <BigNum
                   value={hours}
-                  className="font-heading text-6xl leading-none tracking-tight text-white tabular-nums sm:text-7xl"
+                  className="font-heading text-5xl leading-none tracking-tight text-white tabular-nums sm:text-7xl"
                 />
                 <span className="pb-2 text-sm text-white/35">{t.hours}</span>
               </div>
@@ -322,7 +320,6 @@ export default function EfficiencyCalculator() {
                 </div>
               </div>
 
-              {/* Dual tempo bars */}
               <div className="mt-9 space-y-5">
                 <div>
                   <div className="mb-2 flex justify-between text-xs">
@@ -358,8 +355,7 @@ export default function EfficiencyCalculator() {
               </div>
             </div>
 
-            {/* Scoreboard */}
-            <div className="relative flex flex-col justify-between gap-8 bg-[#0a0f0c] p-6 sm:p-8 lg:col-span-7">
+            <div className="relative flex min-w-0 flex-col justify-between gap-8 bg-[#0a0f0c] p-5 sm:p-8 lg:col-span-7">
               <div
                 className="pointer-events-none absolute top-0 right-0 h-56 w-56 rounded-full opacity-45"
                 style={{
@@ -458,7 +454,7 @@ export default function EfficiencyCalculator() {
                   </Link>
                   <a
                     href="mailto:hello@bonero.tr"
-                    className="inline-flex items-center justify-center px-2 text-sm font-medium text-white/40 transition-colors hover:text-white/70"
+                    className="inline-flex items-center justify-center px-2 text-sm font-medium break-all text-white/40 transition-colors hover:text-white/70"
                   >
                     {t.secondary}
                   </a>

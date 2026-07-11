@@ -219,7 +219,7 @@ export default function HeroVisual() {
 
   return (
     <div
-      className="relative mx-auto w-full max-w-[460px] select-none sm:max-w-none"
+      className="relative mx-auto w-full max-w-[460px] min-w-0 overflow-x-clip select-none px-1 sm:max-w-none sm:px-0"
       aria-hidden="true"
     >
       <div
@@ -230,14 +230,14 @@ export default function HeroVisual() {
         }}
       />
 
-      <div className="relative z-20 mb-4 flex items-center justify-center gap-2 sm:gap-3">
+      <div className="relative z-20 mb-4 flex flex-wrap items-center justify-center gap-1.5 sm:gap-3">
         {channelMeta.map((ch, i) => {
           const Icon = ch.icon;
           const on = activeKey === ch.id;
           return (
             <motion.div
               key={ch.id}
-              className="flex items-center gap-2 rounded-full border border-white/80 bg-white/90 px-2.5 py-1.5 shadow-md backdrop-blur-md"
+              className="flex items-center gap-1.5 rounded-full border border-white/80 bg-white/90 px-2 py-1.5 shadow-md backdrop-blur-md sm:gap-2 sm:px-2.5"
               initial={{ opacity: 0, y: -12 }}
               animate={{
                 opacity: 1,
@@ -261,8 +261,11 @@ export default function HeroVisual() {
                   />
                 )}
               </span>
-              <span className="pr-1 text-[11px] font-semibold text-bonero-dark">
+              <span className="hidden pr-1 text-[11px] font-semibold text-bonero-dark sm:inline">
                 {ch.label[locale]}
+              </span>
+              <span className="pr-0.5 text-[10px] font-bold text-bonero-dark sm:hidden">
+                {ch.short}
               </span>
             </motion.div>
           );

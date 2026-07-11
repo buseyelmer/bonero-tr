@@ -127,7 +127,7 @@ export default function CaseStudy() {
     <section
       ref={ref}
       id="basari-hikayesi"
-      className="relative overflow-hidden py-16 sm:py-24"
+      className="relative overflow-x-clip py-16 sm:py-24"
       style={{
         background:
           "linear-gradient(165deg, #f7faf8 0%, #eef5f0 42%, #f5f8f6 100%)",

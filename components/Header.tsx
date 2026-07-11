@@ -76,7 +76,7 @@ export default function Header() {
     <header className="pointer-events-none fixed inset-x-0 top-0 z-[100]">
       <div className="pointer-events-none mx-auto max-w-6xl px-3 pt-3 sm:px-6 sm:pt-4 lg:px-8">
         <motion.div
-          className={`pointer-events-auto relative z-[101] flex items-center justify-between gap-3 rounded-full border px-3 transition-[padding,box-shadow,background-color,border-color] duration-300 sm:px-4 ${
+          className={`pointer-events-auto relative z-[101] flex min-w-0 items-center justify-between gap-2 rounded-full border px-2.5 transition-[padding,box-shadow,background-color,border-color] duration-300 sm:gap-3 sm:px-4 ${
             scrolled || open
               ? "border-bonero-dark/10 bg-white/90 py-2 shadow-[0_12px_40px_-16px_rgba(30,41,59,0.35)] backdrop-blur-xl"
               : "border-white/60 bg-white/55 py-2.5 shadow-[0_8px_30px_-18px_rgba(30,41,59,0.2)] backdrop-blur-md"
@@ -87,13 +87,13 @@ export default function Header() {
         >
           <Link
             href="/"
-            className="relative z-[101] flex shrink-0 items-center pl-1"
+            className="relative z-[101] flex min-w-0 shrink items-center pl-0.5 sm:pl-1"
             aria-label={t.home}
             onClick={() => setOpen(false)}
           >
             <BrandLogo
               priority
-              className={scrolled ? "!h-7 sm:!h-8" : undefined}
+              className="!h-6 max-w-[7.5rem] sm:!h-8 sm:max-w-none"
             />
           </Link>
 
@@ -144,11 +144,11 @@ export default function Header() {
             </Link>
           </div>
 
-          <div className="relative z-[101] flex items-center gap-1.5 md:hidden">
+          <div className="relative z-[101] flex shrink-0 items-center gap-1 md:hidden">
             <LanguageToggle variant="segment" />
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-bonero-dark transition-colors hover:bg-bonero-dark/5"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-bonero-dark transition-colors hover:bg-bonero-dark/5"
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? t.close : t.open}
@@ -170,8 +170,8 @@ export default function Header() {
             transition={{ duration: 0.2 }}
             className="pointer-events-auto fixed inset-0 z-[99] bg-[#f7f9f8]/95 backdrop-blur-xl md:hidden"
           >
-            <div className="flex h-full flex-col px-5 pt-24 pb-8">
-              <nav className="flex flex-1 flex-col gap-1" aria-label={t.mobile}>
+            <div className="flex h-full flex-col px-5 pt-20 pb-8 sm:pt-24">
+              <nav className="flex flex-1 flex-col gap-1 overflow-y-auto" aria-label={t.mobile}>
                 {navLinks.map((link, i) => (
                   <motion.div
                     key={link.href}

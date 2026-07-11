@@ -195,7 +195,7 @@ export default function WhyBonero() {
   return (
     <section
       id="neden-bonero"
-      className="relative overflow-hidden py-16 sm:py-24"
+      className="relative overflow-x-clip py-16 sm:py-24"
       style={{
         background:
           "linear-gradient(155deg, #0b1210 0%, #101a16 45%, #0c1418 100%)",

@@ -260,7 +260,7 @@ export default function SoftDemoCta() {
       ref={ref}
       id="demo-teklifi"
       aria-labelledby="demo-teklifi-baslik"
-      className="relative overflow-hidden py-20 sm:py-28"
+      className="relative overflow-x-clip py-20 sm:py-28"
       style={{ background: "#f3f6f4" }}
     >
       <div
@@ -288,7 +288,7 @@ export default function SoftDemoCta() {
               />
             </div>
 
-            <div className="mx-auto mt-10 min-h-[5.5rem] sm:min-h-[6.25rem]">
+            <div className="mx-auto mt-10 min-h-[6.5rem] sm:min-h-[6.25rem]">
               <AnimatePresence mode="wait">
                 <motion.h2
                   key={`${locale}-${hi}`}
@@ -297,7 +297,7 @@ export default function SoftDemoCta() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.4, ease }}
-                  className="font-heading mx-auto max-w-xl text-3xl tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.65rem]"
+                  className="font-heading mx-auto max-w-xl px-1 text-2xl tracking-wide break-words text-bonero-dark sm:text-4xl lg:text-[2.65rem]"
                 >
                   {headlines[hi].line}
                   <span className="mt-1 block text-bonero-green">

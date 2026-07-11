@@ -248,7 +248,7 @@ export default function Features() {
   return (
     <section
       id="ozellikler"
-      className="relative overflow-x-hidden bg-background py-16 sm:py-24"
+      className="relative overflow-x-clip bg-background py-16 sm:py-24"
     >
       <div
         className="pointer-events-none absolute top-0 left-0 h-80 w-80 rounded-full opacity-70"

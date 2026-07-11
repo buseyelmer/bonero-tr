@@ -50,7 +50,7 @@ export default function Faq() {
   return (
     <section
       id="sss"
-      className="relative overflow-hidden py-16 sm:py-24"
+      className="relative overflow-x-clip py-16 sm:py-24"
       style={{
         background:
           "linear-gradient(180deg, #ffffff 0%, #f3f6f4 55%, #eef3f0 100%)",
@@ -109,7 +109,7 @@ export default function Faq() {
                           {faq.tag}
                         </span>
                         <span
-                          className={`mt-1 block text-sm font-semibold leading-snug sm:text-[0.95rem] ${
+                          className={`mt-1 block min-w-0 text-sm font-semibold leading-snug break-words sm:text-[0.95rem] ${
                             on ? "text-white" : "text-bonero-dark"
                           }`}
                         >
@@ -125,7 +125,7 @@ export default function Faq() {
 
           {/* Answer stage */}
           <Reveal delay={0.08} className="lg:col-span-7">
-            <div className="relative flex h-full min-h-[320px] flex-col overflow-hidden rounded-[1.5rem] bg-white p-6 shadow-[0_24px_50px_-28px_rgba(30,41,59,0.2)] sm:p-8">
+            <div className="relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-[1.5rem] bg-white p-5 shadow-[0_24px_50px_-28px_rgba(30,41,59,0.2)] sm:min-h-[320px] sm:p-8">
               <div
                 className="pointer-events-none absolute top-0 right-0 h-40 w-40 rounded-full opacity-70"
                 style={{
@@ -153,10 +153,10 @@ export default function Faq() {
                     </span>
                   </div>
 
-                  <h3 className="font-heading mt-6 text-xl tracking-wide text-bonero-dark sm:text-2xl">
+                  <h3 className="font-heading mt-6 text-xl tracking-wide break-words text-bonero-dark sm:text-2xl">
                     {current.q}
                   </h3>
-                  <p className="mt-4 flex-1 text-base leading-relaxed text-bonero-dark/60">
+                  <p className="mt-4 flex-1 text-base leading-relaxed break-words text-bonero-dark/60">
                     {current.a}
                   </p>
 

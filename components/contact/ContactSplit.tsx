@@ -19,9 +19,9 @@ const social = [
 
 export default function ContactSplit() {
   return (
-    <section className="bg-[#f4f6f5] pt-16 sm:pt-[4.5rem]">
-      <div className="flex min-h-[calc(100svh-4rem)] flex-col sm:min-h-[calc(100svh-4.5rem)] lg:flex-row">
-        <aside className="relative flex flex-col justify-between overflow-hidden bg-[#0f1c17] px-6 py-12 sm:px-10 sm:py-14 lg:w-[42%] lg:px-12 lg:py-16 xl:px-16">
+    <section className="overflow-x-clip bg-[#f4f6f5] pt-24 sm:pt-28">
+      <div className="flex min-h-[calc(100svh-5rem)] min-w-0 flex-col sm:min-h-[calc(100svh-5.5rem)] lg:flex-row">
+        <aside className="relative flex min-w-0 flex-col justify-between overflow-hidden bg-[#0f1c17] px-5 py-12 sm:px-10 sm:py-14 lg:w-[42%] lg:px-12 lg:py-16 xl:px-16">
           <div
             className="pointer-events-none absolute inset-0"
             aria-hidden="true"
@@ -131,7 +131,7 @@ export default function ContactSplit() {
           </motion.div>
         </aside>
 
-        <div className="relative flex flex-1 flex-col justify-center bg-[#f4f6f5] px-6 py-14 sm:px-10 lg:px-14 lg:py-16 xl:px-20">
+        <div className="relative flex min-w-0 flex-1 flex-col justify-center overflow-x-clip bg-[#f4f6f5] px-5 py-14 sm:px-10 lg:px-14 lg:py-16 xl:px-20">
           <div
             className="pointer-events-none absolute inset-0 opacity-40"
             aria-hidden="true"

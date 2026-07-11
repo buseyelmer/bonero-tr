@@ -513,7 +513,7 @@ export default function UseCases() {
           </div>
 
           {/* Live scene */}
-          <div className="relative min-h-[300px] bg-[#f8faf9] p-5 sm:min-h-[340px] sm:p-7 lg:col-span-7">
+            <div className="relative min-h-[340px] overflow-hidden bg-[#f8faf9] p-5 pb-28 sm:min-h-[360px] sm:p-7 sm:pb-28 lg:col-span-7">
             <div
               className="pointer-events-none absolute inset-0 opacity-40"
               style={{
@@ -530,7 +530,7 @@ export default function UseCases() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.99 }}
                 transition={{ duration: 0.35, ease }}
-                className="relative h-full min-h-[260px]"
+                className="relative min-h-[200px]"
               >
                 <Scene locale={locale} />
               </motion.div>
@@ -541,13 +541,13 @@ export default function UseCases() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 0.4, ease }}
-              className="absolute right-5 bottom-5 left-5 sm:right-7 sm:bottom-7 sm:left-7"
+              className="absolute right-4 bottom-4 left-4 sm:right-6 sm:bottom-6 sm:left-6"
             >
               <div className="rounded-2xl border border-bonero-green/20 bg-white/95 px-4 py-3 shadow-md backdrop-blur-sm">
                 <p className="text-[10px] font-bold tracking-wide text-bonero-green uppercase">
                   {t.outcome}
                 </p>
-                <p className="mt-0.5 text-sm font-semibold text-bonero-dark">
+                <p className="mt-0.5 text-sm leading-snug font-semibold break-words text-bonero-dark">
                   {current.outcome[locale]}
                 </p>
               </div>

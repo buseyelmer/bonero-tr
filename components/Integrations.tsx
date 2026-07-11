@@ -95,7 +95,7 @@ export default function Integrations() {
   return (
     <section
       id="entegrasyonlar"
-      className="relative overflow-hidden border-y border-bonero-dark/6 bg-background py-16 sm:py-24"
+      className="relative overflow-x-clip border-y border-bonero-dark/6 bg-background py-16 sm:py-24"
     >
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
@@ -178,7 +178,7 @@ export default function Integrations() {
 
           {/* Orbit hub */}
           <Reveal delay={0.08} className="lg:col-span-7">
-            <div className="relative mx-auto aspect-square w-full max-w-[420px]">
+            <div className="relative mx-auto aspect-square w-full max-w-[min(100%,380px)] overflow-hidden sm:max-w-[420px]">
               {/* Rings */}
               <div className="absolute inset-[12%] rounded-full border border-bonero-dark/8" />
               <div className="absolute inset-[22%] rounded-full border border-dashed border-bonero-dark/10" />
