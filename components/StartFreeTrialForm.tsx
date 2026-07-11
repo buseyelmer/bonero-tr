@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Loader2 } from "lucide-react";
 import {
-  demoRequestSchema,
-  type DemoRequestValues,
-} from "@/lib/demo-request-schema";
+  startFreeTrialSchema,
+  type StartFreeTrialValues,
+} from "@/lib/start-free-trial-schema";
 import { useToast } from "@/components/ToastProvider";
 
 type Props = {
@@ -20,15 +20,15 @@ const cardField =
 const editorialField =
   "w-full border-0 border-b bg-transparent px-0 py-3 text-base text-bonero-dark outline-none transition-colors placeholder:text-bonero-dark/30 focus:border-bonero-green focus:ring-0 sm:text-sm";
 
-export default function DemoRequestForm({ variant = "card" }: Props) {
+export default function StartFreeTrialForm({ variant = "card" }: Props) {
   const { toast } = useToast();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<DemoRequestValues>({
-    resolver: zodResolver(demoRequestSchema),
+  } = useForm<StartFreeTrialValues>({
+    resolver: zodResolver(startFreeTrialSchema),
     defaultValues: {
       fullName: "",
       agencyName: "",
@@ -161,7 +161,7 @@ export default function DemoRequestForm({ variant = "card" }: Props) {
             </>
           ) : (
             <>
-              Demo Talep Et
+              Mesaj gönder
               <ArrowRight size={16} />
             </>
           )}
@@ -178,10 +178,10 @@ export default function DemoRequestForm({ variant = "card" }: Props) {
     >
       <div className="border-b border-bonero-dark/6 px-6 py-5 sm:px-8">
         <p className="text-xs font-semibold tracking-[0.16em] text-bonero-green uppercase">
-          Demo talep formu
+          İletişim formu
         </p>
         <p className="mt-1.5 text-sm text-bonero-dark/55">
-          Ajansınız için ücretsiz demo planlayalım.
+          Sorunuz veya işbirliği notunuz — 1 iş günü içinde dönüş yaparız.
         </p>
       </div>
       <div className="grid gap-5 p-6 sm:grid-cols-2 sm:p-8">
@@ -284,7 +284,7 @@ export default function DemoRequestForm({ variant = "card" }: Props) {
             </>
           ) : (
             <>
-              Demo Talep Et
+              Mesaj gönder
               <ArrowRight size={16} />
             </>
           )}

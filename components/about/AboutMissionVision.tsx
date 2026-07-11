@@ -88,14 +88,20 @@ export default function AboutMissionVision() {
           </Reveal>
         </div>
 
-        {/* Axis connector */}
-        <div className="relative mt-14 hidden lg:block" aria-hidden="true">
-          <div className="absolute top-0 right-[8%] left-[8%] h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+        {/* Axis connector — M → V */}
+        <div
+          className="relative mx-[8%] mt-12 mb-2 hidden h-4 lg:block"
+          aria-hidden="true"
+        >
+          <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           <motion.div
-            className="absolute top-0 left-[8%] h-px w-[20%] bg-bonero-green"
-            animate={{ left: ["8%", "72%", "8%"] }}
+            className="absolute top-[calc(50%-1px)] left-0 h-0.5 w-[22%] rounded-full bg-bonero-green"
+            initial={{ left: "0%" }}
+            animate={{ left: ["0%", "78%", "0%"] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
+          <span className="absolute top-1/2 left-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-bonero-green" />
+          <span className="absolute top-1/2 right-0 h-1.5 w-1.5 translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40" />
         </div>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-2 lg:gap-8">

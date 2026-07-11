@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Inbox, Link2, Sparkles } from "lucide-react";
 import HeroVisual from "./HeroVisual";
 import { useLocale } from "./LocaleProvider";
+import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 const copy = {
   tr: {
@@ -20,9 +21,9 @@ const copy = {
     howBodyAccent: "Birleşik Gelen Kutusu",
     howBodyAfter:
       "’nda bir araya getirir. Yapay zeka yanıt taslağı önerir; ekibiniz onaylayıp tek ekrandan gönderir.",
-    cta: "Ücretsiz Demo",
+    cta: "Hemen Başlayın",
     how: "Nasıl çalışır?",
-    note: "Yaklaşık 15 dakikada kurulum · Kredi kartı gerekmez",
+    note: "Kayıt ol · Kurulum ~15 dk · Hemen kullan",
     pillars: [
       { title: "Bağla", text: "Kanalları tek tıkla ekle" },
       { title: "Birleştir", text: "Hepsi tek gelen kutusu" },
@@ -42,9 +43,9 @@ const copy = {
     howBodyAccent: "Unified Inbox",
     howBodyAfter:
       ". AI drafts replies; your team approves and sends from one screen.",
-    cta: "Free Demo",
+    cta: "Get Started",
     how: "How it works",
-    note: "Setup in about 15 minutes · No credit card",
+    note: "Sign up · Setup ~15 min · Start right away",
     pillars: [
       { title: "Connect", text: "Add channels in one click" },
       { title: "Unify", text: "Everything in one inbox" },
@@ -60,7 +61,7 @@ export default function Hero() {
   const t = copy[locale];
 
   return (
-    <section className="relative overflow-x-clip bg-background pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pb-20">
+    <section className="relative overflow-x-clip bg-background pt-28 pb-12 sm:pt-32 sm:pb-16 lg:pb-20">
       <div
         className="pointer-events-none absolute inset-0 overflow-hidden"
         aria-hidden="true"
@@ -139,7 +140,7 @@ export default function Hero() {
             }}
           >
             <Link
-              href="/iletisim"
+              href={PANEL_REGISTER_URL}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-bonero-green px-6 py-3 text-sm font-medium text-white shadow-sm shadow-bonero-green/25 transition-all hover:scale-105 hover:bg-bonero-green/90"
             >
               {t.cta}

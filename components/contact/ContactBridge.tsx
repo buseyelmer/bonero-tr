@@ -12,7 +12,7 @@ export default function ContactBridge() {
             Sonraki adım
           </p>
           <h2 className="font-heading mt-3 text-2xl !font-extrabold tracking-wide text-bonero-dark sm:text-3xl">
-            Demo’yu beklerken Bonero’yu keşfedin.
+            Bonero’yu keşfetmeye devam edin.
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-bonero-dark/55 sm:text-base">
             Ürün hikâyesi, paketler veya kariyer — istediğiniz yerden devam edin.

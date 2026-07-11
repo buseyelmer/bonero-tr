@@ -4,6 +4,7 @@ import { Check, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Reveal from "./Reveal";
 import { useLocale } from "./LocaleProvider";
+import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 type Plan = {
   id: string;
@@ -44,11 +45,13 @@ const plans: Plan[] = [
     features: {
       tr: [
         "Sınırsız müşteri hesabı",
+        "AI içerik + reklam üretimi",
         "Onay akışları ve ekip rolleri",
         "Otomatik müşteri raporları",
       ],
       en: [
         "Unlimited client accounts",
+        "AI content + ad generation",
         "Approval flows & team roles",
         "Automated client reporting",
       ],
@@ -83,8 +86,8 @@ const copy = {
     eyebrow: "Paketler",
     title: "Ajansınıza uygun paket",
     subtitle:
-      "Üç net paket. Ölçeğinizi seçin — fiyatı uyum netleşince konuşalım.",
-    cta: "Bu paketi konuşalım",
+      "Üç net paket. Kaydolun ve hemen kullanmaya başlayın.",
+    cta: "Hemen Başlayın",
     popular: "En çok tercih",
     compare: "Tüm paketleri karşılaştır",
   },
@@ -92,8 +95,8 @@ const copy = {
     eyebrow: "Packages",
     title: "The package that fits your agency",
     subtitle:
-      "Three clear packages. Pick your scale — pricing after the fit is clear.",
-    cta: "Talk about this package",
+      "Three clear packages. Sign up and start using Bonero right away.",
+    cta: "Get Started",
     popular: "Most chosen",
     compare: "Compare all packages",
   },
@@ -190,7 +193,7 @@ export default function Pricing() {
                   </ul>
 
                   <Link
-                    href="/iletisim"
+                    href={PANEL_REGISTER_URL}
                     className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-semibold transition-opacity hover:opacity-90 ${
                       featured
                         ? "bg-bonero-green text-white"

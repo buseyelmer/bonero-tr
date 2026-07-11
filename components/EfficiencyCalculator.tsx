@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "./Reveal";
 import { useLocale } from "./LocaleProvider";
+import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 const copy = {
   tr: {
@@ -25,7 +26,7 @@ const copy = {
     workDays: "iş günü / yıl",
     presets: "Hızlı seç",
     hint: "Model: onay döngülerinin ~%55’inin AI + tek panel ile geri kazanıldığı varsayımı.",
-    cta: "Ücretsiz demo talep et",
+    cta: "Hemen Başlayın",
     secondary: "hello@bonero.tr",
     weekVisual: "Haftalık tempo",
   },
@@ -46,7 +47,7 @@ const copy = {
     workDays: "work days / year",
     presets: "Quick pick",
     hint: "Model: ~55% of approval-cycle time recovered via AI + one panel.",
-    cta: "Request a free demo",
+    cta: "Get Started",
     secondary: "hello@bonero.tr",
     weekVisual: "Weekly tempo",
   },
@@ -443,7 +444,7 @@ export default function EfficiencyCalculator() {
                 </p>
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Link
-                    href="/iletisim"
+                    href={PANEL_REGISTER_URL}
                     className="group inline-flex items-center justify-center gap-2 rounded-full bg-bonero-green px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-bonero-green/25 transition-transform hover:scale-[1.02]"
                   >
                     {t.cta}

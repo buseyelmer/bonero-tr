@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import Reveal from "./Reveal";
 import { useLocale, type Locale } from "./LocaleProvider";
+import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const TOTAL = 15;
@@ -17,40 +18,40 @@ const headlinesByLocale: Record<
   { line: string; accent: string }[]
 > = {
   tr: [
-    { line: "Önce görün.", accent: "Sonra karar verin." },
-    { line: "Taahhüt yok.", accent: "Net cevap var." },
-    { line: "15 dakikada panel.", accent: "Karar sizin." },
+    { line: "Hesap açın.", accent: "Hemen başlayın." },
+    { line: "Panel sizin.", accent: "Kayıt olun, kullanın." },
+    { line: "Kurulum kısa.", accent: "Dakikalar içinde hazır." },
   ],
   en: [
-    { line: "See it first.", accent: "Decide after." },
-    { line: "No commitment.", accent: "Clear answer." },
-    { line: "Panel in 15 minutes.", accent: "Your call." },
+    { line: "Create an account.", accent: "Start right away." },
+    { line: "The panel is yours.", accent: "Sign up and go." },
+    { line: "Setup is quick.", accent: "Ready in minutes." },
   ],
 };
 
 const copy = {
   tr: {
-    eyebrow: "Net karar",
-    remaining: "kalan",
-    dialSub: "dakikada net",
-    body: "Omnichannel paneli bağlayın, Birleşik Gelen Kutusu’nu canlı görün. Kararı ürünü gördükten sonra verin.",
-    cta: "Ücretsiz demo talep et",
+    eyebrow: "Hemen başla",
+    remaining: "yaklaşık",
+    dialSub: "dk kurulum",
+    body: "Hesap oluşturun ve hemen kullanmaya başlayın. Birleşik Gelen Kutusu’nu kendi ajansınızda canlı kullanın.",
+    cta: "Hemen Başlayın",
     secondary: "Paketlere bak",
     assurances: [
-      "Kart gerekmez",
+      "Hızlı kayıt",
       "Kurulum ~15 dk",
-      "Satın alma baskısı yok",
+      "Tek panelde başla",
     ],
     headlineAria: (n: number) => `Başlık ${n}`,
   },
   en: {
-    eyebrow: "Clear call",
-    remaining: "left",
-    dialSub: "minutes to clarity",
-    body: "Connect the omnichannel panel and see the Unified Inbox live. Decide after you’ve felt the product.",
-    cta: "Request a free demo",
+    eyebrow: "Get started",
+    remaining: "about",
+    dialSub: "min setup",
+    body: "Create an account and start using Bonero right away. Run the Unified Inbox live with your agency.",
+    cta: "Get Started",
     secondary: "See packages",
-    assurances: ["No card required", "Setup ~15 min", "No purchase pressure"],
+    assurances: ["Quick signup", "Setup ~15 min", "Start in one panel"],
     headlineAria: (n: number) => `Headline ${n}`,
   },
 };
@@ -214,7 +215,6 @@ function DecisionDial({
             className="font-heading text-[clamp(4.5rem,18vw,6.5rem)] leading-none !font-extrabold tracking-tight text-bonero-dark tabular-nums"
           >
             {String(tick).padStart(2, "0")}
-            <span className="text-bonero-green">′</span>
           </motion.p>
         </AnimatePresence>
         <p className="mt-1 text-[11px] font-semibold tracking-[0.22em] text-bonero-dark/40 uppercase">
@@ -225,7 +225,7 @@ function DecisionDial({
   );
 }
 
-export default function SoftDemoCta() {
+export default function SoftStartFreeTrialCta() {
   const { locale } = useLocale();
   const t = copy[locale];
   const headlines = headlinesByLocale[locale];
@@ -258,8 +258,8 @@ export default function SoftDemoCta() {
   return (
     <section
       ref={ref}
-      id="demo-teklifi"
-      aria-labelledby="demo-teklifi-baslik"
+      id="hemen-basla"
+      aria-labelledby="hemen-basla-baslik"
       className="relative overflow-x-clip py-20 sm:py-28"
       style={{ background: "#f3f6f4" }}
     >
@@ -292,7 +292,7 @@ export default function SoftDemoCta() {
               <AnimatePresence mode="wait">
                 <motion.h2
                   key={`${locale}-${hi}`}
-                  id="demo-teklifi-baslik"
+                  id="hemen-basla-baslik"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
@@ -332,7 +332,7 @@ export default function SoftDemoCta() {
 
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
-                href="/iletisim"
+                href={PANEL_REGISTER_URL}
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-bonero-green px-9 py-3.5 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(24,131,71,0.7)] transition-transform hover:scale-[1.03]"
               >
                 {t.cta}

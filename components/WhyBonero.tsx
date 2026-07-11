@@ -38,8 +38,8 @@ const reasons: Reason[] = [
     icon: Zap,
     title: "AI destekli birleştirme",
     description:
-      "Kanallardaki talepleri AI tek akışta toplar; ekibiniz stratejiye ve hızlı yanıta odaklanır.",
-    proof: ["Akıllı sıralama", "Yanıt önerisi", "Daha az gürültü"],
+      "Kanallardaki talepleri AI tek akışta toplar; içerik ve reklam taslaklarını üretir — ekibiniz stratejiye ve onaya odaklanır.",
+    proof: ["Akıllı sıralama", "AI reklam", "Yanıt önerisi"],
   },
   {
     n: "03",

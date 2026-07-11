@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import CareerHero from "@/components/career/CareerHero";
 import CareerCulture from "@/components/career/CareerCulture";
 import CareerRoles from "@/components/career/CareerRoles";
@@ -15,15 +13,11 @@ export const metadata: Metadata = {
 
 export default function CareersPage() {
   return (
-    <>
-      <Header />
-      <main className="flex-1 bg-background">
-        <CareerHero />
-        <CareerCulture />
-        <CareerRoles />
-        <CareerApply />
-      </main>
-      <Footer />
-    </>
+    <main className="flex-1 bg-background">
+      <CareerHero />
+      <CareerCulture />
+      <CareerRoles />
+      <CareerApply />
+    </main>
   );
 }

@@ -8,20 +8,26 @@ const options: { value: Locale; label: string }[] = [
 ];
 
 type LanguageToggleProps = {
-  variant?: "light" | "dark" | "segment";
+  variant?: "light" | "dark" | "segment" | "segment-dark";
 };
 
 export default function LanguageToggle({
   variant = "light",
 }: LanguageToggleProps) {
   const { locale, setLocale } = useLocale();
+  const aria = locale === "tr" ? "Dil seçimi" : "Language";
 
-  if (variant === "segment") {
+  if (variant === "segment" || variant === "segment-dark") {
+    const dark = variant === "segment-dark";
     return (
       <div
-        className="inline-flex items-center rounded-full border border-bonero-dark/10 bg-bonero-dark/[0.04] p-0.5"
+        className={`inline-flex items-center rounded-full p-0.5 ${
+          dark
+            ? "border border-white/12 bg-white/[0.06]"
+            : "border border-bonero-dark/10 bg-bonero-dark/[0.04]"
+        }`}
         role="group"
-        aria-label={locale === "tr" ? "Dil seçimi" : "Language"}
+        aria-label={aria}
       >
         {options.map((option) => {
           const on = locale === option.value;
@@ -32,8 +38,12 @@ export default function LanguageToggle({
               onClick={() => setLocale(option.value)}
               className={`rounded-full px-2.5 py-1 text-[11px] font-bold tracking-wide transition-colors ${
                 on
-                  ? "bg-white text-bonero-dark shadow-sm"
-                  : "text-bonero-dark/40 hover:text-bonero-dark/70"
+                  ? dark
+                    ? "bg-white/15 text-white shadow-sm"
+                    : "bg-white text-bonero-dark shadow-sm"
+                  : dark
+                    ? "text-white/40 hover:text-white/75"
+                    : "text-bonero-dark/40 hover:text-bonero-dark/70"
               }`}
               aria-pressed={on}
             >
@@ -57,7 +67,7 @@ export default function LanguageToggle({
     <div
       className="inline-flex items-center gap-1 text-xs font-semibold tracking-wide"
       role="group"
-      aria-label={locale === "tr" ? "Dil seçimi" : "Language"}
+      aria-label={aria}
     >
       {options.map((option, index) => (
         <span key={option.value} className="inline-flex items-center gap-1">

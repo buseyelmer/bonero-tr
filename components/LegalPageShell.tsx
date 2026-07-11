@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { ArrowUpRight, FileText } from "lucide-react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 type Section = {
   title: string;
@@ -27,9 +25,7 @@ export function LegalPageShell({
   sections: Section[];
 }) {
   return (
-    <>
-      <Header />
-      <main className="flex-1 bg-background">
+    <main className="flex-1 bg-background">
         {/* Hero band */}
         <section className="relative overflow-hidden border-b border-bonero-dark/8 pt-24 pb-12 sm:pt-28 sm:pb-16">
           <div
@@ -179,7 +175,5 @@ export function LegalPageShell({
           </div>
         </div>
       </main>
-      <Footer />
-    </>
   );
 }

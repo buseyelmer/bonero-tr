@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const demoRequestSchema = z.object({
+export const startFreeTrialSchema = z.object({
   fullName: z
     .string()
     .trim()
@@ -22,4 +22,4 @@ export const demoRequestSchema = z.object({
     .max(2000, "Mesaj çok uzun"),
 });
 
-export type DemoRequestValues = z.infer<typeof demoRequestSchema>;
+export type StartFreeTrialValues = z.infer<typeof startFreeTrialSchema>;

@@ -4,18 +4,19 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Reveal from "./Reveal";
 import { useLocale } from "./LocaleProvider";
+import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 const copy = {
   tr: {
     title: "Omnichannel operasyonunuzu dönüştürün.",
     subtitle: "Tüm kanallar, tek panel. 30 dakikada kurulum.",
-    primary: "Ücretsiz Demo Talep Et",
+    primary: "Hemen Başlayın",
     secondary: "Bize Ulaşın",
   },
   en: {
     title: "Transform your omnichannel operations.",
     subtitle: "All channels, one inbox. Setup in 30 minutes.",
-    primary: "Request a Free Demo",
+    primary: "Get Started",
     secondary: "Contact Us",
   },
 };
@@ -46,7 +47,7 @@ export default function FinalCta() {
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Link
-                  href="/iletisim"
+                  href={PANEL_REGISTER_URL}
                   className="inline-flex items-center justify-center gap-2 rounded-lg bg-bonero-green px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-bonero-green/90"
                 >
                   {t.primary}

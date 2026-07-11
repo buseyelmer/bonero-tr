@@ -7,6 +7,7 @@ import {
   Check,
   LayoutDashboard,
   Mail,
+  Megaphone,
   MessageCircle,
   Sparkles,
   UserPlus,
@@ -16,6 +17,8 @@ import {
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "./Reveal";
+import { FEATURE_PAGES, featureHref } from "@/lib/features";
+import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 type Feature = {
   id: string;
@@ -25,6 +28,7 @@ type Feature = {
   pain: string;
   solution: string;
   points: string[];
+  detailSlug?: (typeof FEATURE_PAGES)[number]["slug"];
 };
 
 const features: Feature[] = [
@@ -36,6 +40,7 @@ const features: Feature[] = [
     pain: "DM, yorum ve mail ayrı panellerde kayboluyor.",
     solution: "Tüm kanallar tek merkezde. Hiçbir mesaj kaçmaz; yanıt süresi kısalır.",
     points: ["WhatsApp + IG + Mail", "Okunmamış nabız", "Tek yerden yanıt"],
+    detailSlug: "gelen-kutusu",
   },
   {
     id: "ai",
@@ -45,6 +50,18 @@ const features: Feature[] = [
     pain: "Her müşteri için taslak üretmek günü yiyor.",
     solution: "Marka sesine uygun taslak ve yanıt önerileri — dakikalar içinde.",
     points: ["Yanıt önerisi", "Marka tonu", "Hızlı taslak"],
+    detailSlug: "yapay-zeka",
+  },
+  {
+    id: "ads",
+    icon: Megaphone,
+    name: "AI Reklam Üretimi",
+    tag: "AI Reklam",
+    pain: "Kampanya metni, varyasyon ve hook’lar manuel yazılıyor; tempo düşüyor.",
+    solution:
+      "Hedefe ve marka tonuna göre reklam metni + varyasyon — onay hattına hazır.",
+    points: ["Meta / IG taslağı", "A/B varyasyon", "Onaya düşen kreatif"],
+    detailSlug: "ai-reklam",
   },
   {
     id: "team",
@@ -54,6 +71,7 @@ const features: Feature[] = [
     pain: "Onaylar ve görevler e-posta zincirinde kayboluyor.",
     solution: "Rol bazlı onay ve görev atama — net sorumluluk, hızlı yayına çıkış.",
     points: ["Rol & yetki", "Görev ata", "Onay hattı"],
+    detailSlug: "isbirligi",
   },
   {
     id: "analytics",
@@ -63,6 +81,7 @@ const features: Feature[] = [
     pain: "Müşteri sunumu için veri toplamak zorlaşıyor.",
     solution: "Performans tek panelde — sunuma hazır, ölçülebilir raporlar.",
     points: ["Canlı metrik", "Müşteri özeti", "PDF’ye hazır"],
+    detailSlug: "raporlama",
   },
 ];
 
@@ -156,6 +175,61 @@ function VisualAI() {
   );
 }
 
+function VisualAds() {
+  const variants = [
+    { label: "A", hook: "Stok bitmeden yakala." },
+    { label: "B", hook: "Bu hafta %20 — sadece sen." },
+    { label: "C", hook: "Sepette bıraktın. Biz hatırlattık." },
+  ];
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-3 px-5">
+      <motion.div
+        className="w-full max-w-[270px] overflow-hidden rounded-2xl border border-bonero-dark/10 bg-white shadow-lg"
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease }}
+      >
+        <div className="flex items-center justify-between border-b border-bonero-dark/6 bg-bonero-dark/[0.03] px-3 py-2">
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-bonero-dark">
+            <Megaphone size={13} className="text-bonero-green" />
+            AI reklam
+          </span>
+          <span className="text-[10px] font-medium text-bonero-dark/35">
+            3 varyasyon
+          </span>
+        </div>
+        <div className="space-y-2 p-3">
+          {variants.map((v, i) => (
+            <motion.div
+              key={v.label}
+              className="flex items-start gap-2.5 rounded-xl border border-bonero-dark/6 bg-bonero-dark/[0.03] px-2.5 py-2"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 + i * 0.18, duration: 0.35, ease }}
+            >
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-bonero-green/15 text-[10px] font-bold text-bonero-green">
+                {v.label}
+              </span>
+              <p className="text-[11px] leading-snug text-bonero-dark/70">
+                {v.hook}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+      <motion.span
+        className="inline-flex items-center gap-1.5 rounded-full bg-bonero-green/10 px-3 py-1 text-[10px] font-bold text-bonero-green"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.05, duration: 0.35 }}
+      >
+        <Check size={11} strokeWidth={2.5} />
+        Onaya hazır kreatif
+      </motion.span>
+    </div>
+  );
+}
+
 function VisualTeam() {
   return (
     <div className="flex h-full items-center justify-center gap-3 px-4 sm:gap-5">
@@ -212,7 +286,7 @@ function VisualAnalytics() {
   );
 }
 
-const visuals = [VisualInbox, VisualAI, VisualTeam, VisualAnalytics];
+const visuals = [VisualInbox, VisualAI, VisualAds, VisualTeam, VisualAnalytics];
 
 export default function Features() {
   const [active, setActive] = useState(0);
@@ -370,17 +444,26 @@ export default function Features() {
               </AnimatePresence>
 
               <div className="flex flex-wrap gap-2">
-                <a
-                  href="#nasil-calisir"
-                  className="inline-flex items-center justify-center rounded-lg border border-bonero-dark/12 bg-white px-4 py-2 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/25"
-                >
-                  Nasıl Çalışır?
-                </a>
+                {current.detailSlug ? (
+                  <Link
+                    href={featureHref(current.detailSlug)}
+                    className="inline-flex items-center justify-center rounded-lg border border-bonero-dark/12 bg-white px-4 py-2 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/25"
+                  >
+                    Detayı gör
+                  </Link>
+                ) : (
+                  <a
+                    href="#nasil-calisir"
+                    className="inline-flex items-center justify-center rounded-lg border border-bonero-dark/12 bg-white px-4 py-2 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/25"
+                  >
+                    Nasıl Çalışır?
+                  </a>
+                )}
                 <Link
-                  href="/iletisim"
+                  href={PANEL_REGISTER_URL}
                   className="inline-flex items-center justify-center rounded-lg bg-bonero-green px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-bonero-green/90"
                 >
-                  Demo Talep Et
+                  Hemen Başlayın
                 </Link>
               </div>
             </div>

@@ -3,7 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import DemoRequestForm from "@/components/DemoRequestForm";
+import { ArrowUpRight } from "lucide-react";
+import StartFreeTrialForm from "@/components/StartFreeTrialForm";
+import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 const contacts = [
   { label: "E-posta", value: "hello@bonero.tr", href: "mailto:hello@bonero.tr" },
@@ -71,9 +73,15 @@ export default function ContactSplit() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              Demo veya soru — yazmanız yeterli. Ekibimiz{" "}
-              <span className="text-white/80">1 iş günü</span> içinde dönüş
-              yapar.
+              Soru veya teklif — yazmanız yeterli. Hemen başlamak için{" "}
+              <a
+                href={PANEL_REGISTER_URL}
+                className="text-bonero-green underline-offset-2 hover:underline"
+              >
+                hemen kaydolun
+              </a>
+              . Ekibimiz <span className="text-white/80">1 iş günü</span> içinde
+              dönüş yapar.
             </motion.p>
 
             <motion.ul
@@ -153,14 +161,21 @@ export default function ContactSplit() {
               }}
             >
               <p className="text-[11px] font-semibold tracking-[0.2em] text-bonero-dark/40 uppercase">
-                Ücretsiz demo
+                İletişim
               </p>
               <h2 className="font-heading mt-3 text-2xl !font-extrabold tracking-wide text-bonero-dark sm:text-3xl">
                 Ajansınızı anlatın,
                 <span className="mt-1 block text-bonero-dark/40">
-                  biz zamanı ayarlayalım.
+                  biz dönüş yapalım.
                 </span>
               </h2>
+              <Link
+                href={PANEL_REGISTER_URL}
+                className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-bonero-green transition-colors hover:text-bonero-dark"
+              >
+                Hemen Başlayın
+                <ArrowUpRight size={14} />
+              </Link>
             </motion.div>
 
             <motion.div
@@ -173,11 +188,11 @@ export default function ContactSplit() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <DemoRequestForm variant="editorial" />
+              <StartFreeTrialForm variant="editorial" />
             </motion.div>
 
             <p className="relative mt-8 text-xs leading-relaxed text-bonero-dark/40">
-              Kart gerekmez · Satın alma baskısı yok ·{" "}
+              Hızlı kayıt · 1 iş günü içinde dönüş ·{" "}
               <Link href="/kvkk" className="underline hover:text-bonero-dark">
                 KVKK
               </Link>

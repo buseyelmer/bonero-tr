@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import AboutHero from "@/components/about/AboutHero";
 import AboutMissionVision from "@/components/about/AboutMissionVision";
 import AboutStory from "@/components/about/AboutStory";
@@ -15,15 +13,11 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <>
-      <Header />
-      <main className="flex-1 bg-background">
-        <AboutHero />
-        <AboutStory />
-        <AboutMissionVision />
-        <AboutTrustBento />
-      </main>
-      <Footer />
-    </>
+    <main className="flex-1 bg-background">
+      <AboutHero />
+      <AboutStory />
+      <AboutMissionVision />
+      <AboutTrustBento />
+    </main>
   );
 }

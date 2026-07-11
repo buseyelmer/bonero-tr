@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { LocaleProvider } from "@/components/LocaleProvider";
 import { ToastProvider } from "@/components/ToastProvider";
 import "./globals.css";
@@ -58,7 +60,11 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <LocaleProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>
+            <Header />
+            <div className="flex min-w-0 flex-1 flex-col">{children}</div>
+            <Footer />
+          </ToastProvider>
         </LocaleProvider>
       </body>
     </html>
