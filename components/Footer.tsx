@@ -26,7 +26,7 @@ const footerByLocale = {
         links: [
           { href: "/hakkimizda", label: "Hakkımızda" },
           { href: "/#basari-hikayesi", label: "Başarı Hikayeleri" },
-          { href: "/#sss", label: "SSS" },
+          { href: "/#sss", label: "Sıkça Sorulan Sorular" },
           { href: "/kariyer", label: "Kariyer" },
         ],
       },
@@ -122,14 +122,25 @@ function FooterNavLink({
   children: React.ReactNode;
   className?: string;
 }) {
-  const isInternal = href.startsWith("/") || href.startsWith("#");
-  if (isInternal && href !== "#") {
+  const isHashLink = href.includes("#") && !href.startsWith("http");
+  const isInternalPage = href.startsWith("/") && !isHashLink;
+
+  if (isHashLink) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
+
+  if (isInternalPage) {
     return (
       <Link href={href} className={className}>
         {children}
       </Link>
     );
   }
+
   return (
     <a href={href} className={className}>
       {children}
