@@ -16,7 +16,7 @@ const footerByLocale = {
         links: [
           { href: "/#ozellikler", label: "Özellikler" },
           { href: "/#birlesik-inbox", label: "Birleşik Gelen Kutusu" },
-          { href: "/#neden-bonero", label: "Yapay Zeka Desteği" },
+          { href: "/#nasil-calisir", label: "Nasıl Çalışır?" },
           { href: "/paketler", label: "Paketler" },
           { href: "/#entegrasyonlar", label: "Entegrasyonlar" },
         ],
@@ -25,7 +25,8 @@ const footerByLocale = {
         title: "Şirket",
         links: [
           { href: "/hakkimizda", label: "Hakkımızda" },
-          { href: "/#basari-hikayesi", label: "Başarı Hikayeleri" },
+          { href: "/#basari-hikayesi", label: "Başarı Hikayesi" },
+          { href: "/#neden-bonero", label: "Neden Bonero?" },
           { href: "/#sss", label: "Sıkça Sorulan Sorular" },
           { href: "/kariyer", label: "Kariyer" },
         ],
@@ -34,9 +35,9 @@ const footerByLocale = {
         title: "Yasal & Destek",
         links: [
           { href: "/kullanim-sartlari", label: "Kullanım Şartları" },
-          { href: "/kvkk", label: "KVKK" },
-          { href: "/iletisim", label: "İletişim" },
+          { href: "/kvkk", label: "KVKK Aydınlatma Metni" },
           { href: "/yardim", label: "Yardım Merkezi" },
+          { href: "/iletisim", label: "İletişim" },
         ],
       },
     ],
@@ -52,7 +53,7 @@ const footerByLocale = {
         links: [
           { href: "/#ozellikler", label: "Features" },
           { href: "/#birlesik-inbox", label: "Unified Inbox" },
-          { href: "/#neden-bonero", label: "AI Support" },
+          { href: "/#nasil-calisir", label: "How It Works" },
           { href: "/paketler", label: "Plans" },
           { href: "/#entegrasyonlar", label: "Integrations" },
         ],
@@ -61,7 +62,8 @@ const footerByLocale = {
         title: "Company",
         links: [
           { href: "/hakkimizda", label: "About" },
-          { href: "/#basari-hikayesi", label: "Case Studies" },
+          { href: "/#basari-hikayesi", label: "Case Study" },
+          { href: "/#neden-bonero", label: "Why Bonero?" },
           { href: "/#sss", label: "FAQ" },
           { href: "/kariyer", label: "Careers" },
         ],
@@ -70,9 +72,9 @@ const footerByLocale = {
         title: "Legal & Support",
         links: [
           { href: "/kullanim-sartlari", label: "Terms of Use" },
-          { href: "/kvkk", label: "Privacy / KVKK" },
-          { href: "/iletisim", label: "Contact" },
+          { href: "/kvkk", label: "KVKK Notice" },
           { href: "/yardim", label: "Help Center" },
+          { href: "/iletisim", label: "Contact" },
         ],
       },
     ],

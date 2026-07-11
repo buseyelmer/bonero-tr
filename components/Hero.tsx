@@ -4,14 +4,61 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Inbox, Link2, Sparkles } from "lucide-react";
 import HeroVisual from "./HeroVisual";
+import { useLocale } from "./LocaleProvider";
 
-const pillars = [
-  { icon: Link2, title: "Bağla", text: "Kanalları tek tıkla ekle" },
-  { icon: Inbox, title: "Birleştir", text: "Hepsi tek gelen kutusu" },
-  { icon: Sparkles, title: "Yanıtla", text: "AI taslak + hızlı gönder" },
-];
+const copy = {
+  tr: {
+    badge: "Ajanslar için çok kanallı AI platformu",
+    h1Before: "Bonero, müşteri mesajlarınızı",
+    h1Accent: "tek panele",
+    h1After: "toplar.",
+    whatTitle: "Çok kanallı (omnichannel) ne demek?",
+    whatBody:
+      "Müşteriniz Instagram’dan, WhatsApp’tan veya e-postadan yazabilir. Her kanal ayrı uygulamadaysa mesajlar dağılır, ekip geç yanıt verir.",
+    howTitle: "Bonero ne işe yarar?",
+    howBodyBefore: "Bu kanalları",
+    howBodyAccent: "Birleşik Gelen Kutusu",
+    howBodyAfter:
+      "’nda bir araya getirir. Yapay zeka yanıt taslağı önerir; ekibiniz onaylayıp tek ekrandan gönderir.",
+    cta: "Ücretsiz Demo",
+    how: "Nasıl çalışır?",
+    note: "Yaklaşık 15 dakikada kurulum · Kredi kartı gerekmez",
+    pillars: [
+      { title: "Bağla", text: "Kanalları tek tıkla ekle" },
+      { title: "Birleştir", text: "Hepsi tek gelen kutusu" },
+      { title: "Yanıtla", text: "AI taslak + hızlı gönder" },
+    ],
+  },
+  en: {
+    badge: "Omnichannel AI platform for agencies",
+    h1Before: "Bonero brings customer messages into",
+    h1Accent: "one panel",
+    h1After: ".",
+    whatTitle: "What does omnichannel mean?",
+    whatBody:
+      "Your client may write on Instagram, WhatsApp, or email. When each channel lives in a different app, messages scatter and replies slow down.",
+    howTitle: "What does Bonero do?",
+    howBodyBefore: "It gathers those channels in a",
+    howBodyAccent: "Unified Inbox",
+    howBodyAfter:
+      ". AI drafts replies; your team approves and sends from one screen.",
+    cta: "Free Demo",
+    how: "How it works",
+    note: "Setup in about 15 minutes · No credit card",
+    pillars: [
+      { title: "Connect", text: "Add channels in one click" },
+      { title: "Unify", text: "Everything in one inbox" },
+      { title: "Reply", text: "AI draft + fast send" },
+    ],
+  },
+};
+
+const pillarIcons = [Link2, Inbox, Sparkles];
 
 export default function Hero() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+
   return (
     <section className="relative bg-background pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pb-20">
       <div
@@ -39,7 +86,7 @@ export default function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-bonero-green opacity-60" />
               <span className="relative h-1.5 w-1.5 rounded-full bg-bonero-green" />
             </span>
-            Ajanslar için çok kanallı AI platformu
+            {t.badge}
           </motion.p>
 
           <motion.h1
@@ -48,8 +95,9 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
           >
-            Bonero, müşteri mesajlarınızı{" "}
-            <span className="text-bonero-green">tek panele</span> toplar.
+            {t.h1Before}{" "}
+            <span className="text-bonero-green">{t.h1Accent}</span>{" "}
+            {t.h1After}
           </motion.h1>
 
           <motion.div
@@ -64,21 +112,19 @@ export default function Hero() {
           >
             <p>
               <strong className="font-semibold text-bonero-dark">
-                Çok kanallı (omnichannel) ne demek?
+                {t.whatTitle}
               </strong>{" "}
-              Müşteriniz Instagram’dan, WhatsApp’tan veya e-postadan yazabilir.
-              Her kanal ayrı uygulamadaysa mesajlar dağılır, ekip geç yanıt verir.
+              {t.whatBody}
             </p>
             <p>
               <strong className="font-semibold text-bonero-dark">
-                Bonero ne işe yarar?
+                {t.howTitle}
               </strong>{" "}
-              Bu kanalları{" "}
+              {t.howBodyBefore}{" "}
               <span className="font-medium text-bonero-dark/80">
-                Birleşik Gelen Kutusu
+                {t.howBodyAccent}
               </span>
-              ’nda bir araya getirir. Yapay zeka yanıt taslağı önerir; ekibiniz
-              onaylayıp tek ekrandan gönderir.
+              {t.howBodyAfter}
             </p>
           </motion.div>
 
@@ -96,14 +142,14 @@ export default function Hero() {
               href="/iletisim"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-bonero-green px-6 py-3 text-sm font-medium text-white shadow-sm shadow-bonero-green/25 transition-all hover:scale-105 hover:bg-bonero-green/90"
             >
-              Ücretsiz Demo
+              {t.cta}
               <ArrowRight size={16} />
             </Link>
             <a
               href="#nasil-calisir"
               className="inline-flex items-center justify-center rounded-lg border border-bonero-dark/15 bg-white/70 px-6 py-3 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/30 hover:bg-white"
             >
-              Nasıl çalışır?
+              {t.how}
             </a>
           </motion.div>
 
@@ -113,7 +159,7 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.4 }}
           >
-            Yaklaşık 15 dakikada kurulum · Kredi kartı gerekmez
+            {t.note}
           </motion.p>
 
           <motion.ul
@@ -126,26 +172,29 @@ export default function Hero() {
               ease: [0.22, 1, 0.36, 1],
             }}
           >
-            {pillars.map(({ icon: Icon, title, text }, i) => (
-              <li key={title}>
-                <a
-                  href="#nasil-calisir"
-                  className="flex h-full items-center gap-2.5 rounded-xl border border-bonero-dark/8 bg-white/80 px-3 py-2.5 backdrop-blur-sm transition-colors hover:border-bonero-green/30 hover:bg-white"
-                >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-bonero-green/10 text-bonero-green">
-                    <Icon size={14} strokeWidth={1.75} />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-xs font-semibold text-bonero-dark">
-                      {i + 1}. {title}
-                    </p>
-                    <p className="truncate text-[11px] text-bonero-dark/45">
-                      {text}
-                    </p>
-                  </div>
-                </a>
-              </li>
-            ))}
+            {t.pillars.map(({ title, text }, i) => {
+              const Icon = pillarIcons[i];
+              return (
+                <li key={title}>
+                  <a
+                    href="#nasil-calisir"
+                    className="flex h-full items-center gap-2.5 rounded-xl border border-bonero-dark/8 bg-white/80 px-3 py-2.5 backdrop-blur-sm transition-colors hover:border-bonero-green/30 hover:bg-white"
+                  >
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-bonero-green/10 text-bonero-green">
+                      <Icon size={14} strokeWidth={1.75} />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold text-bonero-dark">
+                        {i + 1}. {title}
+                      </p>
+                      <p className="truncate text-[11px] text-bonero-dark/45">
+                        {text}
+                      </p>
+                    </div>
+                  </a>
+                </li>
+              );
+            })}
           </motion.ul>
         </div>
 

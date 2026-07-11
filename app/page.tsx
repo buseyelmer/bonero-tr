@@ -8,7 +8,6 @@ import UnifiedInboxMockup from "@/components/UnifiedInboxMockup";
 import Features from "@/components/Features";
 import MetricsStrip from "@/components/MetricsStrip";
 import TimeComparison from "@/components/TimeComparison";
-import Impact from "@/components/Impact";
 import WhyBonero from "@/components/WhyBonero";
 import UseCases from "@/components/UseCases";
 import Integrations from "@/components/Integrations";
@@ -30,60 +29,55 @@ export const metadata: Metadata = {
 };
 
 /**
- * Ana sayfa akışı (SaaS satış hunisi):
- * 1. Dikkat & vaat → 2. Güven → 3. Problem → 4. Nasıl çalışır →
- * 5. Ürünü gör → 6. Çözümler → 7. Kanıt (metrik/ROI) → 8. Farklılaşma →
- * 9. Kimler için → 10. Entegrasyon → 11. Hikâye → 12. Soft CTA →
- * 13. Fiyat → 14. Etkileşim → 15. İtirazlar → 16. Güvenlik
+ * Ana sayfa akışı — tek anlatı:
+ *
+ * 1. Vaat          Hero
+ * 2. Problem       PainPoints
+ * 3. Mekanizma     HowItWorks
+ * 4. Ürünü gör     SocialProof → UnifiedInbox
+ * 5. Derinlik      Features → Integrations
+ * 6. Kazanç        Metrics → TimeComparison
+ * 7. Tercih        WhyBonero → UseCases → CaseStudy
+ * 8. Karar         Calculator → Pricing → SoftDemoCta
+ * 9. Güvence       Faq → TrustStrip → Footer
  */
 export default function Home() {
   return (
     <>
       <Header />
       <main className="flex-1">
-        {/* 1. Vaat — Bonero nedir? */}
+        {/* 1. Vaat */}
         <Hero />
 
-        {/* 2. Erken güven — ajanslar & sayılar */}
-        <SocialProof />
-
-        {/* 3. Problem — neden ihtiyaç var? */}
+        {/* 2. Problem — neden Bonero? */}
         <PainPoints />
 
-        {/* 4. Sadelik — 3 adımda nasıl çalışır */}
+        {/* 3. Mekanizma — 3 adım */}
         <HowItWorks />
-        <MetricsStrip />
 
-        {/* 5. Ürün kanıtı — paneli gör */}
+        {/* 4. Ürünü gör — sosyal kanıt + canlı panel */}
+        <SocialProof />
         <UnifiedInboxMockup />
 
-        {/* 6. Derin çözümler — özellikler */}
+        {/* 5. Derinlik — özellikler ve kanallar */}
         <Features />
-
-        {/* 7. Ölçülebilir kazanç */}
-        <TimeComparison />
-        <Impact />
         <Integrations />
 
-        {/* 8. Neden Bonero? */}
+        {/* 6. Ölçülebilir kazanç */}
+        <MetricsStrip />
+        <TimeComparison />
+
+        {/* 7. Tercih nedeni — kimler, neden, hikâye */}
         <WhyBonero />
-
-        {/* 9. Kimler için */}
         <UseCases />
-
-        {/* 10. Başarı hikâyesi */}
         <CaseStudy />
 
-        {/* 11. Soft CTA */}
+        {/* 8. Karar — kişisel verim → paket → net teklif */}
+        <EfficiencyCalculator />
+        <Pricing />
         <SoftDemoCta />
 
-        {/* 12. Fiyatlandırma */}
-        <Pricing />
-
-        {/* 13. Etkileşimli ikna */}
-        <EfficiencyCalculator />
-
-        {/* 14. İtirazlar + güvenlik */}
+        {/* 9. Güvence → footer */}
         <Faq />
         <TrustStrip />
       </main>

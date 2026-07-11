@@ -1,24 +1,25 @@
 "use client";
 
-import { ArrowRight, Check } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Reveal from "./Reveal";
 import { useLocale } from "./LocaleProvider";
 
 type Plan = {
+  id: string;
   name: { tr: string; en: string };
-  audience: { tr: string; en: string };
+  forWho: { tr: string; en: string };
+  price: { tr: string; en: string };
   features: { tr: string[]; en: string[] };
-  highlighted?: boolean;
+  featured?: boolean;
 };
 
 const plans: Plan[] = [
   {
+    id: "starter",
     name: { tr: "Başlangıç", en: "Starter" },
-    audience: {
-      tr: "Tek Ajans",
-      en: "Single Agency",
-    },
+    forWho: { tr: "Tek ajans · ilk adım", en: "Single agency · first step" },
+    price: { tr: "Birlikte netleştirelim", en: "Finalize together" },
     features: {
       tr: [
         "Tek çalışma alanı",
@@ -33,11 +34,13 @@ const plans: Plan[] = [
     },
   },
   {
+    id: "pro",
     name: { tr: "Pro", en: "Pro" },
-    audience: {
-      tr: "Çoklu Müşteri Yönetimi",
-      en: "Multi-Client Management",
+    forWho: {
+      tr: "Çoklu müşteri · ajans temposu",
+      en: "Multi-client · agency tempo",
     },
+    price: { tr: "Ajanslara özel", en: "Built for agencies" },
     features: {
       tr: [
         "Sınırsız müşteri hesabı",
@@ -50,14 +53,16 @@ const plans: Plan[] = [
         "Automated client reporting",
       ],
     },
-    highlighted: true,
+    featured: true,
   },
   {
+    id: "enterprise",
     name: { tr: "Enterprise", en: "Enterprise" },
-    audience: {
-      tr: "Özel API Entegrasyonları",
-      en: "Custom API Integrations",
+    forWho: {
+      tr: "Kurumsal ölçek · API & SLA",
+      en: "Enterprise scale · API & SLA",
     },
+    price: { tr: "Özel teklif", en: "Custom quote" },
     features: {
       tr: [
         "Özel API ve SSO",
@@ -76,19 +81,21 @@ const plans: Plan[] = [
 const copy = {
   tr: {
     eyebrow: "Paketler",
-    title: "Ajanslara Özel Esnek Planlar",
+    title: "Ajansınıza uygun paket",
     subtitle:
-      "Ölçeğinize uygun paketi seçin — fiyatı birlikte netleştirelim, önce uyumu görün.",
-    cta: "Planı Konuşalım",
-    badge: "En çok tercih edilen",
+      "Üç net paket. Ölçeğinizi seçin — fiyatı uyum netleşince konuşalım.",
+    cta: "Bu paketi konuşalım",
+    popular: "En çok tercih",
+    compare: "Tüm paketleri karşılaştır",
   },
   en: {
-    eyebrow: "Plans",
-    title: "Flexible Plans Built for Agencies",
+    eyebrow: "Packages",
+    title: "The package that fits your agency",
     subtitle:
-      "Pick the tier that matches your scale — we’ll finalize pricing together once the fit is clear.",
-    cta: "Talk About Plans",
-    badge: "Most popular",
+      "Three clear packages. Pick your scale — pricing after the fit is clear.",
+    cta: "Talk about this package",
+    popular: "Most chosen",
+    compare: "Compare all packages",
   },
 };
 
@@ -97,70 +104,115 @@ export default function Pricing() {
   const t = copy[locale];
 
   return (
-    <section id="paketler" className="bg-background py-16 sm:py-24">
+    <section
+      id="paketler"
+      className="py-16 sm:py-24"
+      style={{ background: "#f7f9f8" }}
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
+          <p className="text-sm font-medium tracking-wide text-bonero-green uppercase">
             {t.eyebrow}
           </p>
           <h2 className="font-heading mt-3 text-3xl tracking-wide text-bonero-dark sm:text-4xl">
             {t.title}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-bonero-dark/60">
+          <p className="mt-4 text-base leading-relaxed text-bonero-dark/55">
             {t.subtitle}
           </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {plans.map((plan, index) => (
-            <Reveal key={plan.name.tr} delay={0.08 * index}>
-              <article
-                className={`group glass-panel flex h-full flex-col rounded-2xl p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:p-7 ${
-                  plan.highlighted
-                    ? "ring-1 ring-bonero-green/25"
-                    : ""
-                }`}
-              >
-                {plan.highlighted && (
-                  <span className="absolute -top-3 left-7 rounded-full bg-bonero-green px-3 py-1 text-[11px] font-medium tracking-wide text-white uppercase">
-                    {t.badge}
-                  </span>
-                )}
-                <h3 className="font-heading text-xl text-bonero-dark">
-                  {plan.name[locale]}
-                </h3>
-                <p className="mt-1 text-sm font-medium text-bonero-dark/55">
-                  {plan.audience[locale]}
-                </p>
-                <ul className="mt-6 flex-1 space-y-3">
-                  {plan.features[locale].map((feature) => (
-                    <li
-                      key={feature}
-                      className="flex items-start gap-2.5 text-sm text-bonero-dark/65"
-                    >
-                      <Check
-                        size={16}
-                        className="mt-0.5 shrink-0 text-bonero-green"
-                        strokeWidth={2.25}
-                      />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/iletisim"
-                  className={`mt-8 inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-medium transition-colors ${
-                    plan.highlighted
-                      ? "bg-bonero-green text-white hover:bg-bonero-green/90"
-                      : "border border-bonero-dark/12 text-bonero-dark hover:border-bonero-dark/25"
+        <div className="mt-12 grid gap-5 md:grid-cols-3 md:items-stretch md:gap-5">
+          {plans.map((plan, index) => {
+            const featured = Boolean(plan.featured);
+            return (
+              <Reveal key={plan.id} delay={0.06 * index} className="h-full">
+                <article
+                  className={`flex h-full flex-col rounded-3xl p-6 sm:p-7 ${
+                    featured
+                      ? "bg-bonero-dark text-white shadow-xl shadow-bonero-dark/20"
+                      : "bg-white text-bonero-dark shadow-sm"
                   }`}
                 >
-                  {t.cta}
-                  <ArrowRight size={15} />
-                </Link>
-              </article>
-            </Reveal>
-          ))}
+                  {/* Badge in normal flow — never absolute over content */}
+                  <div className="mb-5 min-h-[1.75rem]">
+                    {featured ? (
+                      <span className="inline-flex rounded-full bg-bonero-green px-3 py-1 text-[11px] font-bold tracking-wide text-white uppercase">
+                        {t.popular}
+                      </span>
+                    ) : (
+                      <span
+                        className={`text-[11px] font-bold tracking-[0.16em] uppercase ${
+                          featured ? "text-white/40" : "text-bonero-dark/35"
+                        }`}
+                      >
+                        {locale === "tr" ? "Paket" : "Package"}{" "}
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="font-heading text-2xl tracking-wide sm:text-[1.75rem]">
+                    {plan.name[locale]}
+                  </h3>
+                  <p
+                    className={`mt-2 text-sm leading-snug ${
+                      featured ? "text-white/50" : "text-bonero-dark/50"
+                    }`}
+                  >
+                    {plan.forWho[locale]}
+                  </p>
+
+                  <p
+                    className={`font-heading mt-6 text-xl tracking-wide ${
+                      featured ? "text-bonero-green" : "text-bonero-dark"
+                    }`}
+                  >
+                    {plan.price[locale]}
+                  </p>
+
+                  <ul className="mt-6 flex flex-1 flex-col gap-3">
+                    {plan.features[locale].map((f) => (
+                      <li
+                        key={f}
+                        className={`flex items-start gap-2.5 text-sm leading-snug ${
+                          featured ? "text-white/75" : "text-bonero-dark/65"
+                        }`}
+                      >
+                        <Check
+                          size={16}
+                          className="mt-0.5 shrink-0 text-bonero-green"
+                          strokeWidth={2.25}
+                        />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link
+                    href="/iletisim"
+                    className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-semibold transition-opacity hover:opacity-90 ${
+                      featured
+                        ? "bg-bonero-green text-white"
+                        : "bg-bonero-dark text-white"
+                    }`}
+                  >
+                    {t.cta}
+                    <ArrowRight size={15} />
+                  </Link>
+                </article>
+              </Reveal>
+            );
+          })}
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link
+            href="/paketler"
+            className="text-sm font-medium text-bonero-dark/45 underline-offset-4 transition-colors hover:text-bonero-dark hover:underline"
+          >
+            {t.compare} →
+          </Link>
         </div>
       </div>
     </section>

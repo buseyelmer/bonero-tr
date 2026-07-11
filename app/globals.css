@@ -266,3 +266,11 @@ h4,
   background: color-mix(in srgb, var(--bonero-dark) 12%, transparent);
 }
 
+.bonero-slider--on-dark {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.bonero-slider--on-dark::-moz-range-track {
+  background: rgba(255, 255, 255, 0.12);
+}
+
