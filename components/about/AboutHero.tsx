@@ -53,7 +53,7 @@ export default function AboutHero() {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.65, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
               >
-                Hizmet işletmelerinin{" "}
+                İşletmelerin{" "}
                 <span className="relative inline-block">
                   <span className="relative z-10">operasyonel kaosunu,</span>
                   <motion.span

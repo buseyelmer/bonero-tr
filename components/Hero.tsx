@@ -2,59 +2,31 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Inbox, Link2, Sparkles } from "lucide-react";
-import HeroVisual from "./HeroVisual";
+import { ArrowRight } from "lucide-react";
+import HeroTimeVisual from "./HeroTimeVisual";
 import { useLocale } from "./LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 const copy = {
   tr: {
-    badge: "Hizmet işletmeleri için çok kanallı AI platformu",
-    h1Before: "Bonero, müşteri mesajlarınızı",
-    h1Accent: "tek panele",
-    h1After: "toplar.",
-    whatTitle: "Çok kanallı (omnichannel) ne demek?",
-    whatBody:
-      "Müşteriniz Instagram’dan, WhatsApp’tan veya e-postadan yazabilir. Her kanal ayrı uygulamadaysa mesajlar dağılır, ekip geç yanıt verir.",
-    howTitle: "Bonero ne işe yarar?",
-    howBodyBefore: "Bu kanalları",
-    howBodyAccent: "Birleşik Gelen Kutusu",
-    howBodyAfter:
-      "’nda bir araya getirir. Yapay zeka yanıt taslağı önerir; ekibiniz onaylayıp tek ekrandan gönderir.",
+    badge: "Tüm işletmeler için",
+    h1: "Müşteri mesajları dağılmasın.",
+    h1Accent: "Tek panelde yönetin.",
+    lead: "WhatsApp, Instagram ve e-posta — Bonero’da birleşir. AI ilk yanıtı önerir; ekibiniz tek ekrandan gönderir. Dağınık paneller yerine ayda ortalama ~35 saat geri kalır.",
     cta: "Hemen Başlayın",
-    how: "Nasıl çalışır?",
-    note: "Kayıt ol · Kurulum ~15 dk · Hemen kullan",
-    pillars: [
-      { title: "Bağla", text: "Kanalları tek tıkla ekle" },
-      { title: "Birleştir", text: "Hepsi tek gelen kutusu" },
-      { title: "Yanıtla", text: "AI taslak + hızlı gönder" },
-    ],
+    secondary: "Ürünü görün",
+    note: "Kayıt · ~15 dk kurulum · Aynı gün kullanın",
   },
   en: {
-    badge: "Omnichannel AI platform for service businesses",
-    h1Before: "Bonero brings customer messages into",
-    h1Accent: "one panel",
-    h1After: ".",
-    whatTitle: "What does omnichannel mean?",
-    whatBody:
-      "Your client may write on Instagram, WhatsApp, or email. When each channel lives in a different app, messages scatter and replies slow down.",
-    howTitle: "What does Bonero do?",
-    howBodyBefore: "It gathers those channels in a",
-    howBodyAccent: "Unified Inbox",
-    howBodyAfter:
-      ". AI drafts replies; your team approves and sends from one screen.",
+    badge: "For every business",
+    h1: "Stop losing customer messages.",
+    h1Accent: "Run them in one panel.",
+    lead: "WhatsApp, Instagram, and email unify in Bonero. AI drafts the first reply; your team sends from one screen. Swap scattered tabs for ~35 hours back each month.",
     cta: "Get Started",
-    how: "How it works",
-    note: "Sign up · Setup ~15 min · Start right away",
-    pillars: [
-      { title: "Connect", text: "Add channels in one click" },
-      { title: "Unify", text: "Everything in one inbox" },
-      { title: "Reply", text: "AI draft + fast send" },
-    ],
+    secondary: "See the product",
+    note: "Sign up · ~15 min setup · Start the same day",
   },
 };
-
-const pillarIcons = [Link2, Inbox, Sparkles];
 
 export default function Hero() {
   const { locale } = useLocale();
@@ -75,7 +47,7 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto grid max-w-6xl min-w-0 items-start gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-10 lg:px-8 xl:gap-14">
+      <div className="relative mx-auto grid max-w-6xl min-w-0 items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:px-8 xl:gap-14">
         <div className="max-w-xl min-w-0 pt-2">
           <motion.p
             className="inline-flex max-w-full items-center gap-2 rounded-full border border-bonero-dark/10 bg-white/80 px-3 py-1 text-xs font-medium tracking-wide text-bonero-dark/55 backdrop-blur-sm"
@@ -91,125 +63,62 @@ export default function Hero() {
           </motion.p>
 
           <motion.h1
-            className="font-heading mt-4 text-[1.75rem] leading-[1.2] tracking-wide break-words text-bonero-dark sm:text-4xl lg:text-[2.75rem]"
+            className="font-heading mt-5 text-[1.85rem] leading-[1.15] tracking-wide break-words text-bonero-dark sm:text-4xl lg:text-[2.85rem]"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
           >
-            {t.h1Before}{" "}
-            <span className="text-bonero-green">{t.h1Accent}</span>{" "}
-            {t.h1After}
+            {t.h1}{" "}
+            <span className="text-bonero-green">{t.h1Accent}</span>
           </motion.h1>
 
-          <motion.div
-            className="mt-4 space-y-3 text-sm leading-relaxed text-bonero-dark/65 sm:text-base"
+          <motion.p
+            className="mt-5 max-w-md text-base leading-relaxed text-bonero-dark/60 sm:text-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.55,
-              delay: 0.12,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+            transition={{ duration: 0.55, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p>
-              <strong className="font-semibold text-bonero-dark">
-                {t.whatTitle}
-              </strong>{" "}
-              {t.whatBody}
-            </p>
-            <p>
-              <strong className="font-semibold text-bonero-dark">
-                {t.howTitle}
-              </strong>{" "}
-              {t.howBodyBefore}{" "}
-              <span className="font-medium text-bonero-dark/80">
-                {t.howBodyAccent}
-              </span>
-              {t.howBodyAfter}
-            </p>
-          </motion.div>
+            {t.lead}
+          </motion.p>
 
           <motion.div
-            className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center"
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.5,
-              delay: 0.2,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+            transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <Link
               href={PANEL_REGISTER_URL}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-bonero-green px-6 py-3 text-sm font-medium text-white shadow-sm shadow-bonero-green/25 transition-all hover:scale-105 hover:bg-bonero-green/90"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-bonero-green px-6 py-3.5 text-sm font-semibold text-white shadow-sm shadow-bonero-green/25 transition-colors hover:bg-bonero-green/90"
             >
               {t.cta}
               <ArrowRight size={16} />
             </Link>
             <a
-              href="#nasil-calisir"
-              className="inline-flex items-center justify-center rounded-lg border border-bonero-dark/15 bg-white/70 px-6 py-3 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/30 hover:bg-white"
+              href="#cozumler"
+              className="inline-flex items-center justify-center rounded-xl border border-bonero-dark/15 bg-white/70 px-6 py-3.5 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/30 hover:bg-white"
             >
-              {t.how}
+              {t.secondary}
             </a>
           </motion.div>
 
           <motion.p
-            className="mt-3 text-xs text-bonero-dark/40"
+            className="mt-4 text-xs text-bonero-dark/40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.4 }}
           >
             {t.note}
           </motion.p>
-
-          <motion.ul
-            className="mt-7 grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-2.5"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.45,
-              delay: 0.28,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
-            {t.pillars.map(({ title, text }, i) => {
-              const Icon = pillarIcons[i];
-              return (
-                <li key={title}>
-                  <a
-                    href="#nasil-calisir"
-                    className="flex h-full items-center gap-2.5 rounded-xl border border-bonero-dark/8 bg-white/80 px-3 py-2.5 backdrop-blur-sm transition-colors hover:border-bonero-green/30 hover:bg-white"
-                  >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-bonero-green/10 text-bonero-green">
-                      <Icon size={14} strokeWidth={1.75} />
-                    </span>
-                    <div className="min-w-0">
-                      <p className="text-xs font-semibold text-bonero-dark">
-                        {i + 1}. {title}
-                      </p>
-                      <p className="truncate text-[11px] text-bonero-dark/45">
-                        {text}
-                      </p>
-                    </div>
-                  </a>
-                </li>
-              );
-            })}
-          </motion.ul>
         </div>
 
         <motion.div
-          className="relative w-full min-w-0 overflow-x-clip lg:pl-4 lg:pr-2"
+          className="relative w-full min-w-0 overflow-x-clip lg:pl-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: 0.15,
-            ease: [0.22, 1, 0.36, 1],
-          }}
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
         >
-          <HeroVisual />
+          <HeroTimeVisual />
         </motion.div>
       </div>
     </section>

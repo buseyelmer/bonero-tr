@@ -13,7 +13,6 @@ import {
   LayoutDashboard,
   Mail,
   Megaphone,
-  UserPlus,
   Users,
   UsersRound,
   type LucideIcon,
@@ -29,6 +28,7 @@ import CrmMock from "@/components/features/mocks/CrmMock";
 import EmailMarketingMock from "@/components/features/mocks/EmailMarketingMock";
 import OmnichannelMock from "@/components/features/mocks/OmnichannelMock";
 import ReportingMock from "@/components/features/mocks/ReportingMock";
+import CollabMock from "@/components/features/mocks/CollabMock";
 import {
   FEATURE_PAGES,
   featureHref,
@@ -53,15 +53,15 @@ const ICONS: Record<FeatureSlug, LucideIcon> = {
 };
 
 const ACCENTS: Record<FeatureSlug, string> = {
-  "gelen-kutusu": "#25D366",
+  "gelen-kutusu": "#188347",
   "yapay-zeka": "#188347",
-  "ai-reklam": "#F59E0B",
-  isbirligi: "#0EA5E9",
-  crm: "#0F766E",
-  randevu: "#D97706",
-  icerik: "#BE185D",
-  "email-marketing": "#0284C7",
-  raporlama: "#2DB56A",
+  "ai-reklam": "#188347",
+  isbirligi: "#188347",
+  crm: "#188347",
+  randevu: "#188347",
+  icerik: "#188347",
+  "email-marketing": "#188347",
+  raporlama: "#188347",
 };
 
 const copy = {
@@ -140,78 +140,9 @@ function StageAds({ active, isEn }: StageProps) {
 }
 
 function StageCollab({ active, isEn }: StageProps) {
-  const [step, setStep] = useState(1);
-  const roles = isEn
-    ? [
-        { label: "Account", task: "Brief uploaded", Icon: Users },
-        { label: "Editor", task: "Creative ready", Icon: UserPlus },
-        { label: "Client", task: "Approval pending", Icon: Check },
-      ]
-    : [
-        { label: "Hesap", task: "Brief yüklendi", Icon: Users },
-        { label: "Editör", task: "Kreatif hazır", Icon: UserPlus },
-        { label: "Müşteri", task: "Onay bekleniyor", Icon: Check },
-      ];
-
-  useEffect(() => {
-    if (!active) return;
-    const t = window.setInterval(() => setStep((p) => (p >= 2 ? 0 : p + 1)), 2000);
-    return () => clearInterval(t);
-  }, [active]);
-
   return (
-    <div className="flex h-full min-h-0 flex-col justify-center gap-3 overflow-hidden p-4 sm:p-5">
-      <div className="flex shrink-0 items-center justify-between">
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-bonero-dark/35">
-          {isEn ? "Approval flow" : "Onay hattı"}
-        </p>
-        <span className="font-mono text-[10px] text-bonero-green">{step + 1}/3</span>
-      </div>
-      <div className="h-1 shrink-0 overflow-hidden rounded-full bg-bonero-dark/8">
-        <motion.div
-          className="h-full rounded-full bg-bonero-green"
-          animate={{ width: active ? `${((step + 1) / 3) * 100}%` : "33%" }}
-          transition={{ duration: 0.4, ease }}
-        />
-      </div>
-      <div className="space-y-2">
-        {roles.map((r, i) => (
-          <motion.div
-            key={r.label}
-            className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 ${
-              active && i === step
-                ? "border-bonero-green/30 bg-bonero-green/5"
-                : "border-bonero-dark/8 bg-white"
-            }`}
-            animate={{ opacity: active ? (i <= step ? 1 : 0.45) : 0.5 }}
-          >
-            <span
-              className={`flex h-8 w-8 items-center justify-center rounded-lg ${
-                i < step && active
-                  ? "bg-bonero-green text-white"
-                  : i === step && active
-                    ? "border border-bonero-green text-bonero-green"
-                    : "bg-bonero-dark/5 text-bonero-dark/40"
-              }`}
-            >
-              {i < step && active ? (
-                <Check size={13} strokeWidth={2.5} />
-              ) : (
-                <r.Icon size={14} />
-              )}
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="text-[13px] font-semibold text-bonero-dark">{r.label}</p>
-              <p className="text-[10px] text-bonero-dark/40">{r.task}</p>
-            </div>
-            {active && i === step && (
-              <span className="text-[9px] font-bold tracking-wider text-bonero-green uppercase">
-                {isEn ? "Now" : "Şimdi"}
-              </span>
-            )}
-          </motion.div>
-        ))}
-      </div>
+    <div className="flex h-full min-h-0 flex-col justify-center p-3 sm:p-4">
+      <CollabMock active={active} isEn={isEn} />
     </div>
   );
 }

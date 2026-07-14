@@ -459,7 +459,7 @@ export const FEATURE_PAGES: FeaturePageContent[] = [
       },
       {
         title: "Otomatik hatırlatma",
-        body: "WhatsApp veya SMS ile onay/hatırlatma; no-show oranı düşer, koltuk dolu kalır.",
+        body: "WhatsApp veya SMS ile onay/hatırlatma; no-show oranı düşer, takvim dolu kalır.",
       },
       {
         title: "Mesajdan randevuya",
@@ -473,7 +473,7 @@ export const FEATURE_PAGES: FeaturePageContent[] = [
       },
       {
         title: "Auto reminders",
-        body: "Confirm and remind via WhatsApp or SMS; fewer no-shows, fuller chairs.",
+        body: "Confirm and remind via WhatsApp or SMS; fewer no-shows, fuller calendars.",
       },
       {
         title: "From message to booking",

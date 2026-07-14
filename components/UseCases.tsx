@@ -154,7 +154,7 @@ const useCases: UseCase[] = [
       },
     ],
     outcome: {
-      tr: "Boş koltuk azalır, doluluk oranı artar",
+      tr: "Boş slot azalır, doluluk oranı artar",
       en: "Fewer empty slots, higher occupancy",
     },
   },
@@ -205,19 +205,15 @@ const useCases: UseCase[] = [
 
 const copy = {
   tr: {
-    eyebrow: "Kullanım Senaryoları",
-    title: "Hizmet sektörüne özel çözümler",
-    subtitle:
-      "Çok kanallı iletişimden e-posta pazarlamasına, randevu hatırlatmalarından kendi reklam yönetimine — işinize uygun senaryoyu seçin.",
-    flow: "Akış",
+    eyebrow: "Kimler için",
+    title: "İşinize uyan senaryo",
+    subtitle: "Her işletme tipi için tek bir net aksiyon akışı.",
     outcome: "Sonuç",
   },
   en: {
-    eyebrow: "Use Cases",
-    title: "Built for the service sector",
-    subtitle:
-      "From omnichannel inbox to email marketing, appointment reminders, and self-serve ads — pick the scenario that fits your business.",
-    flow: "Flow",
+    eyebrow: "Who it’s for",
+    title: "A scenario that fits your work",
+    subtitle: "One clear action flow per business type.",
     outcome: "Outcome",
   },
 };
@@ -500,7 +496,6 @@ export default function UseCases() {
   const { locale } = useLocale();
   const t = copy[locale];
   const [active, setActive] = useState(0);
-  const [beat, setBeat] = useState(0);
   const [inView, setInView] = useState(false);
   const current = useCases[active];
   const Icon = current.icon;
@@ -524,18 +519,11 @@ export default function UseCases() {
 
   useEffect(() => {
     if (!inView) return;
-    setBeat(0);
-    const beatTimers = current.beats.map((_, i) =>
-      window.setTimeout(() => setBeat(i), (i * CYCLE) / current.beats.length),
-    );
     const next = window.setTimeout(() => {
       setActive((p) => (p + 1) % useCases.length);
     }, CYCLE);
-    return () => {
-      beatTimers.forEach(clearTimeout);
-      clearTimeout(next);
-    };
-  }, [active, inView, current.beats]);
+    return () => clearTimeout(next);
+  }, [active, inView]);
 
   return (
     <section
@@ -546,24 +534,15 @@ export default function UseCases() {
           "linear-gradient(180deg, #f4f7f5 0%, #eef3f0 50%, #f7f9f8 100%)",
       }}
     >
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-40"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 80% at 70% 0%, rgba(24,131,71,0.1), transparent)",
-        }}
-        aria-hidden="true"
-      />
-
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="max-w-2xl">
+        <Reveal className="max-w-xl">
           <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
             {t.eyebrow}
           </p>
-          <h2 className="font-heading mt-3 text-3xl tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.65rem]">
+          <h2 className="font-heading mt-3 text-3xl tracking-wide text-bonero-dark sm:text-4xl">
             {t.title}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-bonero-dark/55">
+          <p className="mt-3 text-base leading-relaxed text-bonero-dark/55">
             {t.subtitle}
           </p>
         </Reveal>
@@ -593,7 +572,7 @@ export default function UseCases() {
         </div>
 
         <div className="mt-6 grid min-w-0 overflow-hidden rounded-[1.5rem] border border-bonero-dark/8 bg-white shadow-[0_20px_50px_-28px_rgba(30,41,59,0.25)] lg:grid-cols-12">
-          <div className="flex min-w-0 flex-col justify-between gap-8 border-b border-bonero-dark/6 p-6 sm:p-8 lg:col-span-5 lg:border-r lg:border-b-0">
+          <div className="flex min-w-0 flex-col justify-center gap-6 border-b border-bonero-dark/6 p-6 sm:p-8 lg:col-span-5 lg:border-r lg:border-b-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={current.id}
@@ -616,65 +595,19 @@ export default function UseCases() {
                 <p className="mt-3 text-sm leading-relaxed text-bonero-dark/55 sm:text-base">
                   {current.description[locale]}
                 </p>
+                <div className="mt-6 rounded-2xl border border-bonero-green/20 bg-bonero-green/5 px-4 py-3">
+                  <p className="text-[10px] font-bold tracking-wide text-bonero-green uppercase">
+                    {t.outcome}
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-bonero-dark">
+                    {current.outcome[locale]}
+                  </p>
+                </div>
               </motion.div>
             </AnimatePresence>
-
-            <div>
-              <p className="mb-3 text-[11px] font-bold tracking-wide text-bonero-dark/35 uppercase">
-                {t.flow}
-              </p>
-              <ol className="space-y-2">
-                {current.beats.map((b, i) => {
-                  const on = beat === i;
-                  return (
-                    <li
-                      key={b.label.tr}
-                      className={`flex gap-3 rounded-xl px-3 py-2.5 transition-colors ${
-                        on ? "bg-bonero-green/8" : "bg-transparent"
-                      }`}
-                    >
-                      <span
-                        className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${
-                          on
-                            ? "bg-bonero-green text-white"
-                            : "bg-bonero-dark/8 text-bonero-dark/40"
-                        }`}
-                      >
-                        {i + 1}
-                      </span>
-                      <div className="min-w-0">
-                        <p
-                          className={`text-sm font-semibold ${
-                            on ? "text-bonero-dark" : "text-bonero-dark/45"
-                          }`}
-                        >
-                          {b.label[locale]}
-                        </p>
-                        <p
-                          className={`text-xs ${
-                            on ? "text-bonero-dark/55" : "text-bonero-dark/30"
-                          }`}
-                        >
-                          {b.detail[locale]}
-                        </p>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ol>
-            </div>
           </div>
 
-          <div className="relative min-h-[340px] overflow-hidden bg-[#f8faf9] p-5 pb-28 sm:min-h-[360px] sm:p-7 sm:pb-28 lg:col-span-7">
-            <div
-              className="pointer-events-none absolute inset-0 opacity-40"
-              style={{
-                backgroundImage:
-                  "radial-gradient(rgba(30,41,59,0.06) 1px, transparent 1px)",
-                backgroundSize: "20px 20px",
-              }}
-              aria-hidden="true"
-            />
+          <div className="relative min-h-[300px] overflow-hidden bg-[#f8faf9] p-5 sm:min-h-[340px] sm:p-7 lg:col-span-7">
             <AnimatePresence mode="wait">
               <motion.div
                 key={current.id}
@@ -682,38 +615,13 @@ export default function UseCases() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.99 }}
                 transition={{ duration: 0.35, ease }}
-                className="relative min-h-[200px]"
+                className="relative h-full min-h-[240px]"
               >
                 <Scene locale={locale} />
               </motion.div>
             </AnimatePresence>
-
-            <motion.div
-              key={`out-${current.id}`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.4, ease }}
-              className="absolute right-4 bottom-4 left-4 sm:right-6 sm:bottom-6 sm:left-6"
-            >
-              <div className="rounded-2xl border border-bonero-green/20 bg-white/95 px-4 py-3 shadow-md backdrop-blur-sm">
-                <p className="text-[10px] font-bold tracking-wide text-bonero-green uppercase">
-                  {t.outcome}
-                </p>
-                <p className="mt-0.5 text-sm leading-snug font-semibold break-words text-bonero-dark">
-                  {current.outcome[locale]}
-                </p>
-              </div>
-            </motion.div>
           </div>
         </div>
-
-        <motion.div
-          key={active}
-          className="mt-4 h-0.5 origin-left rounded-full bg-bonero-green"
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: CYCLE / 1000, ease: "linear" }}
-        />
       </div>
     </section>
   );

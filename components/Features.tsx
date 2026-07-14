@@ -3,12 +3,8 @@
 import { useEffect, useState } from "react";
 import {
   BarChart3,
-  Camera,
   Check,
-  LayoutDashboard,
-  Mail,
   Megaphone,
-  MessageCircle,
   Sparkles,
   UserPlus,
   Users,
@@ -32,16 +28,6 @@ type Feature = {
 };
 
 const features: Feature[] = [
-  {
-    id: "inbox",
-    icon: LayoutDashboard,
-    name: "Unified Inbox",
-    tag: "Gelen kutusu",
-    pain: "DM, yorum ve mail ayrı panellerde kayboluyor.",
-    solution: "Tüm kanallar tek merkezde. Hiçbir mesaj kaçmaz; yanıt süresi kısalır.",
-    points: ["WhatsApp + IG + Mail", "Okunmamış nabız", "Tek yerden yanıt"],
-    detailSlug: "gelen-kutusu",
-  },
   {
     id: "ai",
     icon: Sparkles,
@@ -88,47 +74,6 @@ const features: Feature[] = [
 /** One complete beat per feature — no mid-cycle phase flip */
 const CYCLE_MS = 5500;
 const ease = [0.22, 1, 0.36, 1] as const;
-
-function VisualInbox() {
-  const ch = [
-    { Icon: MessageCircle, c: "#25D366" },
-    { Icon: Camera, c: "#E1306C" },
-    { Icon: Mail, c: "#0EA5E9" },
-  ];
-  return (
-    <div className="relative flex h-full flex-col items-center justify-center gap-6 px-4">
-      <div className="flex items-center justify-center gap-3">
-        {ch.map(({ Icon, c }, i) => (
-          <motion.div
-            key={c}
-            className="flex h-12 w-12 items-center justify-center rounded-xl border border-bonero-dark/8 bg-white shadow-md"
-            initial={{ opacity: 0, y: 16, x: (i - 1) * 28 }}
-            animate={{ opacity: 1, y: 0, x: 0 }}
-            transition={{ duration: 0.55, delay: 0.15 + i * 0.12, ease }}
-          >
-            <Icon size={18} style={{ color: c }} strokeWidth={1.75} />
-          </motion.div>
-        ))}
-      </div>
-      <motion.div
-        className="h-8 w-px bg-gradient-to-b from-bonero-dark/15 to-bonero-green"
-        initial={{ scaleY: 0, opacity: 0 }}
-        animate={{ scaleY: 1, opacity: 1 }}
-        transition={{ duration: 0.45, delay: 0.65, ease }}
-      />
-      <motion.div
-        className="flex items-center gap-2 rounded-2xl bg-bonero-green px-4 py-2.5 text-white shadow-lg shadow-bonero-green/25"
-        initial={{ opacity: 0, y: 12, scale: 0.92 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.9 }}
-      >
-        <LayoutDashboard size={16} />
-        <span className="text-xs font-semibold">Tek gelen kutusu</span>
-        <Check size={14} strokeWidth={2.5} />
-      </motion.div>
-    </div>
-  );
-}
 
 function VisualAI() {
   const lines = [
@@ -286,7 +231,7 @@ function VisualAnalytics() {
   );
 }
 
-const visuals = [VisualInbox, VisualAI, VisualAds, VisualTeam, VisualAnalytics];
+const visuals = [VisualAI, VisualAds, VisualTeam, VisualAnalytics];
 
 export default function Features() {
   const [active, setActive] = useState(0);
@@ -296,7 +241,7 @@ export default function Features() {
   const Visual = visuals[active];
 
   useEffect(() => {
-    const el = document.getElementById("ozellikler");
+    const el = document.getElementById("cozumler");
     if (!el) return;
     const obs = new IntersectionObserver(
       ([e]) => {
@@ -321,7 +266,7 @@ export default function Features() {
 
   return (
     <section
-      id="ozellikler"
+      id="cozumler"
       className="relative overflow-x-clip bg-background py-16 sm:py-24"
     >
       <div
@@ -453,10 +398,10 @@ export default function Features() {
                   </Link>
                 ) : (
                   <a
-                    href="#nasil-calisir"
+                    href="/paketler"
                     className="inline-flex items-center justify-center rounded-lg border border-bonero-dark/12 bg-white px-4 py-2 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/25"
                   >
-                    Nasıl Çalışır?
+                    Paketlere bak
                   </a>
                 )}
                 <Link

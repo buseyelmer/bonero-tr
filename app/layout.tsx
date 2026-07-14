@@ -24,20 +24,20 @@ export const metadata: Metadata = {
     template: "%s | Bonero",
   },
   description:
-    "Bonero, hizmet işletmeleri için omnichannel AI iletişim platformudur. Instagram, WhatsApp, e-posta ve web taleplerini Unified Inbox’ta birleştirir.",
+    "Bonero, tüm işletmeler için omnichannel AI iletişim platformudur. Instagram, WhatsApp, e-posta ve web taleplerini Unified Inbox’ta birleştirir.",
   openGraph: {
     type: "website",
     locale: "tr_TR",
     siteName: "Bonero",
     title: "Bonero | Omnichannel AI İletişim Platformu",
     description:
-      "Tüm kanallar, tek panel. Hizmet işletmeleri için omnichannel AI yönetimi.",
+      "Tüm kanallar, tek panel. Tüm işletmeler için omnichannel AI yönetimi.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Bonero | Omnichannel AI İletişim Platformu",
     description:
-      "Tüm kanallar, tek panel. Hizmet işletmeleri için omnichannel AI yönetimi.",
+      "Tüm kanallar, tek panel. Tüm işletmeler için omnichannel AI yönetimi.",
   },
   robots: {
     index: true,

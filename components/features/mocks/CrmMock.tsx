@@ -11,15 +11,15 @@ export default function CrmMock({ active = true, isEn = false }: Props) {
   const stages = isEn
     ? [
         { name: "New", count: 8, tone: "bg-bonero-dark/10" },
-        { name: "Warm", count: 5, tone: "bg-amber-400/25" },
-        { name: "Offer", count: 3, tone: "bg-sky-400/25" },
-        { name: "Won", count: 2, tone: "bg-bonero-green/25" },
+        { name: "Warm", count: 5, tone: "bg-bonero-green/15" },
+        { name: "Offer", count: 3, tone: "bg-bonero-green/25" },
+        { name: "Won", count: 2, tone: "bg-bonero-green/35" },
       ]
     : [
         { name: "Yeni", count: 8, tone: "bg-bonero-dark/10" },
-        { name: "İlgili", count: 5, tone: "bg-amber-400/25" },
-        { name: "Teklif", count: 3, tone: "bg-sky-400/25" },
-        { name: "Kazanıldı", count: 2, tone: "bg-bonero-green/25" },
+        { name: "İlgili", count: 5, tone: "bg-bonero-green/15" },
+        { name: "Teklif", count: 3, tone: "bg-bonero-green/25" },
+        { name: "Kazanıldı", count: 2, tone: "bg-bonero-green/35" },
       ];
 
   const card = isEn

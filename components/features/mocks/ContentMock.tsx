@@ -77,9 +77,9 @@ export default function ContentMock({ active = true, isEn = false }: Props) {
 
   const tone = (s: string) => {
     if (s === "approved") return "bg-bonero-green/15 text-bonero-green";
-    if (s === "review") return "bg-amber-400/20 text-amber-700";
+    if (s === "review") return "bg-bonero-green/10 text-bonero-green/80";
     if (s === "draft") return "bg-bonero-dark/8 text-bonero-dark/50";
-    return "bg-sky-400/15 text-sky-700";
+    return "bg-bonero-green/[0.08] text-bonero-green/70";
   };
 
   const days = isEn

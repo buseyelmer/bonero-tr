@@ -22,25 +22,13 @@ type NavLink = {
 const navByLocale: Record<"tr" | "en", NavLink[]> = {
   tr: [
     { id: "features", href: "/features", label: "Özellikler", featuresMenu: true },
-    { id: "cozumler", href: "/#cozumler", label: "Çözümler", section: "cozumler" },
-    {
-      id: "nasil",
-      href: "/#nasil-calisir",
-      label: "Nasıl Çalışır",
-      section: "nasil-calisir",
-    },
+    { id: "cozumler", href: "/#cozumler", label: "Neden Bonero", section: "cozumler" },
     { id: "paketler", href: "/paketler", label: "Paketler" },
     { id: "iletisim", href: "/iletisim", label: "İletişim" },
   ],
   en: [
     { id: "features", href: "/features", label: "Features", featuresMenu: true },
-    { id: "cozumler", href: "/#cozumler", label: "Solutions", section: "cozumler" },
-    {
-      id: "nasil",
-      href: "/#nasil-calisir",
-      label: "How It Works",
-      section: "nasil-calisir",
-    },
+    { id: "cozumler", href: "/#cozumler", label: "Why Bonero", section: "cozumler" },
     { id: "paketler", href: "/paketler", label: "Plans" },
     { id: "iletisim", href: "/iletisim", label: "Contact" },
   ],
@@ -71,7 +59,7 @@ const copy = {
   },
 };
 
-const SECTION_IDS = ["cozumler", "nasil-calisir"] as const;
+const SECTION_IDS = ["cozumler"] as const;
 
 export default function Header() {
   const { locale } = useLocale();

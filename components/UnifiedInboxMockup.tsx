@@ -252,6 +252,7 @@ const copyByLocale: Record<
     title: string;
     titleAccent: string;
     subtitle: string;
+    points: string[];
     footerNote: string;
     liveSession: string;
     searchPlaceholder: string;
@@ -266,17 +267,22 @@ const copyByLocale: Record<
   }
 > = {
   tr: {
-    eyebrow: "Canlı önizleme",
-    title: "Panelin içine girin.",
-    titleAccent: "Operasyon şu an akıyor.",
+    eyebrow: "Birleşik gelen kutusu",
+    title: "Kanallar ayrıysa iş kaçıyor.",
+    titleAccent: "Bonero hepsini tek panelde toplar.",
     subtitle:
-      "Gerçek bir operasyon anı: mesaj gelir, ekip yazar, yeni kanal ping’ler — hepsi tek ekranda.",
+      "Müşteri bir yerden DM, başka yerden mail atar; ekip üç uygulamada koşar. WhatsApp, Instagram ve e-posta Bonero’da tek listede — atama, etiket ve yanıt aynı ekranda.",
+    points: [
+      "Kaçan mesaj ve soğuk lead azalır",
+      "Geç yanıt düşer; randevu ve satış hızlanır",
+      "Hangi kanalda ne yazıldığı tek thread’de kalır",
+    ],
     footerNote: "Otomatik demo · gerçek panel deneyimine yakın akış",
     liveSession: "Canlı oturum",
     searchPlaceholder: "Inbox’ta ara…",
     filters: ["Tümü", "WhatsApp", "Instagram", "E-posta"],
     contactName: "Ayşe Yılmaz",
-    contactMeta: "WhatsApp · Atlas Media müşterisi",
+    contactMeta: "WhatsApp · Atlas müşterisi",
     conversationStarting: "Konuşma başlıyor…",
     composerPlaceholder: "Yanıt yaz… (tüm kanallardan görünür)",
     ariaLabel: "Bonero Birleşik Gelen Kutusu canlı panel önizlemesi",
@@ -284,11 +290,16 @@ const copyByLocale: Record<
     arriveToast: "Yeni Instagram mesajı",
   },
   en: {
-    eyebrow: "Live preview",
-    title: "Step inside the panel.",
-    titleAccent: "Operations are live right now.",
+    eyebrow: "Unified inbox",
+    title: "Separate channels lose work.",
+    titleAccent: "Bonero puts them in one panel.",
     subtitle:
-      "A real ops moment: a message arrives, the team replies, a new channel pings — all on one screen.",
+      "Customers DM one place and email another; the team juggles three apps. WhatsApp, Instagram, and email land in one Bonero list — assign, tag, and reply on the same screen.",
+    points: [
+      "Fewer missed messages and cold leads",
+      "Faster replies — more bookings and sales",
+      "Every channel stays in one thread",
+    ],
     footerNote: "Auto demo · close to the real panel experience",
     liveSession: "Live session",
     searchPlaceholder: "Search inbox…",
@@ -383,8 +394,8 @@ export default function UnifiedInboxMockup() {
   return (
     <section
       ref={sectionRef}
-      id="birlesik-inbox"
-      className="relative overflow-x-clip py-16 sm:py-24"
+      id="cozumler"
+      className="relative scroll-mt-24 overflow-x-clip py-16 sm:py-24"
       aria-labelledby="birlesik-inbox-baslik"
       style={{
         background:
@@ -429,6 +440,17 @@ export default function UnifiedInboxMockup() {
           <p className="mt-4 text-base leading-relaxed text-bonero-dark/55">
             {t.subtitle}
           </p>
+          <ul className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-2">
+            {t.points.map((point) => (
+              <li
+                key={point}
+                className="flex items-start gap-2 text-left text-sm text-bonero-dark/65 sm:max-w-[14rem]"
+              >
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-bonero-green" />
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
         </Reveal>
 
         <Reveal delay={0.1} className="mt-12 lg:mt-14">

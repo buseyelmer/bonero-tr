@@ -44,7 +44,7 @@ export default function AdsMock({ active = true, isEn = false }: Props) {
           </p>
         </div>
         <motion.span
-          className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-50 px-2.5 py-1 text-[10px] font-semibold text-amber-700"
+          className="inline-flex items-center gap-1.5 rounded-full border border-bonero-green/30 bg-bonero-green/10 px-2.5 py-1 text-[10px] font-semibold text-bonero-green"
           animate={active ? { opacity: [0.55, 1, 0.55] } : { opacity: 0.7 }}
           transition={{ duration: 1.8, repeat: Infinity }}
         >

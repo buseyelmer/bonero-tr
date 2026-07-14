@@ -7,7 +7,7 @@ import AboutTrustBento from "@/components/about/AboutTrustBento";
 export const metadata: Metadata = {
   title: "Hakkımızda",
   description:
-    "Hizmet işletmelerinin operasyonel kaosunu yapay zeka ile şeffaf bir başarı hikayesine dönüştürüyoruz. Bonero misyonu, vizyonu ve güven altyapısı.",
+    "İşletmelerin operasyonel kaosunu yapay zeka ile şeffaf bir başarı hikayesine dönüştürüyoruz. Bonero misyonu, vizyonu ve güven altyapısı.",
   alternates: { canonical: "/hakkimizda" },
 };
 

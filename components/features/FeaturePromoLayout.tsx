@@ -48,15 +48,15 @@ const ICONS: Record<FeatureSlug, LucideIcon> = {
 };
 
 const ACCENTS: Record<FeatureSlug, string> = {
-  "gelen-kutusu": "#25D366",
+  "gelen-kutusu": "#188347",
   "yapay-zeka": "#188347",
-  "ai-reklam": "#F59E0B",
-  isbirligi: "#0EA5E9",
-  crm: "#0F766E",
-  randevu: "#D97706",
-  icerik: "#BE185D",
-  "email-marketing": "#0284C7",
-  raporlama: "#2DB56A",
+  "ai-reklam": "#188347",
+  isbirligi: "#188347",
+  crm: "#188347",
+  randevu: "#188347",
+  icerik: "#188347",
+  "email-marketing": "#188347",
+  raporlama: "#188347",
 };
 
 const copy = {
@@ -420,28 +420,28 @@ export default function FeaturePromoLayout({
       </section>
 
       {/* ── CTA 3 ── */}
-      <section className="border-t border-bonero-dark/6 bg-bonero-dark py-14 sm:py-16">
+      <section className="border-t border-bonero-dark/6 bg-bonero-green py-14 sm:py-16">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <p className="text-sm font-medium tracking-wide text-white/40 uppercase">
+          <p className="text-sm font-medium tracking-wide text-white/55 uppercase">
             {t.finalEyebrow}
           </p>
           <h2 className="font-heading mt-3 text-2xl tracking-wide text-white sm:text-3xl">
             {t.finalTitle}
           </h2>
-          <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-white/50">
+          <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-white/75">
             {t.finalBody}
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               href={PANEL_REGISTER_URL}
-              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-bonero-green px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1a9a52]"
+              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-bonero-green transition-opacity hover:opacity-90"
             >
               {t.cta}
               <ArrowUpRight size={16} />
             </Link>
             <Link
               href="/iletisim"
-              className="inline-flex items-center justify-center rounded-xl border border-white/15 px-5 py-3 text-sm font-medium text-white/70 transition-colors hover:border-white/30 hover:text-white"
+              className="inline-flex items-center justify-center rounded-xl border border-white/30 px-5 py-3 text-sm font-medium text-white transition-colors hover:border-white/50"
             >
               {isEn ? "Contact us" : "İletişime geç"}
             </Link>

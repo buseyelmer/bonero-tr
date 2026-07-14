@@ -277,6 +277,251 @@ export const HELP_ARTICLES: HelpArticle[] = [
       },
     ],
   },
+  {
+    slug: "email-kampanya-gonderme",
+    category: "reklam",
+    title: "E-posta kampanyası oluşturma ve gönderme",
+    description:
+      "Segment seçin, konuyu yazın, zamanlayın ve açılma/tıklama sonuçlarını takip edin.",
+    readingMinutes: 7,
+    updatedAt: "2026-07-14",
+    body: [
+      {
+        type: "p",
+        text: "Bonero’da e-posta pazarlama ayrı bir ESP’ye export etmeden çalışır. Listeniz CRM / abone verisinden gelir; kampanya, gönderim ve ölçüm aynı panelde kalır.",
+      },
+      {
+        type: "h2",
+        text: "Hazırlık",
+      },
+      {
+        type: "ul",
+        items: [
+          "Gönderen adresi doğrulanmış olmalı (Ayarlar → E-posta)",
+          "En az bir segment veya abone listesi tanımlı olmalı",
+          "Konu satırı ve CTA hedefiniz net olsun",
+        ],
+      },
+      {
+        type: "h2",
+        text: "Kampanya adımları",
+      },
+      {
+        type: "steps",
+        items: [
+          {
+            title: "Segment seçin",
+            body: "Pazarlama → Segmentler. “Son 30 günde satın alan”, “pasif abone” gibi filtreleri kaydedin. Küçük bir test listesiyle başlayın.",
+          },
+          {
+            title: "Kampanyayı tasarlayın",
+            body: "Konu, önizleme metni ve gövdeyi yazın. A/B testi açıyorsanız iki konu satırı tanımlayın; kazanan otomatik devam eder.",
+          },
+          {
+            title: "Önizleyip zamanlayın",
+            body: "Kendinize test maili gönderin. Onay sonrası “şimdi gönder” veya takvim slotu seçin.",
+          },
+          {
+            title: "Sonuçları okuyun",
+            body: "Açılma, tıklama ve abonelikten çıkış oranına bakın. Sonraki segmenti bu metriğe göre daraltın.",
+          },
+        ],
+      },
+      {
+        type: "tip",
+        text: "İlk kampanyayı tüm listeye atmayın. %10 örnek + kazanan varyasyon, spam şikayetini ve teslimatı korur.",
+      },
+    ],
+  },
+  {
+    slug: "crm-pipeline-kullanimi",
+    category: "operasyon",
+    title: "CRM pipeline’ı günlük kullanım",
+    description:
+      "Lead’leri yakalayın, skorlayın ve kapatın — kartlar mesaj geçmişiyle birlikte ilerler.",
+    readingMinutes: 6,
+    updatedAt: "2026-07-14",
+    body: [
+      {
+        type: "p",
+        text: "CRM, Unified Inbox’taki talepleri satış/operasyon kartına dönüştürür. Amaç: spreadsheet yerine sürükle-bırak pipeline.",
+      },
+      {
+        type: "steps",
+        items: [
+          {
+            title: "Lead’i kart yapın",
+            body: "Inbox’tan “CRM’e ekle” veya form entegrasyonuyla kart oluşur. Kanal ve kaynak otomatik gelir.",
+          },
+          {
+            title: "Aşamayı güncelleyin",
+            body: "Yeni → İlgili → Teklif → Kazanıldı. Kartı sürükleyin; not ve sonraki adımı yazın.",
+          },
+          {
+            title: "Ekibe görünür tutun",
+            body: "Sahibi ata, etiket ekle. Haftalık görüşmede pipeline panosunu ekran paylaşın — gizli Excel yok.",
+          },
+        ],
+      },
+      {
+        type: "tip",
+        text: "“Teklif” aşamasında 7 günden fazla bekleyen kartları filtreleyin. Darboğaz genelde burada görünür.",
+      },
+    ],
+  },
+  {
+    slug: "randevu-hatirlatma",
+    category: "operasyon",
+    title: "Randevu alma ve otomatik hatırlatma",
+    description:
+      "Inbox talebinden takvim slotuna; no-show’u düşüren hatırlatmalar.",
+    readingMinutes: 6,
+    updatedAt: "2026-07-14",
+    body: [
+      {
+        type: "p",
+        text: "Müşteri “yarın müsait misiniz?” yazdığında konuşmayı randevu kartına çevirirsiniz. Hatırlatma WhatsApp/SMS ile otomatik gider.",
+      },
+      {
+        type: "steps",
+        items: [
+          {
+            title: "Talebi randevuya çevirin",
+            body: "Konuşmada “Randevu oluştur”. Tarih, saat, hizmet ve personel seçin. Onay mesajı müşteriye düşer.",
+          },
+          {
+            title: "Hatırlatmayı açın",
+            body: "24 saat ve/veya 2 saat kala şablon seçin. İptal linki eklemek no-show’u daha da düşürür.",
+          },
+          {
+            title: "No-show sonrası",
+            body: "Gelmedi işaretleyin. Tek tıkla yeni slot önerin — kart geçmişi korunur.",
+          },
+        ],
+      },
+      {
+        type: "ul",
+        items: [
+          "Çakışan slotlarda sistem uyarır",
+          "Takvim görünümü ekipçe paylaşılır",
+          "Kanal bağlamı (WhatsApp/IG) randevu kartında kalır",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "ai-reklam-brief",
+    category: "reklam",
+    title: "AI reklam: brief’ten varyasyona",
+    description:
+      "Platformları bağlayın, kısa brief verin, AI varyasyon üretin ve yayına alın.",
+    readingMinutes: 7,
+    updatedAt: "2026-07-14",
+    body: [
+      {
+        type: "p",
+        text: "AI reklam masası Meta, Google ve TikTok hesaplarını tek yerde tutar. Brief tek; varyasyonlar çok — onay hattına hazır kreatif çıkar.",
+      },
+      {
+        type: "steps",
+        items: [
+          {
+            title: "Hesapları bağlayın",
+            body: "Ayarlar → Reklam platformları. Yetkileri tamamlayın; bütçe ve durum panoda görünür hale gelir.",
+          },
+          {
+            title: "Brief yazın",
+            body: "Ürün, hedef kitle, teklif ve ton. 3–5 cümle yeter. Marka yasaklı kelimeleri ekleyin.",
+          },
+          {
+            title: "Varyasyon seçin",
+            body: "Başlık + görsel + CTA kombinasyonlarını inceleyin. Kazananı onaylayıp kampanyayı açın.",
+          },
+        ],
+      },
+      {
+        type: "tip",
+        text: "İlk hafta bütçeyi düşük tutun. Raporlamada ROAS ve CTR’yi izleyip kazanan varyasyonu ölçekleyin.",
+      },
+    ],
+  },
+  {
+    slug: "raporlama-metrikleri",
+    category: "operasyon",
+    title: "Raporlamada doğru metriklere bakmak",
+    description:
+      "Kanal, yanıt süresi, kampanya ve randevu performansını tek dashboard’da okuyun.",
+    readingMinutes: 5,
+    updatedAt: "2026-07-14",
+    body: [
+      {
+        type: "p",
+        text: "Raporlama, “dün ne oldu?” sorusuna Excel’siz cevap verir. Haftalık operasyon toplantısı için hazır paneller kullanın.",
+      },
+      {
+        type: "h2",
+        text: "Önerilen nabız",
+      },
+      {
+        type: "ul",
+        items: [
+          "Ortalama ilk yanıt süresi (inbox)",
+          "AI Agent çözüm oranı ve handoff sayısı",
+          "Randevu doluluk ve no-show oranı",
+          "E-posta açılma / tıklama",
+          "Reklam harcaması vs. lead / randevu",
+        ],
+      },
+      {
+        type: "ol",
+        items: [
+          "Haftanın başında varsayılan dashboard’u açın",
+          "Anomali gördüğünüz metrikte detaya inin (kanal veya kampanya)",
+          "PDF / özet paylaşımıyla ekibi hizalayın",
+        ],
+      },
+      {
+        type: "tip",
+        text: "10 metrik değil, 4 nabız seçin. Fazla KPI panosu kimsenin açmadığı bir ekrana dönüşür.",
+      },
+    ],
+  },
+  {
+    slug: "ekip-rolleri-onay",
+    category: "operasyon",
+    title: "Ekip rolleri ve onay hattı",
+    description:
+      "Yetki verin, görev atayın, onayları e-posta zinciri olmadan ilerletin.",
+    readingMinutes: 5,
+    updatedAt: "2026-07-14",
+    body: [
+      {
+        type: "p",
+        text: "İşbirliği modülü rolleri (yönetici, editör, onaycı) ve onay rayını Bonero içinde tutar. Kim neyi bekliyor sorusu sohbette kaybolmaz.",
+      },
+      {
+        type: "steps",
+        items: [
+          {
+            title: "Rol tanımlayın",
+            body: "Ayarlar → Ekip. Yeni üyeyi davet ederken rol seçin; yetki sınırı hemen uygulanır.",
+          },
+          {
+            title: "Onay rayını kurun",
+            body: "İçerik veya reklam işi için “editör → onaycı” sırasını seçin. Bekleyen adımlar panoda görünür.",
+          },
+          {
+            title: "Darboğazı izleyin",
+            body: "48 saatten fazla bekleyen onaylarda hatırlatma gönderin. Yayın ancak onay sonrası açılır.",
+          },
+        ],
+      },
+      {
+        type: "tip",
+        text: "Müşteri onayını iç onaydan ayırın. Aynı kişide birikirse ray tıkanır.",
+      },
+    ],
+  },
 ];
 
 export const HELP_ARTICLE_SLUGS = HELP_ARTICLES.map((a) => a.slug);

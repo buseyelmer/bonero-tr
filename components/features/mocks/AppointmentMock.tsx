@@ -42,8 +42,8 @@ export default function AppointmentMock({
 
   const statusClass = (s: string) => {
     if (s === "confirmed") return "bg-bonero-green/15 text-bonero-green";
-    if (s === "pending") return "bg-amber-400/20 text-amber-700";
-    return "bg-sky-400/15 text-sky-700";
+    if (s === "pending") return "bg-bonero-green/10 text-bonero-green/80";
+    return "bg-bonero-green/[0.08] text-bonero-green/70";
   };
 
   return (
