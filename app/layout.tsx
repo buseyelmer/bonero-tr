@@ -20,24 +20,24 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://bonero.tr"),
   title: {
-    default: "Bonero | Ajanslar İçin Omnichannel AI İletişim Platformu",
+    default: "Bonero | Omnichannel AI İletişim Platformu",
     template: "%s | Bonero",
   },
   description:
-    "Bonero, dijital ajanslar için omnichannel AI iletişim platformudur. Instagram, WhatsApp, e-posta ve web taleplerini Unified Inbox’ta birleştirir.",
+    "Bonero, hizmet işletmeleri için omnichannel AI iletişim platformudur. Instagram, WhatsApp, e-posta ve web taleplerini Unified Inbox’ta birleştirir.",
   openGraph: {
     type: "website",
     locale: "tr_TR",
     siteName: "Bonero",
-    title: "Bonero | Ajanslar İçin Omnichannel AI İletişim Platformu",
+    title: "Bonero | Omnichannel AI İletişim Platformu",
     description:
-      "Tüm kanallar, tek panel. Ajanslar için omnichannel AI yönetimi.",
+      "Tüm kanallar, tek panel. Hizmet işletmeleri için omnichannel AI yönetimi.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bonero | Ajanslar İçin Omnichannel AI İletişim Platformu",
+    title: "Bonero | Omnichannel AI İletişim Platformu",
     description:
-      "Tüm kanallar, tek panel. Ajanslar için omnichannel AI yönetimi.",
+      "Tüm kanallar, tek panel. Hizmet işletmeleri için omnichannel AI yönetimi.",
   },
   robots: {
     index: true,

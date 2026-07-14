@@ -12,7 +12,7 @@ import { PANEL_REGISTER_URL } from "@/lib/panel";
 const footerByLocale = {
   tr: {
     blurb:
-      "Dijital ajanslar için omnichannel AI. Kanallar, içerik ve rapor — tek panelde.",
+      "Hizmet işletmeleri için omnichannel AI. Kanallar, içerik ve rapor — tek panelde.",
     cta: "Hemen Başlayın",
     features: "Özellikler",
     groups: [
@@ -47,7 +47,7 @@ const footerByLocale = {
   },
   en: {
     blurb:
-      "Omnichannel AI for digital agencies. Channels, content, and reporting — one panel.",
+      "Omnichannel AI for service businesses. Channels, content, and reporting — one panel.",
     cta: "Get Started",
     features: "Features",
     groups: [

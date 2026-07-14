@@ -29,7 +29,7 @@ const metrics: Metric[] = [
     suffix: "%",
     label: "daha hızlı yanıt",
     detail: "Ortalama yanıt süresinde iyileşme",
-    story: "Müşteri beklemez. Ajans aynı anda üç kanalı tek yerden yönetir.",
+    story: "Müşteri beklemez. Ekip aynı anda üç kanalı tek yerden yönetir.",
     icon: Timer,
     compare: { before: "18 dk", after: "11 dk" },
   },
@@ -45,7 +45,7 @@ const metrics: Metric[] = [
     value: 15,
     suffix: " dk",
     label: "kurulum",
-    detail: "Ajans hesabı dakikalar içinde hazır",
+    detail: "Hesap dakikalar içinde hazır",
     story: "Haftalar süren entegrasyon yok — bağla ve operasyona başla.",
     icon: Gauge,
   },
@@ -172,7 +172,7 @@ export default function MetricsStrip() {
               </h2>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-white/45 lg:text-right">
-              Her metrik bir ajans gerçeği — daha az dağınıklık, daha çok teslimat.
+              Her metrik bir operasyon gerçeği — daha az dağınıklık, daha çok teslimat.
             </p>
           </div>
         </Reveal>

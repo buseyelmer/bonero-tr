@@ -28,10 +28,10 @@ const reasons: Reason[] = [
   {
     n: "01",
     icon: Building2,
-    title: "Ajans odaklı omnichannel",
+    title: "İşletme odaklı omnichannel",
     description:
       "Çoklu müşteri, çoklu kanal ve ekip rolleri için tasarlandı — dağınık gelen kutularını tek operasyona indirger.",
-    proof: ["Multi-client", "Rol bazlı erişim", "Tek operasyon"],
+    proof: ["Çoklu müşteri", "Rol bazlı erişim", "Tek operasyon"],
   },
   {
     n: "02",
@@ -54,7 +54,7 @@ const reasons: Reason[] = [
 const CYCLE = 4500;
 const ease = [0.22, 1, 0.36, 1] as const;
 
-function SceneAgency({ on }: { on: boolean }) {
+function SceneOps({ on }: { on: boolean }) {
   return (
     <div className="flex h-full items-center justify-center gap-3">
       {["A", "B", "C"].map((c, i) => (
@@ -78,7 +78,7 @@ function SceneAgency({ on }: { on: boolean }) {
         transition={{ delay: 0.45, type: "spring", stiffness: 240, damping: 20 }}
       >
         <Building2 size={18} />
-        <span className="text-xs font-semibold">Tek ajans paneli</span>
+        <span className="text-xs font-semibold">Tek operasyon paneli</span>
       </motion.div>
     </div>
   );
@@ -159,7 +159,7 @@ function SceneChannels({ on }: { on: boolean }) {
   );
 }
 
-const scenes = [SceneAgency, SceneAI, SceneChannels];
+const scenes = [SceneOps, SceneAI, SceneChannels];
 
 export default function WhyBonero() {
   const [active, setActive] = useState(0);
@@ -224,7 +224,7 @@ export default function WhyBonero() {
               <span className="mt-1 block text-bonero-green">Operasyon.</span>
             </h2>
             <p className="mt-4 text-base text-white/45">
-              Ajans gerçeklerine göre kuruldu — vitrin özelliği değil, günlük iş
+              Operasyon gerçeklerine göre kuruldu — vitrin özelliği değil, günlük iş
               akışı.
             </p>
           </Reveal>

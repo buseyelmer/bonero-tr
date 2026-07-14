@@ -6,11 +6,11 @@ export const startFreeTrialSchema = z.object({
     .trim()
     .min(2, "Ad soyad en az 2 karakter olmalı")
     .max(80, "Ad soyad çok uzun"),
-  agencyName: z
+  companyName: z
     .string()
     .trim()
-    .min(2, "Ajans adı en az 2 karakter olmalı")
-    .max(100, "Ajans adı çok uzun"),
+    .min(2, "Şirket adı en az 2 karakter olmalı")
+    .max(100, "Şirket adı çok uzun"),
   email: z
     .string()
     .trim()

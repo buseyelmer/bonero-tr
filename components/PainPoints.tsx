@@ -163,10 +163,10 @@ export default function PainPoints() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <Reveal className="max-w-xl">
             <p className="text-sm font-medium tracking-wide text-white/40 uppercase">
-              Ajans operasyonu
+              İşletme operasyonu
             </p>
             <h2 className="font-heading mt-3 text-3xl !font-extrabold tracking-wide text-white sm:text-4xl lg:text-[2.75rem]">
-              Her ajansın
+              Her işletmenin
               <span className="mt-1 block text-white/35">bildiği kaos.</span>
               <span className="mt-1 block text-bonero-green">
                 Bonero’nun bitirdiği.

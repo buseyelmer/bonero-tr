@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import {
-  Camera,
+  Bell,
+  CalendarClock,
   Check,
-  MapPinned,
+  LayoutDashboard,
+  Mail,
+  Megaphone,
   MessageCircle,
-  Package,
-  ShoppingBag,
-  Star,
-  UserRound,
+  Send,
   type LucideIcon,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,132 +30,175 @@ type UseCase = {
 
 const useCases: UseCase[] = [
   {
-    id: "ecommerce",
-    icon: ShoppingBag,
+    id: "omnichannel",
+    icon: LayoutDashboard,
     title: {
-      tr: "E-ticaret ajansları",
-      en: "E-commerce agencies",
+      tr: "Çok kanallı hizmet işletmeleri",
+      en: "Multi-channel service businesses",
     },
     tagline: {
-      tr: "Katalogdan yanıta tek zincir",
-      en: "Catalog to reply in one chain",
+      tr: "Tüm kanallar tek ekranda",
+      en: "Every channel on one screen",
     },
     description: {
-      tr: "Stok, kampanya ve DM’ler ayrı panellerde dağılmasın. Ürün soruları, iade ve kampanya mesajları aynı operasyonda aksın.",
-      en: "Stock, campaigns, and DMs shouldn’t live in separate tabs. Product questions, returns, and promos run in one operation.",
+      tr: "Hizmet sektöründe WhatsApp, Instagram, e-posta ve web formları ayrı uygulamalarda dağılmasın. Tüm müşteri taleplerini tek ekrandan görün, yanıtlayın ve takip edin.",
+      en: "In services, WhatsApp, Instagram, email, and web forms shouldn't live in separate apps. See every customer request on one screen — reply and follow up without switching tabs.",
     },
     beats: [
       {
-        label: { tr: "Katalog sinyali", en: "Catalog signal" },
+        label: { tr: "Kanalları bağla", en: "Connect channels" },
         detail: {
-          tr: "Yeni SKU ve stok düşüşü paneli besler",
-          en: "New SKUs and stock drops feed the panel",
+          tr: "WhatsApp, IG ve e-posta tek tıkla panele gelir",
+          en: "WhatsApp, IG, and email land in the panel in one click",
         },
       },
       {
-        label: { tr: "Kanal yayını", en: "Channel publish" },
+        label: { tr: "Tek gelen kutusu", en: "One inbox" },
         detail: {
-          tr: "IG + WA + mail aynı anda güncellenir",
-          en: "IG + WA + mail update together",
+          tr: "Okunmamışlar ve öncelikler tek listede",
+          en: "Unread items and priorities in one list",
         },
       },
       {
-        label: { tr: "Satış yanıtı", en: "Sales reply" },
+        label: { tr: "Hızlı yanıt", en: "Fast reply" },
         detail: {
-          tr: "Ürün sorusu saniyeler içinde cevaplanır",
-          en: "Product questions answered in seconds",
+          tr: "AI taslak önerir; siz onaylayıp gönderirsiniz",
+          en: "AI suggests drafts; you review and send",
         },
       },
     ],
     outcome: {
-      tr: "Kampanya günü panik yerine kontrollü tempo",
-      en: "Campaign day becomes controlled tempo, not panic",
+      tr: "Hiçbir mesaj kaçmaz, müşteri beklemez",
+      en: "No message slips through; customers don't wait",
     },
   },
   {
-    id: "local",
-    icon: MapPinned,
+    id: "email-marketing",
+    icon: Mail,
     title: {
-      tr: "Yerel işletmeler",
-      en: "Local businesses",
+      tr: "E-posta pazarlaması yapanlar",
+      en: "Email marketing for services",
     },
     tagline: {
-      tr: "Harita + sosyal, aynı nabız",
-      en: "Maps + social, same pulse",
+      tr: "Kampanyadan gönderime tek akış",
+      en: "Campaign to send in one flow",
     },
     description: {
-      tr: "Rezervasyon, yorum ve hikâye etkileşimi ayrı yerlerde birikmesin. Yerel marka tek inbox’ta müşteriyi kaçırmasın.",
-      en: "Bookings, reviews, and story replies shouldn’t pile up apart. Local brands keep every guest in one inbox.",
+      tr: "Hizmet sektöründe müşterilerinize düzenli e-posta göndermek isteyenler için. Liste yönetimi, kampanya taslağı ve gönderim tek panelde — ayrı araçlara gerek kalmaz.",
+      en: "For service businesses that want to reach customers by email. List management, campaign drafts, and sending live in one panel — no extra tools required.",
     },
     beats: [
       {
-        label: { tr: "Yorum düşer", en: "Review lands" },
+        label: { tr: "Liste oluştur", en: "Build your list" },
         detail: {
-          tr: "Google yorumu anında görünür",
-          en: "Google review shows up instantly",
+          tr: "Müşteri segmentlerini tek yerden yönetin",
+          en: "Manage customer segments from one place",
         },
       },
       {
-        label: { tr: "Rezervasyon", en: "Booking" },
+        label: { tr: "Kampanya taslağı", en: "Campaign draft" },
         detail: {
-          tr: "DM / WhatsApp talebi sıraya girer",
-          en: "DM / WhatsApp request joins the queue",
+          tr: "AI marka tonunda e-posta metni önerir",
+          en: "AI drafts on-brand email copy",
         },
       },
       {
-        label: { tr: "Yanıt + yayın", en: "Reply + post" },
+        label: { tr: "Gönder & ölç", en: "Send & measure" },
         detail: {
-          tr: "Teşekkür + hikâye aynı akışta",
-          en: "Thank-you + story in the same flow",
+          tr: "Açılma ve tıklama oranlarını canlı izleyin",
+          en: "Track opens and clicks in real time",
         },
       },
     ],
     outcome: {
-      tr: "Mahalle itibarı ve doluluk aynı panelden yönetilir",
-      en: "Neighborhood reputation and occupancy from one panel",
+      tr: "Düzenli iletişim, daha sadık müşteri kitlesi",
+      en: "Consistent outreach, a more loyal customer base",
     },
   },
   {
-    id: "personal",
-    icon: UserRound,
+    id: "appointments",
+    icon: CalendarClock,
     title: {
-      tr: "Kişisel markalar",
-      en: "Personal brands",
+      tr: "Randevu ile çalışan işletmeler",
+      en: "Appointment-based businesses",
     },
     tagline: {
-      tr: "Tonunuz bozulmadan ölçek",
-      en: "Scale without losing your voice",
+      tr: "Kuaför, güzellik merkezi ve daha fazlası",
+      en: "Salons, beauty centers, and more",
     },
     description: {
-      tr: "DM, collab ve yorum yağmuru kişisel sesi boğmasın. Planlama, yanıt ve iş birliği talepleri tek operasyonda kalsın.",
-      en: "DMs, collabs, and comment waves shouldn’t drown your voice. Planning, replies, and partnership asks stay in one flow.",
+      tr: "Kuaför, güzellik merkezi ve benzeri randevu ile çalışan işletmeler için. Randevu taleplerini tek yerden yönetin; otomatik hatırlatma ile no-show oranını düşürün.",
+      en: "For hairdressers, beauty salons, and similar appointment-led businesses. Manage booking requests in one place; cut no-shows with automatic reminders.",
     },
     beats: [
       {
-        label: { tr: "Ton kilidi", en: "Voice lock" },
+        label: { tr: "Randevu talebi", en: "Booking request" },
         detail: {
-          tr: "Yanıt önerileri marka sesine uyar",
-          en: "Reply suggestions match your tone",
+          tr: "DM veya WhatsApp'tan gelen talep sıraya girer",
+          en: "DM or WhatsApp requests join the queue",
         },
       },
       {
-        label: { tr: "Collab filtresi", en: "Collab filter" },
+        label: { tr: "Takvim senkronu", en: "Calendar sync" },
         detail: {
-          tr: "İş birliği talepleri ayrı kuyrukta",
-          en: "Partnership asks land in their own queue",
+          tr: "Onaylanan randevu takvime işlenir",
+          en: "Confirmed bookings land on your calendar",
         },
       },
       {
-        label: { tr: "Tek yanıt hattı", en: "One reply line" },
+        label: { tr: "Otomatik hatırlatma", en: "Auto reminder" },
         detail: {
-          tr: "DM + yorum aynı tempoda kapanır",
-          en: "DMs + comments close at the same pace",
+          tr: "24 saat önce SMS veya WhatsApp bildirimi gider",
+          en: "SMS or WhatsApp reminder goes out 24h before",
         },
       },
     ],
     outcome: {
-      tr: "Kişisel marka büyür, ses bozulmaz",
-      en: "The brand grows; the voice stays intact",
+      tr: "Boş koltuk azalır, doluluk oranı artar",
+      en: "Fewer empty slots, higher occupancy",
+    },
+  },
+  {
+    id: "self-ads",
+    icon: Megaphone,
+    title: {
+      tr: "Kendi reklamını yönetenler",
+      en: "Self-managed advertising",
+    },
+    tagline: {
+      tr: "Kendiniz yönetin",
+      en: "Run it yourself",
+    },
+    description: {
+      tr: "Reklamı dışarıdan yönetmek istemeyen, kendi başına Meta ve Instagram reklamlarını yönetmek isteyen işletmeler için. AI metin ve varyasyon üretir; siz onaylayıp yayına alırsınız.",
+      en: "For businesses that want to run Meta and Instagram ads themselves — no middleman required. AI generates copy and variants; you approve and go live.",
+    },
+    beats: [
+      {
+        label: { tr: "Hedef belirle", en: "Set your goal" },
+        detail: {
+          tr: "Trafik, lead veya satış hedefini seçin",
+          en: "Pick traffic, leads, or sales as your goal",
+        },
+      },
+      {
+        label: { tr: "AI kreatif", en: "AI creative" },
+        detail: {
+          tr: "Hook, gövde ve A/B varyasyonları hazır gelir",
+          en: "Hooks, body copy, and A/B variants ready to go",
+        },
+      },
+      {
+        label: { tr: "Yayına al", en: "Go live" },
+        detail: {
+          tr: "Onaylayın; reklam doğrudan Meta'ya gider",
+          en: "Approve; the ad goes straight to Meta",
+        },
+      },
+    ],
+    outcome: {
+      tr: "Ek maliyet olmadan profesyonel reklam yönetimi",
+      en: "Professional ad management without middleman fees",
     },
   },
 ];
@@ -163,17 +206,17 @@ const useCases: UseCase[] = [
 const copy = {
   tr: {
     eyebrow: "Kullanım Senaryoları",
-    title: "Nişinize göre akan operasyon",
+    title: "Hizmet sektörüne özel çözümler",
     subtitle:
-      "Her dikey kendi temposunda çalışır. Senaryoyu seçin — Bonero’nun o nişte nasıl işlediğini canlı görün.",
+      "Çok kanallı iletişimden e-posta pazarlamasına, randevu hatırlatmalarından kendi reklam yönetimine — işinize uygun senaryoyu seçin.",
     flow: "Akış",
     outcome: "Sonuç",
   },
   en: {
     eyebrow: "Use Cases",
-    title: "Operations that match your niche",
+    title: "Built for the service sector",
     subtitle:
-      "Every vertical has its own tempo. Pick a scenario — watch how Bonero runs that niche live.",
+      "From omnichannel inbox to email marketing, appointment reminders, and self-serve ads — pick the scenario that fits your business.",
     flow: "Flow",
     outcome: "Outcome",
   },
@@ -182,48 +225,75 @@ const copy = {
 const CYCLE = 6200;
 const ease = [0.22, 1, 0.36, 1] as const;
 
-function SceneEcommerce({ locale }: { locale: Locale }) {
-  const items = [
-    { sku: "SKU-204", stock: locale === "tr" ? "Stok 12" : "Stock 12", ok: true },
-    { sku: "SKU-881", stock: locale === "tr" ? "Kampanya" : "Campaign", ok: true },
-    { sku: "SKU-044", stock: locale === "tr" ? "DM soru" : "DM ask", ok: false },
+function SceneOmnichannel({ locale }: { locale: Locale }) {
+  const channels = [
+    {
+      Icon: MessageCircle,
+      label: "WhatsApp",
+      text:
+        locale === "tr"
+          ? "Fiyat bilgisi alabilir miyim?"
+          : "Can I get pricing info?",
+      c: "#25D366",
+    },
+    {
+      Icon: MessageCircle,
+      label: "Instagram",
+      text:
+        locale === "tr"
+          ? "Randevu için müsait misiniz?"
+          : "Are you available for a booking?",
+      c: "#E1306C",
+    },
+    {
+      Icon: Mail,
+      label: locale === "tr" ? "E-posta" : "Email",
+      text:
+        locale === "tr"
+          ? "Hizmet detaylarınızı öğrenmek istiyorum"
+          : "I'd like to learn about your services",
+      c: "#4285F4",
+    },
   ];
   return (
     <div className="flex h-full flex-col justify-center gap-3 px-2">
-      {items.map((item, i) => (
+      {channels.map((ch, i) => (
         <motion.div
-          key={item.sku}
+          key={ch.label}
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.15 + i * 0.18, duration: 0.4, ease }}
           className="flex items-center gap-3 rounded-2xl border border-bonero-dark/8 bg-white px-3.5 py-3 shadow-sm"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-bonero-green/10 text-bonero-green">
-            <Package size={16} strokeWidth={1.75} />
+          <span
+            className="flex h-9 w-9 items-center justify-center rounded-xl"
+            style={{ backgroundColor: `${ch.c}18` }}
+          >
+            <ch.Icon size={16} strokeWidth={1.75} style={{ color: ch.c }} />
           </span>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold text-bonero-dark">{item.sku}</p>
-            <p className="text-[11px] text-bonero-dark/45">{item.stock}</p>
+            <p className="text-xs font-bold text-bonero-dark">{ch.label}</p>
+            <p className="truncate text-[11px] text-bonero-dark/45">{ch.text}</p>
           </div>
-          {item.ok ? (
-            <Check size={14} className="text-bonero-green" strokeWidth={2.5} />
-          ) : (
-            <motion.span
-              className="rounded-full bg-bonero-green px-2 py-0.5 text-[10px] font-bold text-white"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.85, type: "spring", stiffness: 280, damping: 18 }}
-            >
-              {locale === "tr" ? "Yanıtla" : "Reply"}
-            </motion.span>
-          )}
+          <Check size={14} className="text-bonero-green" strokeWidth={2.5} />
         </motion.div>
       ))}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.75, duration: 0.35, ease }}
+        className="mt-1 flex items-center justify-center gap-2 rounded-xl bg-bonero-green/10 px-3 py-2"
+      >
+        <LayoutDashboard size={14} className="text-bonero-green" />
+        <span className="text-[11px] font-bold text-bonero-green">
+          {locale === "tr" ? "Tek gelen kutusunda" : "In one unified inbox"}
+        </span>
+      </motion.div>
     </div>
   );
 }
 
-function SceneLocal({ locale }: { locale: Locale }) {
+function SceneEmailMarketing({ locale }: { locale: Locale }) {
   return (
     <div className="flex h-full flex-col justify-center gap-4 px-2">
       <motion.div
@@ -232,113 +302,199 @@ function SceneLocal({ locale }: { locale: Locale }) {
         transition={{ delay: 0.12, duration: 0.4, ease }}
         className="rounded-2xl border border-bonero-dark/8 bg-white p-4 shadow-sm"
       >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MapPinned size={15} className="text-bonero-green" />
-            <span className="text-xs font-bold text-bonero-dark">
-              {locale === "tr" ? "Google yorum" : "Google review"}
-            </span>
-          </div>
-          <div className="flex gap-0.5">
-            {[1, 2, 3, 4, 5].map((s) => (
-              <Star
-                key={s}
-                size={11}
-                className="fill-amber-400 text-amber-400"
-              />
-            ))}
-          </div>
+        <div className="flex items-center gap-2">
+          <Mail size={15} className="text-bonero-green" />
+          <span className="text-xs font-bold text-bonero-dark">
+            {locale === "tr" ? "Kampanya taslağı" : "Campaign draft"}
+          </span>
         </div>
         <p className="mt-2 text-[12px] leading-relaxed text-bonero-dark/55">
           {locale === "tr"
-            ? "“Hizmet harika, kesinlikle tekrar geleceğiz.”"
-            : "“Great service — we’ll definitely come back.”"}
+            ? "“Bu hafta özel indirimlerimizden yararlanın — sizi bekliyoruz!”"
+            : "“Enjoy our special offers this week — we look forward to seeing you!”"}
         </p>
       </motion.div>
 
       <div className="flex gap-2">
         {[
           {
-            Icon: MessageCircle,
-            label: locale === "tr" ? "Rezervasyon" : "Booking",
-            c: "#25D366",
+            label: locale === "tr" ? "1.240 alıcı" : "1,240 recipients",
+            sub: locale === "tr" ? "Aktif liste" : "Active list",
           },
           {
-            Icon: Camera,
-            label: locale === "tr" ? "Hikâye" : "Story",
-            c: "#E1306C",
+            label: locale === "tr" ? "%32 açılma" : "32% open rate",
+            sub: locale === "tr" ? "Son kampanya" : "Last campaign",
           },
-        ].map(({ Icon, label, c }, i) => (
+        ].map((item, i) => (
           <motion.div
-            key={label}
+            key={item.label}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 + i * 0.15, duration: 0.35, ease }}
-            className="flex flex-1 items-center gap-2 rounded-2xl border border-bonero-dark/8 bg-white px-3 py-2.5 shadow-sm"
+            className="flex flex-1 flex-col rounded-2xl border border-bonero-dark/8 bg-white px-3 py-2.5 shadow-sm"
           >
-            <Icon size={14} style={{ color: c }} strokeWidth={1.75} />
-            <span className="text-[11px] font-semibold text-bonero-dark/70">
-              {label}
+            <span className="text-[11px] font-bold text-bonero-dark">
+              {item.label}
             </span>
-            <Check size={12} className="ml-auto text-bonero-green" strokeWidth={2.5} />
+            <span className="text-[10px] text-bonero-dark/40">{item.sub}</span>
           </motion.div>
         ))}
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.7, type: "spring", stiffness: 280, damping: 18 }}
+        className="flex items-center justify-center gap-2 rounded-xl bg-bonero-green px-4 py-2.5 text-white shadow-md shadow-bonero-green/25"
+      >
+        <Send size={14} />
+        <span className="text-[11px] font-bold">
+          {locale === "tr" ? "Kampanyayı gönder" : "Send campaign"}
+        </span>
+      </motion.div>
     </div>
   );
 }
 
-function ScenePersonal({ locale }: { locale: Locale }) {
-  const rows = [
+function SceneAppointments({ locale }: { locale: Locale }) {
+  const slots = [
     {
-      from: "DM",
-      text:
-        locale === "tr"
-          ? "Collab teklifi — marka X"
-          : "Collab offer — brand X",
-      tag: locale === "tr" ? "Collab" : "Collab",
+      time: "10:00",
+      client: locale === "tr" ? "Ayşe K." : "Sarah K.",
+      service: locale === "tr" ? "Saç kesimi" : "Haircut",
+      reminded: true,
     },
     {
-      from: "IG",
-      text:
-        locale === "tr" ? "Yorum: tonun çok iyi 🔥" : "Comment: love your tone",
-      tag: locale === "tr" ? "Yanıt" : "Reply",
+      time: "11:30",
+      client: locale === "tr" ? "Mehmet D." : "Mike D.",
+      service: locale === "tr" ? "Bakım" : "Treatment",
+      reminded: true,
     },
     {
-      from: "WA",
-      text:
-        locale === "tr" ? "Podcast daveti — Perşembe" : "Podcast invite — Thu",
-      tag: locale === "tr" ? "Plan" : "Plan",
+      time: "14:00",
+      client: locale === "tr" ? "Zeynep A." : "Zoe A.",
+      service: locale === "tr" ? "Manikür" : "Manicure",
+      reminded: false,
     },
   ];
   return (
     <div className="flex h-full flex-col justify-center gap-2.5 px-2">
-      {rows.map((row, i) => (
+      {slots.map((slot, i) => (
         <motion.div
-          key={row.text}
+          key={slot.time}
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.12 + i * 0.16, duration: 0.4, ease }}
-          className="flex items-start gap-3 rounded-2xl border border-bonero-dark/8 bg-white px-3.5 py-3 shadow-sm"
+          className="flex items-center gap-3 rounded-2xl border border-bonero-dark/8 bg-white px-3.5 py-3 shadow-sm"
         >
-          <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-bonero-dark/[0.05] text-[10px] font-bold text-bonero-dark/50">
-            {row.from}
+          <span className="flex h-9 w-9 shrink-0 flex-col items-center justify-center rounded-xl bg-bonero-green/10 text-bonero-green">
+            <span className="text-[10px] font-bold leading-none">{slot.time}</span>
           </span>
           <div className="min-w-0 flex-1">
-            <p className="text-[12px] font-medium text-bonero-dark/80">
-              {row.text}
+            <p className="text-[12px] font-semibold text-bonero-dark">
+              {slot.client} · {slot.service}
             </p>
-            <span className="mt-1 inline-block rounded-full bg-bonero-green/10 px-2 py-0.5 text-[10px] font-bold text-bonero-green">
-              {row.tag}
-            </span>
           </div>
+          {slot.reminded ? (
+            <span className="flex items-center gap-1 rounded-full bg-bonero-green/10 px-2 py-0.5 text-[10px] font-bold text-bonero-green">
+              <Bell size={10} />
+              {locale === "tr" ? "Hatırlatıldı" : "Reminded"}
+            </span>
+          ) : (
+            <motion.span
+              className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.85, type: "spring", stiffness: 280, damping: 18 }}
+            >
+              {locale === "tr" ? "Hatırlat" : "Remind"}
+            </motion.span>
+          )}
         </motion.div>
       ))}
     </div>
   );
 }
 
-const scenes = [SceneEcommerce, SceneLocal, ScenePersonal];
+function SceneSelfAds({ locale }: { locale: Locale }) {
+  const variants = [
+    {
+      id: "A",
+      hook:
+        locale === "tr"
+          ? "Bu hafta %20 indirim — kaçırmayın!"
+          : "20% off this week — don't miss out!",
+      ctr: "2.4%",
+      win: true,
+    },
+    {
+      id: "B",
+      hook:
+        locale === "tr"
+          ? "Sizi özledik — geri dönün"
+          : "We miss you — come back",
+      ctr: "1.8%",
+      win: false,
+    },
+    {
+      id: "C",
+      hook:
+        locale === "tr"
+          ? "Yeni müşterilere özel fırsat"
+          : "Special offer for new customers",
+      ctr: "3.1%",
+      win: false,
+    },
+  ];
+  return (
+    <div className="flex h-full flex-col justify-center gap-2.5 px-2">
+      {variants.map((v, i) => (
+        <motion.div
+          key={v.id}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.12 + i * 0.16, duration: 0.4, ease }}
+          className={`flex items-start gap-3 rounded-2xl border px-3.5 py-3 shadow-sm ${
+            v.win
+              ? "border-bonero-green/30 bg-bonero-green/5"
+              : "border-bonero-dark/8 bg-white"
+          }`}
+        >
+          <span
+            className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[10px] font-bold ${
+              v.win
+                ? "bg-bonero-green text-white"
+                : "bg-bonero-dark/[0.05] text-bonero-dark/50"
+            }`}
+          >
+            {v.id}
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[12px] font-medium text-bonero-dark/80">
+              {v.hook}
+            </p>
+            <span className="mt-1 inline-block text-[10px] font-bold text-bonero-dark/40">
+              CTR {v.ctr}
+              {v.win
+                ? ` · ${locale === "tr" ? "Kazanan" : "Winner"}`
+                : ""}
+            </span>
+          </div>
+          {v.win && (
+            <Check size={14} className="mt-0.5 text-bonero-green" strokeWidth={2.5} />
+          )}
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+const scenes = [
+  SceneOmnichannel,
+  SceneEmailMarketing,
+  SceneAppointments,
+  SceneSelfAds,
+];
 
 export default function UseCases() {
   const { locale } = useLocale();
@@ -412,7 +568,6 @@ export default function UseCases() {
           </p>
         </Reveal>
 
-        {/* Scenario tabs */}
         <div className="mt-10 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {useCases.map((uc, i) => {
             const on = active === i;
@@ -437,9 +592,7 @@ export default function UseCases() {
           })}
         </div>
 
-        {/* Stage */}
         <div className="mt-6 grid min-w-0 overflow-hidden rounded-[1.5rem] border border-bonero-dark/8 bg-white shadow-[0_20px_50px_-28px_rgba(30,41,59,0.25)] lg:grid-cols-12">
-          {/* Narrative */}
           <div className="flex min-w-0 flex-col justify-between gap-8 border-b border-bonero-dark/6 p-6 sm:p-8 lg:col-span-5 lg:border-r lg:border-b-0">
             <AnimatePresence mode="wait">
               <motion.div
@@ -512,8 +665,7 @@ export default function UseCases() {
             </div>
           </div>
 
-          {/* Live scene */}
-            <div className="relative min-h-[340px] overflow-hidden bg-[#f8faf9] p-5 pb-28 sm:min-h-[360px] sm:p-7 sm:pb-28 lg:col-span-7">
+          <div className="relative min-h-[340px] overflow-hidden bg-[#f8faf9] p-5 pb-28 sm:min-h-[360px] sm:p-7 sm:pb-28 lg:col-span-7">
             <div
               className="pointer-events-none absolute inset-0 opacity-40"
               style={{

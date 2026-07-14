@@ -159,7 +159,7 @@ export default function AboutHeroVisual() {
               şeffaf başarıya
             </motion.span>
             {" — "}
-            ajans operasyonu tek platformda.
+            işletme operasyonu tek platformda.
           </motion.p>
 
           {/* Before → After */}
@@ -305,7 +305,7 @@ export default function AboutHeroVisual() {
           <div className="mt-5 grid grid-cols-3 divide-x divide-bonero-dark/8 rounded-2xl border border-bonero-dark/8 bg-[#fafbfa]">
             <CountMetric value={68} prefix="−" suffix="%" label="Onay süresi" delay={1.1} />
             <CountMetric value={1} label="Panel" delay={1.25} />
-            <CountMetric value={40} prefix="−" suffix="%" label="Ajans yükü" delay={1.4} />
+            <CountMetric value={40} prefix="−" suffix="%" label="Operasyon yükü" delay={1.4} />
           </div>
         </div>
 

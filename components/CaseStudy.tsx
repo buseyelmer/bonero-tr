@@ -9,7 +9,7 @@ import { useLocale } from "./LocaleProvider";
 const copy = {
   tr: {
     eyebrow: "Başarı Hikayesi",
-    agency: "Pulse Agency",
+    company: "Nova Beauty",
     headline: "Aynı kadro.",
     headlineAccent: "İki kat hesap.",
     lead:
@@ -43,7 +43,7 @@ const copy = {
   },
   en: {
     eyebrow: "Case Study",
-    agency: "Pulse Agency",
+    company: "Nova Beauty",
     headline: "Same team.",
     headlineAccent: "Twice the accounts.",
     lead:
@@ -152,7 +152,7 @@ export default function CaseStudy() {
                 {t.eyebrow}
               </p>
               <p className="font-heading mt-4 text-sm font-bold tracking-[0.2em] text-bonero-green uppercase">
-                {t.agency}
+                {t.company}
               </p>
               <h2 className="font-heading mt-3 text-3xl tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.75rem]">
                 {t.headline}{" "}
@@ -235,7 +235,7 @@ export default function CaseStudy() {
             <div className="overflow-hidden rounded-[1.5rem] border border-bonero-dark/8 bg-white shadow-[0_24px_60px_-32px_rgba(30,41,59,0.35)]">
               <div className="border-b border-bonero-dark/6 bg-bonero-dark px-6 py-5">
                 <p className="text-[11px] font-bold tracking-wide text-white/40 uppercase">
-                  {t.agency}
+                  {t.company}
                 </p>
                 <p className="font-heading mt-1 text-xl tracking-wide text-white">
                   {locale === "tr" ? "Sonuç panosu" : "Results board"}
@@ -299,7 +299,7 @@ export default function CaseStudy() {
                       {t.name}
                     </p>
                     <p className="text-xs text-bonero-dark/45">
-                      {t.role} · {t.agency}
+                      {t.role} · {t.company}
                     </p>
                   </div>
                 </div>

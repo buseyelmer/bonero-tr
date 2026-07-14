@@ -13,7 +13,7 @@ const sections = [
     title: "1. Taraflar ve Kabul",
     paragraphs: [
       "Bu Kullanım Şartları (“Şartlar”), Bonero tarafından sunulan omnichannel AI iletişim platformu ve ilgili hizmetlerin (“Hizmet”) kullanımını düzenler. Hizmete erişerek veya hesap oluşturarak bu Şartları okuduğunuzu, anladığınızı ve kabul ettiğinizi beyan edersiniz.",
-      "Hizmeti bir ajans veya şirket adına kullanıyorsanız, ilgili kuruluşu bu Şartlarla bağlamaya yetkili olduğunuzu kabul edersiniz.",
+      "Hizmeti bir şirket adına kullanıyorsanız, ilgili kuruluşu bu Şartlarla bağlamaya yetkili olduğunuzu kabul edersiniz.",
     ],
   },
   {

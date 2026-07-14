@@ -19,7 +19,7 @@ const plans: Plan[] = [
   {
     id: "starter",
     name: { tr: "Başlangıç", en: "Starter" },
-    forWho: { tr: "Tek ajans · ilk adım", en: "Single agency · first step" },
+    forWho: { tr: "Tek işletme · ilk adım", en: "Single business · first step" },
     price: { tr: "Birlikte netleştirelim", en: "Finalize together" },
     features: {
       tr: [
@@ -38,10 +38,10 @@ const plans: Plan[] = [
     id: "pro",
     name: { tr: "Pro", en: "Pro" },
     forWho: {
-      tr: "Çoklu müşteri · ajans temposu",
-      en: "Multi-client · agency tempo",
+      tr: "Çoklu müşteri · ekip temposu",
+      en: "Multi-client · team tempo",
     },
-    price: { tr: "Ajanslara özel", en: "Built for agencies" },
+    price: { tr: "İşletmelere özel", en: "Built for businesses" },
     features: {
       tr: [
         "Sınırsız müşteri hesabı",
@@ -84,7 +84,7 @@ const plans: Plan[] = [
 const copy = {
   tr: {
     eyebrow: "Paketler",
-    title: "Ajansınıza uygun paket",
+    title: "İşletmenize uygun paket",
     subtitle:
       "Üç net paket. Kaydolun ve hemen kullanmaya başlayın.",
     cta: "Hemen Başlayın",
@@ -93,7 +93,7 @@ const copy = {
   },
   en: {
     eyebrow: "Packages",
-    title: "The package that fits your agency",
+    title: "The package that fits your business",
     subtitle:
       "Three clear packages. Sign up and start using Bonero right away.",
     cta: "Get Started",

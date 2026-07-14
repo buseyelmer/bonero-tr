@@ -142,7 +142,7 @@ export default function HelpHeroVisual() {
 
         <div className="border-t border-white/8 px-5 py-3.5">
           <p className="text-[11px] leading-relaxed text-white/40">
-            Ajans operasyonuna özel destek — genelde{" "}
+            Operasyona özel destek — genelde{" "}
             <span className="text-bonero-green">1 iş günü</span> içinde.
           </p>
         </div>

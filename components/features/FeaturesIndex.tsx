@@ -3,21 +3,32 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import {
+  ArrowRight,
   ArrowUpRight,
   BarChart3,
-  Camera,
+  Bot,
+  CalendarCheck,
   Check,
+  FileText,
   LayoutDashboard,
   Mail,
   Megaphone,
-  MessageCircle,
-  Sparkles,
   UserPlus,
   Users,
+  UsersRound,
   type LucideIcon,
 } from "lucide-react";
-import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import { useLocale } from "@/components/LocaleProvider";
+import AppointmentMock from "@/components/features/mocks/AppointmentMock";
+import AdsMock from "@/components/features/mocks/AdsMock";
+import AiAgentMock from "@/components/features/mocks/AiAgentMock";
+import ContentMock from "@/components/features/mocks/ContentMock";
+import CrmMock from "@/components/features/mocks/CrmMock";
+import EmailMarketingMock from "@/components/features/mocks/EmailMarketingMock";
+import OmnichannelMock from "@/components/features/mocks/OmnichannelMock";
+import ReportingMock from "@/components/features/mocks/ReportingMock";
 import {
   FEATURE_PAGES,
   featureHref,
@@ -27,287 +38,120 @@ import {
 import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+const HERO_CYCLE_MS = 3200;
 
 const ICONS: Record<FeatureSlug, LucideIcon> = {
   "gelen-kutusu": LayoutDashboard,
-  "yapay-zeka": Sparkles,
+  "yapay-zeka": Bot,
   "ai-reklam": Megaphone,
   isbirligi: Users,
+  crm: UsersRound,
+  randevu: CalendarCheck,
+  icerik: FileText,
+  "email-marketing": Mail,
   raporlama: BarChart3,
 };
 
-const THEMES: Record<
-  FeatureSlug,
-  { glow: string; tint: string; chip: string }
-> = {
-  "gelen-kutusu": {
-    glow: "rgba(37,211,102,0.2)",
-    tint: "#25D366",
-    chip: "from-[#0d1f16] to-[#0b1220]",
-  },
-  "yapay-zeka": {
-    glow: "rgba(24,131,71,0.28)",
-    tint: "#188347",
-    chip: "from-[#07110c] to-[#0b1220]",
-  },
-  "ai-reklam": {
-    glow: "rgba(245,158,11,0.14)",
-    tint: "#F59E0B",
-    chip: "from-[#1a140c] to-[#0b1220]",
-  },
-  isbirligi: {
-    glow: "rgba(56,189,248,0.12)",
-    tint: "#38BDF8",
-    chip: "from-[#0c1218] to-[#0b1220]",
-  },
-  raporlama: {
-    glow: "rgba(24,131,71,0.22)",
-    tint: "#2DB56A",
-    chip: "from-[#0a0f14] to-[#0b1220]",
-  },
+const ACCENTS: Record<FeatureSlug, string> = {
+  "gelen-kutusu": "#25D366",
+  "yapay-zeka": "#188347",
+  "ai-reklam": "#F59E0B",
+  isbirligi: "#0EA5E9",
+  crm: "#0F766E",
+  randevu: "#D97706",
+  icerik: "#BE185D",
+  "email-marketing": "#0284C7",
+  raporlama: "#2DB56A",
 };
 
 const copy = {
   tr: {
     eyebrow: "Ürün haritası",
-    title: "Beş özellik.",
+    title: "Tüm özellikler.",
     titleAccent: "Bir operasyon.",
-    lead: "Her katman ajans gününün farklı bir gerçeğine cevap verir. Sahneleri izleyin, detaya girin.",
+    lead: "Her katman günlük operasyonunuzun farklı bir gerçeğine cevap verir. Sahneleri izleyin, detaya girin.",
     explore: "Detayı aç",
     cta: "Hemen Başlayın",
     outcome: "Sonuç",
     scene: "Sahne",
     scroll: "Aşağı kaydır",
+    valueTitle: "Ne kazanırsınız",
+    scenariosTitle: "Günlük senaryolar",
+    mapEyebrow: "Operasyon haritası",
+    mapTitle: "Tüm katmanlar.",
+    mapAccent: "Tek akış.",
+    mapLead:
+      "Herhangi bir katmana girin — veya günlük operasyonunuzda nasıl bağlandıklarını görün.",
+    pricingHint: "Önce paketlere mi bakmak istersiniz?",
+    pricingLink: "Paketleri gör",
+    live: "canlı",
+    moreScenarios: "senaryo daha",
   },
   en: {
     eyebrow: "Product map",
-    title: "Five features.",
+    title: "All features.",
     titleAccent: "One operation.",
-    lead: "Each layer answers a different agency-day truth. Watch the stages, open the detail.",
+    lead: "Each layer answers a different truth in your daily operations. Watch the stages, open the detail.",
     explore: "Open detail",
     cta: "Get Started",
     outcome: "Outcome",
     scene: "Scene",
-    scroll: "Scroll",
+    scroll: "Scroll down",
+    valueTitle: "What you gain",
+    scenariosTitle: "Daily scenarios",
+    mapEyebrow: "Operation map",
+    mapTitle: "Every layer.",
+    mapAccent: "One flow.",
+    mapLead:
+      "Jump into any layer — or see how they connect in a normal workday.",
+    pricingHint: "Prefer pricing first?",
+    pricingLink: "View plans",
+    live: "live",
+    moreScenarios: "more scenarios",
   },
 };
 
-/* ── Per-feature animated stages ───────────────────────── */
+type StageProps = { active: boolean; isEn: boolean };
 
-function StageInbox({ active }: { active: boolean }) {
-  const [i, setI] = useState(0);
-  const rows = [
-    { c: "#25D366", Icon: MessageCircle, t: "WhatsApp · stok sorusu", sub: "Acme Beauty" },
-    { c: "#E1306C", Icon: Camera, t: "IG · story onayı", sub: "Brand Co." },
-    { c: "#0EA5E9", Icon: Mail, t: "Mail · brief eki", sub: "Q3 kampanya" },
-  ];
+/* ── Light-theme animated stages ───────────────────────── */
 
-  useEffect(() => {
-    if (!active) return;
-    const t = window.setInterval(() => setI((p) => (p + 1) % rows.length), 2200);
-    return () => clearInterval(t);
-  }, [active, rows.length]);
-
+function StageInbox({ active, isEn }: StageProps) {
   return (
-    <div className="flex h-full min-h-0 flex-col justify-center gap-2 overflow-hidden p-4 sm:gap-2.5 sm:p-5">
-      <div className="flex shrink-0 items-center justify-between gap-2">
-        <p className="text-[10px] font-medium text-white/35">
-          WhatsApp · IG · Mail
-        </p>
-        <span className="rounded-md bg-bonero-green/20 px-2 py-0.5 text-[10px] font-bold text-bonero-green">
-          3 {active ? "yeni" : "…"}
-        </span>
-      </div>
-
-      <div className="flex min-h-0 flex-col gap-2">
-        {rows.map((r, idx) => (
-          <motion.div
-            key={r.t}
-            className="flex items-center gap-3 rounded-xl border px-3 py-2.5 sm:px-3.5"
-            animate={{
-              borderColor:
-                active && idx === i
-                  ? "rgba(24,131,71,0.45)"
-                  : "rgba(255,255,255,0.08)",
-              backgroundColor:
-                active && idx === i
-                  ? "rgba(24,131,71,0.12)"
-                  : "rgba(255,255,255,0.03)",
-              x: active && idx === i ? 3 : 0,
-              opacity: active ? (idx === i ? 1 : 0.45) : 0.55,
-            }}
-            transition={{ duration: 0.35, ease }}
-          >
-            <span
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-              style={{ background: `${r.c}22`, color: r.c }}
-            >
-              <r.Icon size={14} />
-            </span>
-            <div className="min-w-0 flex-1">
-              <span className="block truncate text-[13px] font-medium text-white/80">
-                {r.t}
-              </span>
-              <span className="text-[10px] text-white/30">{r.sub}</span>
-            </div>
-            {active && idx === i && (
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-bonero-green" />
-            )}
-          </motion.div>
-        ))}
-      </div>
-
-      <motion.div
-        className="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-lg bg-bonero-green px-2.5 py-1.5 text-[10px] font-semibold text-white"
-        animate={active ? { opacity: 1, y: 0 } : { opacity: 0.4, y: 2 }}
-      >
-        <Check size={11} strokeWidth={2.5} />
-        Tek kutuda birleşti
-      </motion.div>
+    <div className="flex h-full min-h-0 flex-col justify-center p-3 sm:p-4">
+      <OmnichannelMock active={active} isEn={isEn} />
     </div>
   );
 }
 
-function StageAI({ active }: { active: boolean }) {
-  const lines = [
-    { k: "Ton", v: "Marka · kibar" },
-    { k: "Taslak", v: "Merhaba! Onayınızı aldık — kampanyayı takvime ekledik…" },
-    { k: "Aksiyon", v: "Onayla & gönder" },
-  ];
+function StageAI({ active, isEn }: StageProps) {
   return (
-    <div className="flex h-full min-h-0 flex-col justify-center gap-2.5 overflow-hidden p-4 sm:gap-3 sm:p-5">
-      <div className="flex shrink-0 items-center gap-2 text-bonero-green">
-        <motion.span
-          animate={active ? { rotate: [0, 12, -8, 0] } : {}}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Sparkles size={16} />
-        </motion.span>
-        <span className="text-xs font-semibold sm:text-sm">AI asistan</span>
-        <span className="ml-auto font-mono text-[10px] text-white/30">
-          {active ? "yazıyor…" : "hazır"}
-        </span>
-      </div>
-      {lines.map((line, i) => (
-        <motion.div
-          key={line.k}
-          className="shrink-0 rounded-xl border border-white/8 bg-white/[0.04] px-3.5 py-2.5"
-          initial={false}
-          animate={
-            active ? { opacity: 1, x: 0 } : { opacity: 0.35, x: -6 }
-          }
-          transition={{ delay: active ? 0.12 + i * 0.1 : 0, duration: 0.4, ease }}
-        >
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-white/30">
-            {line.k}
-          </p>
-          <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-white/70">
-            {line.v}
-            {i === lines.length - 1 && active && (
-              <motion.span
-                className="ml-1 inline-block h-3 w-[2px] bg-bonero-green align-middle"
-                animate={{ opacity: [1, 0] }}
-                transition={{ duration: 0.7, repeat: Infinity }}
-              />
-            )}
-          </p>
-        </motion.div>
-      ))}
+    <div className="flex h-full min-h-0 flex-col justify-center p-3 sm:p-4">
+      <AiAgentMock active={active} isEn={isEn} />
     </div>
   );
 }
 
-function StageAds({ active }: { active: boolean }) {
-  const [focus, setFocus] = useState(0);
-  const cards = [
-    { l: "A", h: "Stok bitmeden yakala.", angle: "Aciliyet", m: "CTR 2.4%" },
-    { l: "B", h: "Bu hafta %20 — sadece sen.", angle: "Teklif", m: "ROAS 3.1×" },
-    { l: "C", h: "Sepette bıraktın.", angle: "Retarget", m: "+18% CVR" },
-  ];
-
-  useEffect(() => {
-    if (!active) return;
-    const t = window.setInterval(() => setFocus((p) => (p + 1) % 3), 2400);
-    return () => clearInterval(t);
-  }, [active]);
-
-  const current = cards[focus];
-
+function StageAds({ active, isEn }: StageProps) {
   return (
-    <div className="relative flex h-full min-h-0 flex-col justify-center overflow-hidden p-4 sm:p-5">
-      <div className="mb-3 flex shrink-0 items-center justify-between">
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-white/30">
-          Kreatif
-        </p>
-        <div className="flex gap-1.5">
-          {cards.map((c, i) => (
-            <span
-              key={c.l}
-              className={`flex h-6 w-6 items-center justify-center rounded-md text-[10px] font-bold ${
-                i === focus
-                  ? "bg-bonero-green text-white"
-                  : "bg-white/8 text-white/35"
-              }`}
-            >
-              {c.l}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={current.l}
-          className="shrink-0 rounded-xl border border-bonero-green/35 bg-[#14110f] p-4 sm:p-5"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.35, ease }}
-        >
-          <div className="flex items-start justify-between gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-bonero-green text-base font-bold text-white">
-              {current.l}
-            </span>
-            <span className="rounded-full border border-amber-400/25 bg-amber-400/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-amber-300/90">
-              {current.angle}
-            </span>
-          </div>
-          <p className="mt-3 font-heading text-xl font-bold leading-snug text-white sm:text-2xl">
-            {current.h}
-          </p>
-          <div className="mt-4 flex items-center justify-between">
-            <span className="rounded-lg bg-bonero-green px-2.5 py-1 text-[10px] font-bold text-white">
-              Onaya hazır
-            </span>
-            <span className="font-mono text-[10px] text-bonero-green">{current.m}</span>
-          </div>
-        </motion.div>
-      </AnimatePresence>
-
-      <div className="mt-2.5 flex shrink-0 gap-2">
-        {cards
-          .filter((_, i) => i !== focus)
-          .map((c) => (
-            <div
-              key={c.l}
-              className="min-w-0 flex-1 rounded-lg border border-white/8 bg-white/[0.03] px-2.5 py-1.5"
-            >
-              <span className="text-[10px] font-bold text-white/30">{c.l}</span>
-              <p className="truncate text-[11px] text-white/40">{c.h}</p>
-            </div>
-          ))}
-      </div>
+    <div className="flex h-full min-h-0 flex-col justify-center p-3 sm:p-4">
+      <AdsMock active={active} isEn={isEn} />
     </div>
   );
 }
 
-function StageCollab({ active }: { active: boolean }) {
+function StageCollab({ active, isEn }: StageProps) {
   const [step, setStep] = useState(1);
-  const roles = [
-    { label: "Hesap", task: "Brief yüklendi", Icon: Users },
-    { label: "Editör", task: "Kreatif hazır", Icon: UserPlus },
-    { label: "Müşteri", task: "Onay bekleniyor", Icon: Check },
-  ];
+  const roles = isEn
+    ? [
+        { label: "Account", task: "Brief uploaded", Icon: Users },
+        { label: "Editor", task: "Creative ready", Icon: UserPlus },
+        { label: "Client", task: "Approval pending", Icon: Check },
+      ]
+    : [
+        { label: "Hesap", task: "Brief yüklendi", Icon: Users },
+        { label: "Editör", task: "Kreatif hazır", Icon: UserPlus },
+        { label: "Müşteri", task: "Onay bekleniyor", Icon: Check },
+      ];
 
   useEffect(() => {
     if (!active) return;
@@ -318,14 +162,12 @@ function StageCollab({ active }: { active: boolean }) {
   return (
     <div className="flex h-full min-h-0 flex-col justify-center gap-3 overflow-hidden p-4 sm:p-5">
       <div className="flex shrink-0 items-center justify-between">
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-white/30">
-          Onay hattı
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-bonero-dark/35">
+          {isEn ? "Approval flow" : "Onay hattı"}
         </p>
-        <span className="font-mono text-[10px] text-bonero-green">
-          {step + 1}/3
-        </span>
+        <span className="font-mono text-[10px] text-bonero-green">{step + 1}/3</span>
       </div>
-      <div className="h-1 shrink-0 overflow-hidden rounded-full bg-white/10">
+      <div className="h-1 shrink-0 overflow-hidden rounded-full bg-bonero-dark/8">
         <motion.div
           className="h-full rounded-full bg-bonero-green"
           animate={{ width: active ? `${((step + 1) / 3) * 100}%` : "33%" }}
@@ -338,12 +180,10 @@ function StageCollab({ active }: { active: boolean }) {
             key={r.label}
             className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 ${
               active && i === step
-                ? "border-bonero-green/40 bg-bonero-green/10"
-                : "border-white/8 bg-white/[0.03]"
+                ? "border-bonero-green/30 bg-bonero-green/5"
+                : "border-bonero-dark/8 bg-white"
             }`}
-            animate={{
-              opacity: active ? (i <= step ? 1 : 0.4) : 0.5,
-            }}
+            animate={{ opacity: active ? (i <= step ? 1 : 0.45) : 0.5 }}
           >
             <span
               className={`flex h-8 w-8 items-center justify-center rounded-lg ${
@@ -351,7 +191,7 @@ function StageCollab({ active }: { active: boolean }) {
                   ? "bg-bonero-green text-white"
                   : i === step && active
                     ? "border border-bonero-green text-bonero-green"
-                    : "bg-white/5 text-white/35"
+                    : "bg-bonero-dark/5 text-bonero-dark/40"
               }`}
             >
               {i < step && active ? (
@@ -361,12 +201,12 @@ function StageCollab({ active }: { active: boolean }) {
               )}
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-[13px] font-semibold text-white">{r.label}</p>
-              <p className="text-[10px] text-white/35">{r.task}</p>
+              <p className="text-[13px] font-semibold text-bonero-dark">{r.label}</p>
+              <p className="text-[10px] text-bonero-dark/40">{r.task}</p>
             </div>
             {active && i === step && (
               <span className="text-[9px] font-bold tracking-wider text-bonero-green uppercase">
-                Şimdi
+                {isEn ? "Now" : "Şimdi"}
               </span>
             )}
           </motion.div>
@@ -376,203 +216,252 @@ function StageCollab({ active }: { active: boolean }) {
   );
 }
 
-function StageReport({ active }: { active: boolean }) {
-  const bars = [32, 48, 40, 62, 54, 78, 70, 88];
+function StageReport({ active, isEn }: StageProps) {
   return (
-    <div className="flex h-full min-h-0 flex-col justify-center gap-3 overflow-hidden p-4 sm:gap-4 sm:p-5">
-      <div className="grid shrink-0 grid-cols-3 gap-2">
-        {[
-          { k: "Yanıt", v: "−42%" },
-          { k: "Açık", v: "18" },
-          { k: "NPS", v: "4.8" },
-        ].map((m) => (
-          <div
-            key={m.k}
-            className="rounded-xl border border-white/8 bg-white/[0.03] px-2.5 py-2"
-          >
-            <p className="text-[9px] uppercase tracking-wider text-white/30">{m.k}</p>
-            <p className="mt-0.5 font-heading text-base font-bold text-white sm:text-lg">
-              {m.v}
-            </p>
-          </div>
-        ))}
-      </div>
-      <div className="flex shrink-0 items-end justify-between">
-        <span className="text-[11px] font-medium text-white/40">Haftalık</span>
-        <motion.span
-          className="font-mono text-[10px] text-bonero-green"
-          animate={active ? { opacity: [0.4, 1, 0.4] } : { opacity: 0.5 }}
-          transition={{ duration: 1.6, repeat: Infinity }}
-        >
-          LIVE
-        </motion.span>
-      </div>
-      <div className="flex h-24 min-h-0 items-end gap-1.5 sm:h-28 sm:gap-2">
-        {bars.map((h, i) => (
-          <motion.div
-            key={i}
-            className="flex-1 rounded-t-md bg-bonero-green"
-            style={{
-              opacity: i === bars.length - 1 ? 1 : 0.55,
-            }}
-            initial={{ height: "12%" }}
-            animate={{ height: active ? `${h}%` : "20%" }}
-            transition={{ duration: 0.6, delay: active ? i * 0.05 : 0, ease }}
-          />
-        ))}
-      </div>
+    <div className="flex h-full min-h-0 flex-col justify-center p-3 sm:p-4">
+      <ReportingMock active={active} isEn={isEn} />
     </div>
   );
 }
 
-const STAGES: Record<FeatureSlug, (p: { active: boolean }) => ReactNode> = {
+function StageCrm({ active, isEn }: StageProps) {
+  return (
+    <div className="flex h-full min-h-0 flex-col justify-center p-3 sm:p-4">
+      <CrmMock active={active} isEn={isEn} />
+    </div>
+  );
+}
+
+function StageAppointment({ active, isEn }: StageProps) {
+  return (
+    <div className="flex h-full min-h-0 flex-col justify-center p-3 sm:p-4">
+      <AppointmentMock active={active} isEn={isEn} />
+    </div>
+  );
+}
+
+function StageContent({ active, isEn }: StageProps) {
+  return (
+    <div className="flex h-full min-h-0 flex-col justify-center p-3 sm:p-4">
+      <ContentMock active={active} isEn={isEn} />
+    </div>
+  );
+}
+
+function StageEmail({ active, isEn }: StageProps) {
+  return (
+    <div className="flex h-full min-h-0 flex-col justify-center p-3 sm:p-4">
+      <EmailMarketingMock active={active} isEn={isEn} />
+    </div>
+  );
+}
+
+const STAGES: Record<FeatureSlug, (p: StageProps) => ReactNode> = {
   "gelen-kutusu": StageInbox,
   "yapay-zeka": StageAI,
   "ai-reklam": StageAds,
   isbirligi: StageCollab,
+  crm: StageCrm,
+  randevu: StageAppointment,
+  icerik: StageContent,
+  "email-marketing": StageEmail,
   raporlama: StageReport,
 };
 
-function FeatureChapter({
+function FeatureStage({
+  feature,
+  index,
+  active,
+  sceneLabel,
+  isEn,
+}: {
+  feature: FeaturePageContent;
+  index: number;
+  active: boolean;
+  sceneLabel: string;
+  isEn: boolean;
+}) {
+  const Icon = ICONS[feature.slug];
+  const accent = ACCENTS[feature.slug];
+  const Stage = STAGES[feature.slug];
+
+  return (
+    <div
+      className="relative min-h-[320px] overflow-hidden rounded-[1.5rem] border border-bonero-dark/8 bg-[#f3f6f4] shadow-[0_24px_60px_rgba(30,41,59,0.08)] sm:min-h-[360px]"
+      role="img"
+      aria-label={isEn ? feature.mockCaptionEn : feature.mockCaption}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 transition-opacity duration-500"
+        style={{
+          background: `radial-gradient(ellipse 70% 60% at 80% 0%, ${accent}22, transparent 55%)`,
+          opacity: active ? 1 : 0.6,
+        }}
+      />
+      <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+        <span
+          className="flex h-9 w-9 items-center justify-center rounded-xl border border-bonero-dark/8 bg-white shadow-sm"
+          style={{ color: accent }}
+        >
+          <Icon size={16} strokeWidth={1.75} />
+        </span>
+        <span className="rounded-full border border-bonero-dark/8 bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-bonero-dark/45 backdrop-blur-sm">
+          {sceneLabel} {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
+      <div className="relative h-full min-h-[280px] pt-12 pb-10">
+        <Stage active={active} isEn={isEn} />
+      </div>
+      <p className="pointer-events-none absolute right-4 bottom-3 left-4 z-10 text-[10px] text-bonero-dark/35 sm:left-auto sm:max-w-[55%]">
+        {isEn ? feature.mockCaptionEn : feature.mockCaption}
+      </p>
+      <span
+        className="pointer-events-none absolute -right-1 bottom-6 font-mono text-[4.5rem] font-bold leading-none text-bonero-dark/[0.04] sm:text-[6rem]"
+        aria-hidden
+      >
+        {String(index + 1).padStart(2, "0")}
+      </span>
+    </div>
+  );
+}
+
+function FeatureSection({
   feature,
   index,
   isEn,
-  explore,
-  outcomeLabel,
-  sceneLabel,
+  t,
 }: {
   feature: FeaturePageContent;
   index: number;
   isEn: boolean;
-  explore: string;
-  outcomeLabel: string;
-  sceneLabel: string;
+  t: (typeof copy)["tr"];
 }) {
   const [inView, setInView] = useState(false);
-  const Icon = ICONS[feature.slug];
-  const theme = THEMES[feature.slug];
-  const Stage = STAGES[feature.slug];
-  const scenario = (isEn ? feature.scenariosEn : feature.scenarios)[0];
   const reverse = index % 2 === 1;
+  const valuePoints = isEn ? feature.valuePointsEn : feature.valuePoints;
+  const scenarios = isEn ? feature.scenariosEn : feature.scenarios;
+  const accent = ACCENTS[feature.slug];
+  const extraScenarios = scenarios.slice(1);
 
   return (
     <motion.article
       id={`feature-${feature.slug}`}
-      className="scroll-mt-32"
+      className="scroll-mt-32 border-b border-bonero-dark/6 last:border-b-0 sm:scroll-mt-36"
       onViewportEnter={() => setInView(true)}
-      onViewportLeave={() => setInView(false)}
-      viewport={{ amount: 0.45 }}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, ease }}
+      viewport={{ amount: 0.15, margin: "-80px 0px -20% 0px" }}
     >
-      <div
-        className={`page-pad mx-auto grid max-w-6xl items-center gap-8 py-14 sm:py-20 lg:grid-cols-2 lg:gap-14 ${
-          reverse ? "lg:[&>*:first-child]:order-2" : ""
-        }`}
-      >
-        {/* Stage */}
-        <Link
-          href={featureHref(feature.slug)}
-          className={`group relative block min-h-[280px] overflow-hidden rounded-[1.75rem] border border-white/10 bg-gradient-to-br ${theme.chip} shadow-[0_40px_80px_-48px_rgba(0,0,0,0.9)] transition-[border-color,transform] duration-300 hover:border-bonero-green/35 sm:min-h-[320px]`}
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div
+          className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-14 ${
+            reverse ? "lg:[&>*:first-child]:order-2" : ""
+          }`}
         >
-          <div
-            className="pointer-events-none absolute inset-0 transition-opacity duration-500"
-            aria-hidden
-            style={{
-              background: `radial-gradient(ellipse 70% 60% at 80% 0%, ${theme.glow}, transparent 55%)`,
-              opacity: inView ? 1 : 0.5,
-            }}
+          <FeatureStage
+            feature={feature}
+            index={index}
+            active={inView}
+            sceneLabel={t.scene}
+            isEn={isEn}
           />
-          <div className="absolute left-4 top-4 z-10 flex items-center gap-2">
-            <span
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-black/30 backdrop-blur-sm"
-              style={{ color: theme.tint }}
+
+          <Reveal delay={0.05}>
+            <p
+              className="text-[11px] font-semibold uppercase tracking-[0.18em]"
+              style={{ color: accent }}
             >
-              <Icon size={16} strokeWidth={1.75} />
-            </span>
-            <span className="rounded-full border border-white/10 bg-black/25 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white/45 backdrop-blur-sm">
-              {sceneLabel} {String(index + 1).padStart(2, "0")}
-            </span>
-          </div>
-          <div className="relative h-full pt-12">
-            <Stage active={inView} />
-          </div>
-          <motion.span
-            className="pointer-events-none absolute -bottom-2 -right-1 font-mono text-[5.5rem] font-bold leading-none text-white/[0.04] sm:text-[7rem]"
-            animate={inView ? { opacity: 0.07, y: 0 } : { opacity: 0.03, y: 8 }}
-          >
-            {String(index + 1).padStart(2, "0")}
-          </motion.span>
-        </Link>
+              {isEn ? feature.eyebrowEn : feature.eyebrow}
+            </p>
+            <h2 className="font-heading mt-3 text-2xl tracking-wide text-bonero-dark sm:text-3xl lg:text-4xl">
+              {isEn ? feature.titleEn : feature.title}
+            </h2>
+            <p className="mt-3 text-lg font-semibold leading-snug text-bonero-dark/80">
+              {isEn ? feature.headlineEn : feature.headline}
+            </p>
+            <p className="mt-4 text-base leading-relaxed text-bonero-dark/55">
+              {isEn ? feature.leadEn : feature.lead}
+            </p>
 
-        {/* Copy */}
-        <div className={reverse ? "lg:text-right" : ""}>
-          <motion.p
-            className="text-[11px] font-semibold uppercase tracking-[0.18em]"
-            style={{ color: theme.tint }}
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            {isEn ? feature.eyebrowEn : feature.eyebrow}
-          </motion.p>
-          <h2 className="mt-3 font-heading text-[1.75rem] font-bold leading-[1.15] tracking-tight text-white sm:text-4xl">
-            {isEn ? feature.titleEn : feature.title}
-          </h2>
-          <p
-            className={`mt-4 max-w-md text-base leading-relaxed text-white/50 ${
-              reverse ? "lg:ml-auto" : ""
-            }`}
-          >
-            {isEn ? feature.headlineEn : feature.headline}
-          </p>
+            <p className="mt-8 text-[11px] font-bold tracking-wide text-bonero-dark/35 uppercase">
+              {t.valueTitle}
+            </p>
+            <ul className="mt-3 space-y-3">
+              {valuePoints.map((vp) => (
+                <li key={vp.title} className="flex gap-3">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-bonero-green text-white">
+                    <Check size={11} strokeWidth={2.5} />
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-bonero-dark">{vp.title}</p>
+                    <p className="mt-0.5 text-sm leading-relaxed text-bonero-dark/50">
+                      {vp.body}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
 
-          {scenario && (
-            <motion.blockquote
-              className={`mt-6 max-w-md border-white/10 py-1 text-sm leading-relaxed text-white/40 ${
-                reverse
-                  ? "border-r-2 pr-4 lg:ml-auto lg:border-r-0 lg:border-l-2 lg:pr-0 lg:pl-4"
-                  : "border-l-2 pl-4"
-              }`}
-              style={{ borderColor: `${theme.tint}55` }}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.15 }}
+            <p className="mt-8 text-[11px] font-bold tracking-wide text-bonero-dark/35 uppercase">
+              {t.scenariosTitle}
+            </p>
+            {scenarios[0] && (
+              <div
+                className="mt-3 rounded-xl border border-bonero-dark/8 bg-white/80 px-4 py-3"
+                style={{ borderLeftWidth: 3, borderLeftColor: `${accent}88` }}
+              >
+                <p className="text-sm font-semibold text-bonero-dark">
+                  {scenarios[0].label}
+                </p>
+                <p className="mt-1 text-sm leading-relaxed text-bonero-dark/50">
+                  {scenarios[0].text}
+                </p>
+              </div>
+            )}
+            {extraScenarios.length > 0 && (
+              <details className="group mt-3 rounded-xl border border-bonero-dark/8 bg-white/60">
+                <summary className="cursor-pointer list-none px-4 py-3 text-sm font-semibold text-bonero-dark/70 marker:content-none [&::-webkit-details-marker]:hidden">
+                  <span className="text-bonero-green">
+                    +{extraScenarios.length}
+                  </span>{" "}
+                  {t.moreScenarios}
+                </summary>
+                <ul className="space-y-2 border-t border-bonero-dark/6 px-4 py-3">
+                  {extraScenarios.map((s) => (
+                    <li
+                      key={s.label}
+                      className="rounded-lg border border-bonero-dark/6 bg-white px-3 py-2.5"
+                    >
+                      <p className="text-sm font-semibold text-bonero-dark">
+                        {s.label}
+                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-bonero-dark/50">
+                        {s.text}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
+
+            <div className="mt-8 rounded-xl border border-bonero-green/20 bg-bonero-green/5 px-4 py-3">
+              <p className="text-[10px] font-bold tracking-wide text-bonero-green uppercase">
+                {t.outcome}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-bonero-dark">
+                {isEn ? feature.outcomeEn : feature.outcome}
+              </p>
+            </div>
+
+            <Link
+              href={featureHref(feature.slug)}
+              className="group mt-6 inline-flex items-center gap-2 rounded-xl bg-bonero-green px-5 py-3 text-sm font-semibold text-white shadow-md shadow-bonero-green/20 transition-colors hover:bg-bonero-green/90"
             >
-              <span className="font-semibold text-white/55">{scenario.label} — </span>
-              {scenario.text}
-            </motion.blockquote>
-          )}
-
-          <p
-            className={`mt-5 max-w-md text-xs font-medium uppercase tracking-wider text-white/30 ${
-              reverse ? "lg:ml-auto" : ""
-            }`}
-          >
-            {outcomeLabel}
-          </p>
-          <p
-            className={`mt-1 max-w-md text-sm font-medium text-white/65 ${
-              reverse ? "lg:ml-auto" : ""
-            }`}
-          >
-            {isEn ? feature.outcomeEn : feature.outcome}
-          </p>
-
-          <Link
-            href={featureHref(feature.slug)}
-            className={`group mt-8 inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/[0.04] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:border-bonero-green/40 hover:bg-bonero-green/15 ${
-              reverse ? "lg:flex-row-reverse" : ""
-            }`}
-          >
-            {explore}
-            <ArrowUpRight
-              size={15}
-              className="text-bonero-green transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
-          </Link>
+              {t.explore}
+              <ArrowUpRight
+                size={15}
+                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </Link>
+          </Reveal>
         </div>
       </div>
     </motion.article>
@@ -583,19 +472,34 @@ export default function FeaturesIndex() {
   const { locale } = useLocale();
   const t = copy[locale];
   const isEn = locale === "en";
-  const [activeSlug, setActiveSlug] = useState<FeatureSlug>(FEATURE_PAGES[0].slug);
   const [heroCycle, setHeroCycle] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
+  const [heroProgress, setHeroProgress] = useState(0);
+  const [activeSlug, setActiveSlug] = useState<FeatureSlug>(FEATURE_PAGES[0].slug);
   const [pastHero, setPastHero] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 24 });
+
+  const heroFeature = FEATURE_PAGES[heroCycle];
+  const HeroIcon = ICONS[heroFeature.slug];
+  const HeroStage = STAGES[heroFeature.slug];
+  const heroAccent = ACCENTS[heroFeature.slug];
+
+  useEffect(() => {
+    if (heroPaused) return;
+    setHeroProgress(0);
+    const start = Date.now();
+    const id = window.setInterval(() => {
+      const p = Math.min((Date.now() - start) / HERO_CYCLE_MS, 1);
+      setHeroProgress(p);
+    }, 32);
+    return () => clearInterval(id);
+  }, [heroCycle, heroPaused]);
 
   useEffect(() => {
     if (heroPaused) return;
     const id = window.setInterval(
       () => setHeroCycle((p) => (p + 1) % FEATURE_PAGES.length),
-      3200,
+      HERO_CYCLE_MS,
     );
     return () => clearInterval(id);
   }, [heroPaused]);
@@ -628,112 +532,53 @@ export default function FeaturesIndex() {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  const heroFeature = FEATURE_PAGES[heroCycle];
-  const HeroIcon = ICONS[heroFeature.slug];
-  const HeroStage = STAGES[heroFeature.slug];
-  const heroTheme = THEMES[heroFeature.slug];
-
-  const pickHero = (i: number) => {
-    setHeroPaused(true);
-    setHeroCycle(i);
-  };
-
   return (
-    <div className="relative overflow-x-clip bg-bonero-dark text-white">
-      <motion.div
-        className="pointer-events-none fixed top-0 right-0 left-0 z-[90] h-[2px] origin-left bg-bonero-green"
-        style={{ scaleX: progress }}
-      />
-
-      {/* Hero — brand + live product stage in one viewport */}
+    <div className="bg-background">
+      {/* Hero */}
       <section
         ref={heroRef}
-        className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-20 pb-8 sm:pt-24 sm:pb-10"
-        onMouseEnter={() => setHeroPaused(true)}
-        onMouseLeave={() => setHeroPaused(false)}
+        className="relative overflow-hidden pt-24 pb-12 sm:pt-28 sm:pb-16"
+        style={{
+          background:
+            "linear-gradient(180deg, #f9fafb 0%, #f4f7f5 55%, #f9fafb 100%)",
+        }}
       >
         <div
-          className="pointer-events-none absolute inset-0 transition-[background] duration-700"
+          className="pointer-events-none absolute inset-0"
           aria-hidden
           style={{
-            background: `
-              radial-gradient(ellipse 55% 50% at 82% 45%, ${heroTheme.glow}, transparent 58%),
-              radial-gradient(ellipse 40% 35% at 12% 70%, rgba(24,131,71,0.14), transparent 55%),
-              linear-gradient(165deg, #070d16 0%, #0a1410 48%, #061018 100%)
-            `,
+            background:
+              "radial-gradient(ellipse 50% 60% at 75% 20%, rgba(24,131,71,0.08), transparent 60%)",
           }}
         />
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.28]"
-          aria-hidden
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-            maskImage:
-              "radial-gradient(ellipse 80% 70% at 70% 45%, black 15%, transparent 72%)",
-          }}
-        />
+        <div className="bg-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden />
 
-        <div className="page-pad relative z-10 mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-[0.92fr_1.18fr] lg:gap-12">
-          {/* Copy */}
-          <div className="max-w-xl">
-            <motion.p
-              className="font-heading text-[clamp(2.5rem,5.5vw,3.75rem)] font-extrabold leading-none tracking-tight text-white"
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease }}
-            >
-              Bonero
-            </motion.p>
-
-            <h1 className="mt-4 font-heading text-[clamp(1.7rem,3.6vw,2.45rem)] font-bold leading-[1.08] tracking-tight text-white/90">
-              <motion.span
-                className="block"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.06, ease }}
-              >
-                {t.title}
-              </motion.span>
-              <motion.span
-                className="mt-1 block text-bonero-green"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.14, ease }}
-              >
-                {t.titleAccent}
-              </motion.span>
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
+          <Reveal>
+            <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
+              {t.eyebrow}
+            </p>
+            <h1 className="font-heading mt-3 text-3xl tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.65rem]">
+              {t.title}
+              <span className="mt-1 block text-bonero-green">{t.titleAccent}</span>
             </h1>
-
-            <motion.p
-              className="mt-4 max-w-md text-sm leading-relaxed text-white/45 sm:text-[15px]"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.22, duration: 0.4, ease }}
-            >
+            <p className="mt-4 max-w-lg text-base leading-relaxed text-bonero-dark/55">
               {t.lead}
-            </motion.p>
-
-            <motion.div
-              className="mt-7 flex flex-wrap items-center gap-4"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.4, ease }}
-            >
+            </p>
+            <div className="mt-7 flex flex-wrap items-center gap-3">
               <Link
                 href={PANEL_REGISTER_URL}
-                className="group inline-flex items-center gap-2 rounded-xl bg-bonero-green px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_48px_-18px_rgba(24,131,71,0.95)] transition-colors hover:bg-[#1a9a52]"
+                className="group inline-flex items-center gap-2 rounded-xl bg-bonero-green px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-bonero-green/20 transition-colors hover:bg-bonero-green/90"
               >
                 {t.cta}
-                <ArrowUpRight
+                <ArrowRight
                   size={16}
-                  className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="transition-transform group-hover:translate-x-0.5"
                 />
               </Link>
               <a
                 href={`#feature-${FEATURE_PAGES[0].slug}`}
-                className="inline-flex items-center gap-2 text-sm font-medium text-white/35 transition-colors hover:text-white"
+                className="inline-flex items-center gap-2 text-sm font-medium text-bonero-dark/45 transition-colors hover:text-bonero-dark"
               >
                 {t.scroll}
                 <motion.span
@@ -743,33 +588,36 @@ export default function FeaturesIndex() {
                   ↓
                 </motion.span>
               </a>
-            </motion.div>
-          </div>
+            </div>
+          </Reveal>
 
-          {/* Dominant stage panel */}
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.1, ease }}
-          >
+          <Reveal delay={0.1}>
             <div
-              className="pointer-events-none absolute -inset-5 rounded-[2rem] opacity-80"
+              className="relative overflow-hidden rounded-[1.5rem] border border-bonero-dark/8 bg-white shadow-[0_24px_60px_rgba(30,41,59,0.1)]"
               style={{
-                background: `radial-gradient(ellipse at 50% 40%, ${heroTheme.glow}, transparent 65%)`,
+                background: `linear-gradient(135deg, #ffffff 0%, #f3f6f4 100%)`,
               }}
-              aria-hidden
-            />
-
-            <div
-              className={`relative flex h-[min(440px,54svh)] flex-col overflow-hidden rounded-[1.5rem] border border-white/12 bg-gradient-to-br shadow-[0_40px_80px_-40px_rgba(0,0,0,0.95)] sm:h-[min(480px,58svh)] ${heroTheme.chip}`}
+              onMouseEnter={() => setHeroPaused(true)}
+              onMouseLeave={() => setHeroPaused(false)}
+              onFocus={() => setHeroPaused(true)}
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                  setHeroPaused(false);
+                }
+              }}
             >
-              {/* Stage chrome */}
-              <div className="relative z-10 flex shrink-0 items-center justify-between gap-3 border-b border-white/8 bg-black/20 px-4 py-3 sm:px-5">
+              <div
+                className="pointer-events-none absolute inset-0"
+                aria-hidden
+                style={{
+                  background: `radial-gradient(ellipse at 70% 0%, ${heroAccent}18, transparent 55%)`,
+                }}
+              />
+              <div className="relative flex items-center justify-between gap-3 border-b border-bonero-dark/6 px-4 py-3 sm:px-5">
                 <div className="flex min-w-0 items-center gap-2.5">
                   <span
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-black/25"
-                    style={{ color: heroTheme.tint }}
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-bonero-green/10"
+                    style={{ color: heroAccent }}
                   >
                     <HeroIcon size={15} strokeWidth={1.75} />
                   </span>
@@ -777,7 +625,7 @@ export default function FeaturesIndex() {
                     <AnimatePresence mode="wait">
                       <motion.p
                         key={heroFeature.slug}
-                        className="truncate text-sm font-semibold text-white"
+                        className="truncate text-sm font-semibold text-bonero-dark"
                         initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -4 }}
@@ -786,38 +634,36 @@ export default function FeaturesIndex() {
                         {isEn ? heroFeature.navLabelEn : heroFeature.navLabel}
                       </motion.p>
                     </AnimatePresence>
-                    <p className="font-mono text-[10px] text-white/30">
-                      {String(heroCycle + 1).padStart(2, "0")} / 05 · live
+                    <p className="font-mono text-[10px] text-bonero-dark/35">
+                      {String(heroCycle + 1).padStart(2, "0")} / 05 · {t.live}
                     </p>
                   </div>
                 </div>
                 <Link
                   href={featureHref(heroFeature.slug)}
-                  className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1.5 text-[11px] font-semibold text-bonero-green transition-colors hover:border-bonero-green/40 hover:bg-bonero-green/15"
+                  className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-bonero-dark/10 px-2.5 py-1.5 text-[11px] font-semibold text-bonero-green transition-colors hover:border-bonero-green/30 hover:bg-bonero-green/5"
                 >
                   {t.explore}
                   <ArrowUpRight size={12} />
                 </Link>
               </div>
 
-              {/* Animated stage body — clipped so content never overlaps chrome/tabs */}
-              <div className="relative z-0 min-h-0 flex-1 overflow-hidden">
+              <div className="relative min-h-[280px] overflow-hidden sm:min-h-[300px]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={heroFeature.slug}
-                    className="absolute inset-0 overflow-hidden"
-                    initial={{ opacity: 0, x: 18 }}
+                    className="absolute inset-0"
+                    initial={{ opacity: 0, x: 16 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -12 }}
                     transition={{ duration: 0.35, ease }}
                   >
-                    <HeroStage active />
+                    <HeroStage active isEn={isEn} />
                   </motion.div>
                 </AnimatePresence>
               </div>
 
-              {/* Feature tabs inside panel */}
-              <div className="relative z-10 shrink-0 border-t border-white/8 bg-black/35 px-2 py-2 sm:px-3">
+              <div className="border-t border-bonero-dark/6 px-2 py-2 sm:px-3">
                 <div className="flex gap-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   {FEATURE_PAGES.map((f, i) => {
                     const on = heroCycle === i;
@@ -826,11 +672,11 @@ export default function FeaturesIndex() {
                       <button
                         key={f.slug}
                         type="button"
-                        onClick={() => pickHero(i)}
+                        onClick={() => setHeroCycle(i)}
                         className={`inline-flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
                           on
-                            ? "bg-bonero-green text-white"
-                            : "text-white/40 hover:bg-white/5 hover:text-white"
+                            ? "bg-bonero-dark text-white"
+                            : "text-bonero-dark/45 hover:bg-bonero-dark/5 hover:text-bonero-dark"
                         }`}
                       >
                         <Icon size={12} strokeWidth={2} />
@@ -846,32 +692,28 @@ export default function FeaturesIndex() {
                 </div>
               </div>
 
-              {/* Auto-progress */}
-              <motion.div
-                key={heroCycle}
-                className="relative z-10 h-0.5 origin-left bg-bonero-green"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: heroPaused ? 0 : 1 }}
-                transition={{
-                  duration: heroPaused ? 0.2 : 3.2,
-                  ease: "linear",
-                }}
-              />
+              <div className="h-0.5 bg-bonero-dark/5">
+                <div
+                  className="h-full origin-left bg-bonero-green transition-[width] duration-75 ease-linear"
+                  style={{ width: `${heroProgress * 100}%` }}
+                />
+              </div>
             </div>
-          </motion.div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Sticky chapter nav — appears after hero leaves */}
-      <div
-        className={`sticky top-16 z-40 overflow-hidden border-b bg-bonero-dark/92 backdrop-blur-xl transition-[max-height,opacity,border-color] duration-300 sm:top-[4.5rem] ${
+      {/* Sticky nav */}
+      <nav
+        className={`sticky top-16 z-40 overflow-hidden border-b bg-white/90 backdrop-blur-xl transition-[max-height,opacity,border-color] duration-300 sm:top-[4.5rem] ${
           pastHero
-            ? "max-h-16 border-white/8 opacity-100"
+            ? "max-h-16 border-bonero-dark/8 opacity-100 shadow-sm"
             : "pointer-events-none max-h-0 border-transparent opacity-0"
         }`}
+        aria-label={isEn ? "Feature sections" : "Özellik bölümleri"}
         aria-hidden={!pastHero}
       >
-        <div className="page-pad mx-auto flex max-w-6xl gap-1 overflow-x-auto py-2.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-4 py-2.5 sm:px-6 lg:px-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {FEATURE_PAGES.map((f, i) => {
             const on = activeSlug === f.slug;
             const Icon = ICONS[f.slug];
@@ -883,112 +725,101 @@ export default function FeaturesIndex() {
                 className={`inline-flex shrink-0 items-center gap-2 rounded-full px-3.5 py-2 text-xs font-semibold transition-colors ${
                   on
                     ? "bg-bonero-green text-white"
-                    : "text-white/45 hover:bg-white/5 hover:text-white"
+                    : "text-bonero-dark/50 hover:bg-bonero-dark/5 hover:text-bonero-dark"
                 }`}
               >
                 <Icon size={13} strokeWidth={2} />
                 <span className="font-mono opacity-70">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                {isEn ? f.navLabelEn : f.navLabel}
+                <span className="max-w-[5.5rem] truncate sm:max-w-none">
+                  {isEn ? f.navLabelEn : f.navLabel}
+                </span>
               </a>
             );
           })}
         </div>
-      </div>
+      </nav>
 
-      {/* Chapters */}
-      <div className="relative divide-y divide-white/8">
+      {/* Feature chapters */}
+      <div className="relative">
         {FEATURE_PAGES.map((f, i) => (
-          <FeatureChapter
-            key={f.slug}
-            feature={f}
-            index={i}
-            isEn={isEn}
-            explore={t.explore}
-            outcomeLabel={t.outcome}
-            sceneLabel={t.scene}
-          />
+          <FeatureSection key={f.slug} feature={f} index={i} isEn={isEn} t={t} />
         ))}
       </div>
 
-      {/* Close — stack map (footer already owns register CTA) */}
-      <section className="relative border-t border-white/8">
-        <div className="page-pad mx-auto max-w-6xl py-14 sm:py-16">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, ease }}
-          >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/35">
-              {isEn ? "Operation map" : "Operasyon haritası"}
+      {/* Operation map */}
+      <section
+        className="relative overflow-hidden py-16 sm:py-24"
+        style={{
+          background:
+            "linear-gradient(180deg, #f4f7f5 0%, #eef3f0 50%, #f7f9f8 100%)",
+        }}
+      >
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-40"
+          style={{
+            background:
+              "radial-gradient(ellipse 50% 80% at 70% 0%, rgba(24,131,71,0.1), transparent)",
+          }}
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <Reveal className="max-w-2xl">
+            <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
+              {t.mapEyebrow}
             </p>
-            <h2 className="mt-2 max-w-lg font-heading text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              {isEn ? "Five layers. One flow." : "Beş katman. Tek akış."}
+            <h2 className="font-heading mt-3 text-3xl tracking-wide text-bonero-dark sm:text-4xl">
+              {t.mapTitle}
+              <span className="mt-1 block text-bonero-green">{t.mapAccent}</span>
             </h2>
-            <p className="mt-3 max-w-xl text-sm text-white/45">
-              {isEn
-                ? "Jump into any layer — or see how they connect in a normal agency day."
-                : "Herhangi bir katmana girin — veya ajans gününde nasıl bağlandıklarını görün."}
+            <p className="mt-4 text-base leading-relaxed text-bonero-dark/55">
+              {t.mapLead}
             </p>
-          </motion.div>
+          </Reveal>
 
-          <div className="mt-10 flex flex-col gap-0 sm:flex-row sm:items-stretch">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {FEATURE_PAGES.map((f, i) => {
               const Icon = ICONS[f.slug];
-              const theme = THEMES[f.slug];
+              const accent = ACCENTS[f.slug];
               return (
-                <motion.div
-                  key={f.slug}
-                  className="flex min-w-0 flex-1 items-stretch"
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.06, duration: 0.35, ease }}
-                >
+                <Reveal key={f.slug} delay={i * 0.05}>
                   <Link
                     href={featureHref(f.slug)}
-                    className="group flex min-w-0 flex-1 flex-col border border-white/10 bg-white/[0.02] px-4 py-5 transition-colors hover:border-bonero-green/35 hover:bg-bonero-green/[0.06] sm:border-l-0 sm:first:border-l sm:first:rounded-l-2xl sm:last:rounded-r-2xl"
+                    className="group glass-panel flex h-full flex-col rounded-2xl p-5 transition-[border-color,box-shadow] hover:border-bonero-green/25 hover:shadow-md"
                   >
-                    <span className="font-mono text-[10px] text-white/30">
+                    <span className="font-mono text-[10px] text-bonero-dark/30">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span
-                      className="mt-3 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-black/20"
-                      style={{ color: theme.tint }}
+                      className="mt-3 flex h-10 w-10 items-center justify-center rounded-xl bg-bonero-green/10"
+                      style={{ color: accent }}
                     >
-                      <Icon size={16} strokeWidth={1.75} />
+                      <Icon size={18} strokeWidth={1.75} />
                     </span>
-                    <span className="mt-3 text-sm font-semibold text-white group-hover:text-bonero-green">
+                    <span className="mt-3 text-sm font-semibold text-bonero-dark group-hover:text-bonero-green">
                       {isEn ? f.navLabelEn : f.navLabel}
                     </span>
-                    <span className="mt-1 line-clamp-2 text-[11px] leading-snug text-white/35">
+                    <span className="mt-1 line-clamp-2 flex-1 text-[11px] leading-snug text-bonero-dark/45">
                       {isEn ? f.headlineEn : f.headline}
                     </span>
-                    <span className="mt-4 inline-flex items-center gap-1 text-[11px] font-semibold text-white/40 transition-colors group-hover:text-bonero-green">
+                    <span className="mt-4 inline-flex items-center gap-1 text-[11px] font-semibold text-bonero-green">
                       {t.explore}
                       <ArrowUpRight size={12} />
                     </span>
                   </Link>
-                  {i < FEATURE_PAGES.length - 1 && (
-                    <div
-                      className="hidden w-px shrink-0 self-center sm:block"
-                      aria-hidden
-                    />
-                  )}
-                </motion.div>
+                </Reveal>
               );
             })}
           </div>
 
-          <p className="mt-8 text-sm text-white/40">
-            {isEn ? "Prefer pricing first?" : "Önce paketlere mi bakmak istersiniz?"}{" "}
+          <p className="mt-8 text-sm text-bonero-dark/45">
+            {t.pricingHint}{" "}
             <Link
               href="/paketler"
               className="font-semibold text-bonero-green transition-opacity hover:opacity-80"
             >
-              {isEn ? "View plans" : "Paketleri gör"} →
+              {t.pricingLink} →
             </Link>
           </p>
         </div>

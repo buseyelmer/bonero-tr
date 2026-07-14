@@ -18,7 +18,7 @@ export default function HelpCta() {
                 Hâlâ yardıma mı ihtiyacınız var?
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-bonero-dark/55 sm:text-base">
-                Destek ekibimiz ajans operasyonunuza özel yanıt verir — genelde 1
+                Destek ekibimiz operasyonunuza özel yanıt verir — genelde 1
                 iş günü içinde.
               </p>
             </div>

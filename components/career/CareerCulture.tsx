@@ -18,10 +18,10 @@ type Value = {
 const values: Value[] = [
   {
     icon: Waypoints,
-    title: "Ajans gerçeği",
+    title: "Saha gerçeği",
     tagline: "Sahadan ürün",
     description:
-      "Ürünü, sahadaki operasyon acılarından tasarlıyoruz — slayt değil, çalışan yazılım. Her özellik bir ajans gününden doğar.",
+      "Ürünü, sahadaki operasyon acılarından tasarlıyoruz — slayt değil, çalışan yazılım. Her özellik bir iş gününden doğar.",
     beats: ["Saha görüşmesi", "Ağrı noktası", "Canlı özellik"],
     proof: "Demo’da gerçek akış — sunum slaytı yok",
     index: "01",

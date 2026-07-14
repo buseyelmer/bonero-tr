@@ -27,7 +27,7 @@ const pillars: Pillar[] = [
     title: "Her an yanınızda",
     line: "Operasyonunuz hiçbir zaman durmasın.",
     detail:
-      "Ajans temposuna ayak uyduran canlı destek — kesinti yok, bekleme yok. Operasyonunuz güvende kalsın.",
+      "İş temposuna ayak uyduran canlı destek — kesinti yok, bekleme yok. Operasyonunuz güvende kalsın.",
     proof: ["Canlı destek hattı", "Operasyon SLA bilinci", "Hızlı eskalasyon"],
   },
   {
@@ -57,7 +57,7 @@ const signals = [
 
 const layers = [
   { id: "edge", label: "Kenar", desc: "SSL / TLS · güvenli giriş kapısı" },
-  { id: "data", label: "Veri", desc: "Şifreli depolama · ajans izolasyonu" },
+  { id: "data", label: "Veri", desc: "Şifreli depolama · hesap izolasyonu" },
   { id: "access", label: "Erişim", desc: "Rol · yetki · denetim izi" },
 ];
 

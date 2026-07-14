@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
-import ContactSplit from "@/components/contact/ContactSplit";
+import ContactHero from "@/components/contact/ContactHero";
+import ContactReasons from "@/components/contact/ContactReasons";
+import ContactFormSection from "@/components/contact/ContactFormSection";
+import ContactFaq from "@/components/contact/ContactFaq";
 import ContactBridge from "@/components/contact/ContactBridge";
 
 export const metadata: Metadata = {
   title: "İletişim",
   description:
-    "Bonero iletişim formu ve destek. Kaydolun ve hemen başlayın — sorularınız için 1 iş günü içinde dönüş.",
+    "Bonero ile iletişime geçin. Demo, destek ve işbirliği — formu doldurun, 1 iş günü içinde dönüş yapalım.",
   alternates: { canonical: "/iletisim" },
 };
 
 export default function ContactPage() {
   return (
-    <main className="flex-1">
-      <ContactSplit />
+    <main className="flex-1 bg-background">
+      <ContactHero />
+      <ContactReasons />
+      <ContactFormSection />
+      <ContactFaq />
       <ContactBridge />
     </main>
   );

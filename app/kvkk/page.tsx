@@ -21,7 +21,7 @@ const sections = [
       "Hizmet kapsamında aşağıdaki kategorilerde veriler işlenebilir:",
     ],
     bullets: [
-      "Kimlik ve iletişim: ad-soyad, e-posta, telefon, şirket / ajans unvanı",
+      "Kimlik ve iletişim: ad-soyad, e-posta, telefon, şirket unvanı",
       "Hesap ve kullanım: oturum, rol, tercih, destek kayıtları",
       "İletişim içeriği: bağladığınız kanallardan gelen mesajlar (müşteri verisi)",
       "Teknik veriler: IP, tarayıcı, cihaz, log ve güvenlik kayıtları",

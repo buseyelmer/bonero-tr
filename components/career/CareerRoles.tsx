@@ -27,9 +27,9 @@ const roles: Role[] = [
   {
     icon: Package,
     title: "Ürün",
-    line: "Ajans operasyonunu ürün diline çevirenler",
+    line: "Operasyonu ürün diline çevirenler",
     detail:
-      "Saha geri bildirimini önceliklendirir, yol haritasını net tutar ve özelliğin ajans gününde gerçekten işe yaradığını doğrularsınız.",
+      "Saha geri bildirimini önceliklendirir, yol haritasını net tutar ve özelliğin iş gününde gerçekten işe yaradığını doğrularsınız.",
     traits: ["Keşif", "Önceliklendirme", "Ölçüm"],
     stack: ["Kullanıcı görüşmesi", "PRD", "Metrik"],
   },
@@ -54,9 +54,9 @@ const roles: Role[] = [
   {
     icon: Headphones,
     title: "Müşteri başarısı",
-    line: "Ajansları canlıda başarıya taşıyanlar",
+    line: "Müşterileri canlıda başarıya taşıyanlar",
     detail:
-      "Onboarding’den günlük kullanıma kadar ajansın yanında olursunuz. Başarıyı aktivasyon ve tutmada ölçersiniz.",
+      "Onboarding’den günlük kullanıma kadar müşterinin yanında olursunuz. Başarıyı aktivasyon ve tutmada ölçersiniz.",
     traits: ["Empati", "Eğitim", "Büyüme"],
     stack: ["Onboarding", "SLA", "Feedback"],
   },
@@ -66,7 +66,10 @@ export default function CareerRoles() {
   const [active, setActive] = useState(1);
 
   return (
-    <section className="relative overflow-hidden border-t border-bonero-dark/6 bg-background py-20 sm:py-28">
+    <section
+      id="roller"
+      className="relative scroll-mt-28 overflow-hidden border-t border-bonero-dark/6 bg-background py-20 sm:py-28"
+    >
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"

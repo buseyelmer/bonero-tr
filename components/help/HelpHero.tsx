@@ -78,8 +78,8 @@ export default function HelpHero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3, ease }}
             >
-              Kurulum, gelen kutusu ve faturalama — ajans gününüze özel rehberler
-              ve hızlı destek.
+              Bonero’nun tamamını kullanmayı öğrenin — kurulumdan Omnichannel ve
+              AI Agent’a kadar makalelerle adım adım.
             </motion.p>
 
             <motion.div
@@ -96,10 +96,10 @@ export default function HelpHero() {
                 <ArrowRight size={15} />
               </Link>
               <a
-                href="#konular"
+                href="#makaleler"
                 className="inline-flex items-center gap-2 rounded-xl border border-bonero-dark/12 bg-white/70 px-5 py-2.5 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/25"
               >
-                Konulara git
+                Makalelere git
               </a>
             </motion.div>
           </div>

@@ -7,7 +7,7 @@ import { PANEL_REGISTER_URL } from "@/lib/panel";
 export const metadata: Metadata = {
   title: "Paketler",
   description:
-    "Bonero fiyatlandırma: Starter, Agency ve Enterprise. Ajans ölçeğinize uygun planı seçin, kaydolun ve hemen başlayın.",
+    "Bonero fiyatlandırma: Starter, Pro ve Enterprise. İşletme ölçeğinize uygun planı seçin, kaydolun ve hemen başlayın.",
   alternates: { canonical: "/paketler" },
 };
 
@@ -26,9 +26,9 @@ const plans = [
     ],
   },
   {
-    name: "Agency",
-    price: "Ajanslara özel",
-    description: "Çoklu müşteri yöneten ajanslar için.",
+    name: "Pro",
+    price: "İşletmelere özel",
+    description: "Çoklu müşteri yöneten ekipler için.",
     popular: true,
     features: [
       "Sınırsız müşteri hesabı",
@@ -66,7 +66,7 @@ export default function PricingPage() {
                 Paketler
               </p>
               <h1 className="font-heading mt-3 text-3xl tracking-wide text-bonero-dark sm:text-4xl">
-                Ajansınıza uygun planı seçin
+                İşletmenize uygun planı seçin
               </h1>
               <p className="mt-4 text-base leading-relaxed text-bonero-dark/60">
                 Şeffaf paketler, net özellikler. Ölçeğiniz büyüdükçe Bonero da

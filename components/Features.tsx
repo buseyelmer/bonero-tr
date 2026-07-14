@@ -339,7 +339,7 @@ export default function Features() {
             Özellikler & Çözümler
           </p>
           <h2 className="font-heading mt-3 text-3xl !font-extrabold tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.75rem]">
-            Ajans acılarına
+            Operasyon sorunlarına
             <span className="mt-1 block text-bonero-green">net cevaplar.</span>
           </h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-bonero-dark/55">

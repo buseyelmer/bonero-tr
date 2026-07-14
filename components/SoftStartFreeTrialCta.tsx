@@ -34,7 +34,7 @@ const copy = {
     eyebrow: "Hemen başla",
     remaining: "yaklaşık",
     dialSub: "dk kurulum",
-    body: "Hesap oluşturun ve hemen kullanmaya başlayın. Birleşik Gelen Kutusu’nu kendi ajansınızda canlı kullanın.",
+    body: "Hesap oluşturun ve hemen kullanmaya başlayın. Birleşik Gelen Kutusu’nu kendi işletmenizde canlı kullanın.",
     cta: "Hemen Başlayın",
     secondary: "Paketlere bak",
     assurances: [
@@ -48,7 +48,7 @@ const copy = {
     eyebrow: "Get started",
     remaining: "about",
     dialSub: "min setup",
-    body: "Create an account and start using Bonero right away. Run the Unified Inbox live with your agency.",
+    body: "Create an account and start using Bonero right away. Run the Unified Inbox live with your business.",
     cta: "Get Started",
     secondary: "See packages",
     assurances: ["Quick signup", "Setup ~15 min", "Start in one panel"],

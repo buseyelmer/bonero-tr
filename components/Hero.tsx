@@ -9,7 +9,7 @@ import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 const copy = {
   tr: {
-    badge: "Ajanslar için çok kanallı AI platformu",
+    badge: "Hizmet işletmeleri için çok kanallı AI platformu",
     h1Before: "Bonero, müşteri mesajlarınızı",
     h1Accent: "tek panele",
     h1After: "toplar.",
@@ -31,7 +31,7 @@ const copy = {
     ],
   },
   en: {
-    badge: "Omnichannel AI platform for agencies",
+    badge: "Omnichannel AI platform for service businesses",
     h1Before: "Bonero brings customer messages into",
     h1Accent: "one panel",
     h1After: ".",

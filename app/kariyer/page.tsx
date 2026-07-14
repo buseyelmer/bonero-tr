@@ -7,7 +7,7 @@ import CareerApply from "@/components/career/CareerApply";
 export const metadata: Metadata = {
   title: "Kariyer",
   description:
-    "Bonero’da kariyer fırsatları. Ajanslar için omnichannel AI platformunu birlikte büyütelim.",
+    "Bonero’da kariyer fırsatları. Omnichannel AI platformunu birlikte büyütelim.",
   alternates: { canonical: "/kariyer" },
 };
 

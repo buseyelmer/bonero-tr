@@ -18,25 +18,25 @@ const faqs: FaqItem[] = [
     tag: "Güvenlik",
     icon: Lock,
     q: "Tüm kanalları tek panelde toplamak güvenlik riski yaratır mı?",
-    a: "Hayır. Bonero tüm bağlantıları uçtan uca şifreli (SSL) API protokolleri üzerinden kurar. Veriler şifreli aktarılır ve saklanır; erişim rol bazlı yetkilendirme ile sınırlandırılır. Her ajans ve müşteri hesabı izole çalışma alanlarında yönetilir.",
+    a: "Hayır. Bonero tüm bağlantıları uçtan uca şifreli (SSL) API protokolleri üzerinden kurar. Veriler şifreli aktarılır ve saklanır; erişim rol bazlı yetkilendirme ile sınırlandırılır. Her çalışma alanı izole yönetilir.",
   },
   {
     tag: "Veri",
     icon: Shield,
     q: "Müşterilerimin verileri güvende mi?",
-    a: "Evet. Veriler şifreli aktarılır ve saklanır; erişim rol bazlı yetkilendirme ile sınırlandırılır. Her ajans ve müşteri hesabı izole çalışma alanlarında yönetilir.",
+    a: "Evet. Veriler şifreli aktarılır ve saklanır; erişim rol bazlı yetkilendirme ile sınırlandırılır. Her çalışma alanı izole yönetilir.",
   },
   {
     tag: "Entegrasyon",
     icon: Plug,
     q: "Hangi platformlarla entegre çalışıyor?",
-    a: "Instagram, Meta Business Suite, WhatsApp Business, Gmail, Outlook ve LinkedIn başta olmak üzere ajansların en çok kullandığı kanallarla entegre çalışır. Yeni entegrasyonlar düzenli olarak eklenir.",
+    a: "Instagram, Meta Business Suite, WhatsApp Business, Gmail, Outlook ve LinkedIn başta olmak üzere işletmelerin en çok kullandığı kanallarla entegre çalışır. Yeni entegrasyonlar düzenli olarak eklenir.",
   },
   {
     tag: "Operasyon",
     icon: Users,
-    q: "Birden fazla ajans/müşteri hesabı yönetebilir miyim?",
-    a: "Evet. Bonero çoklu müşteri (multi-client) yapısı için tasarlandı. Ekip rolleri, onay akışları ve raporları müşteri bazında ayrı ayrı yönetebilirsiniz.",
+    q: "Birden fazla müşteri hesabı yönetebilir miyim?",
+    a: "Evet. Bonero çoklu müşteri yapısı için tasarlandı. Ekip rolleri, onay akışları ve raporları müşteri bazında ayrı ayrı yönetebilirsiniz.",
   },
 ];
 

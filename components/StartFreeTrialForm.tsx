@@ -31,7 +31,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
     resolver: zodResolver(startFreeTrialSchema),
     defaultValues: {
       fullName: "",
-      agencyName: "",
+      companyName: "",
       email: "",
       message: "",
     },
@@ -76,25 +76,25 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
           </div>
           <div>
             <label
-              htmlFor="agencyName"
+              htmlFor="companyName"
               className="block text-[10px] font-semibold tracking-[0.16em] text-bonero-dark/40 uppercase"
             >
-              Ajans Adı
+              Şirket adı
             </label>
             <input
-              id="agencyName"
+              id="companyName"
               type="text"
               autoComplete="organization"
-              aria-invalid={!!errors.agencyName}
+              aria-invalid={!!errors.companyName}
               className={`${editorialField} ${
-                errors.agencyName ? "border-red-400" : "border-bonero-dark/20"
+                errors.companyName ? "border-red-400" : "border-bonero-dark/20"
               }`}
-              placeholder="Ajansınızın adı"
-              {...register("agencyName")}
+              placeholder="Şirket adınız"
+              {...register("companyName")}
             />
-            {errors.agencyName && (
+            {errors.companyName && (
               <p className="mt-1.5 text-sm text-red-500" role="alert">
-                {errors.agencyName.message}
+                {errors.companyName.message}
               </p>
             )}
           </div>
@@ -115,7 +115,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             className={`${editorialField} ${
               errors.email ? "border-red-400" : "border-bonero-dark/20"
             }`}
-            placeholder="ornek@ajans.com"
+            placeholder="ornek@sirket.com"
             {...register("email")}
           />
           {errors.email && (
@@ -208,24 +208,24 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
         </div>
         <div>
           <label
-            htmlFor="agencyName"
+            htmlFor="companyName"
             className="mb-1.5 block text-sm font-medium text-bonero-dark"
           >
-            Ajans Adı
+            Şirket adı
           </label>
           <input
-            id="agencyName"
+            id="companyName"
             type="text"
             autoComplete="organization"
             className={`${cardField} ${
-              errors.agencyName ? "border-red-400" : "border-bonero-dark/15"
+              errors.companyName ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="Ajansınızın adı"
-            {...register("agencyName")}
+            placeholder="Şirket adınız"
+            {...register("companyName")}
           />
-          {errors.agencyName && (
+          {errors.companyName && (
             <p className="mt-1.5 text-sm text-red-500">
-              {errors.agencyName.message}
+              {errors.companyName.message}
             </p>
           )}
         </div>
@@ -243,7 +243,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             className={`${cardField} ${
               errors.email ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="ornek@ajans.com"
+            placeholder="ornek@sirket.com"
             {...register("email")}
           />
           {errors.email && (
@@ -263,7 +263,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             className={`${cardField} resize-y ${
               errors.message ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="Ajansınızın ihtiyaçlarını kısaca yazın…"
+            placeholder="İhtiyaçlarınızı kısaca yazın…"
             {...register("message")}
           />
           {errors.message && (

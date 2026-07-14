@@ -19,10 +19,10 @@ import TrustStrip from "@/components/TrustStrip";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Bonero | Ajanslar İçin Omnichannel AI İletişim Platformu",
+    absolute: "Bonero | Omnichannel AI İletişim Platformu",
   },
   description:
-    "Tüm kanallar, tek panel. Instagram, WhatsApp ve e-postayı Birleşik Gelen Kutusu’nda birleştirin — ajanslar için omnichannel AI yönetimi.",
+    "Tüm kanallar, tek panel. Instagram, WhatsApp ve e-postayı Birleşik Gelen Kutusu’nda birleştirin — hizmet işletmeleri için omnichannel AI yönetimi.",
   alternates: { canonical: "/" },
 };
 

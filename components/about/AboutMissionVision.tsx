@@ -11,7 +11,7 @@ const missionSignals = [
 
 const visionPillars = [
   { title: "Omnichannel standart", body: "Her kanal, tek operasyon dili." },
-  { title: "Her ölçekte ajans", body: "Boutique’tan holding’e aynı kalite." },
+  { title: "Her ölçekte işletme", body: "Boutique’tan holding’e aynı kalite." },
   { title: "Kurumsal kalite", body: "Süreç, şeffaflık, ölçülebilir sonuç." },
 ];
 
@@ -59,7 +59,7 @@ export default function AboutMissionVision() {
               <span className="text-bonero-green">nereye gidiyoruz</span>
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/45">
-              Ajansın müşterisine yansıyan kalite: yaratıcılığa alan, operasyonda
+              Müşteriye yansıyan kalite: yaratıcılığa alan, operasyonda
               kurumsal standart.
             </p>
           </Reveal>
@@ -140,7 +140,7 @@ export default function AboutMissionVision() {
               </div>
 
               <p className="relative mt-6 text-lg leading-relaxed text-white/70 sm:text-xl">
-                Ajans ekiplerini operasyonel yükten arındırarak, yaratıcılığa ve
+                Ekipleri operasyonel yükten arındırarak, yaratıcılığa ve
                 stratejiye odaklanabilecekleri bir çalışma ortamı sunmak.
               </p>
 
@@ -225,7 +225,7 @@ export default function AboutMissionVision() {
 
               <p className="relative mt-8 text-lg leading-relaxed text-white/70 sm:text-xl">
                 Dijital dünyada omnichannel iletişimin standardını belirlemek;
-                her büyüklükteki ajansın, kurumsal bir operasyon kalitesine
+                her büyüklükteki işletmenin, kurumsal bir operasyon kalitesine
                 ulaşmasını sağlamak.
               </p>
 
@@ -268,7 +268,7 @@ export default function AboutMissionVision() {
                   Manifesto
                 </p>
                 <p className="font-heading mt-1 text-xl !font-extrabold text-white sm:text-2xl">
-                  Her ajans — kurumsal operasyon kalitesinde.
+                  Her işletme — kurumsal operasyon kalitesinde.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">

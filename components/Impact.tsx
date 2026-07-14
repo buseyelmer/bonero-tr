@@ -83,7 +83,7 @@ export default function Impact() {
             Dönüşüm
           </p>
           <h2 className="font-heading mt-3 text-3xl !font-extrabold tracking-wide text-white sm:text-4xl lg:text-[2.75rem]">
-            Bonero ile ajansınızda
+            Bonero ile işletmenizde
             <span className="mt-1 block text-bonero-green">neler değişir?</span>
           </h2>
         </Reveal>

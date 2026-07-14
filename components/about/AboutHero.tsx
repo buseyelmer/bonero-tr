@@ -53,7 +53,7 @@ export default function AboutHero() {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.65, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
               >
-                Dijital ajansların{" "}
+                Hizmet işletmelerinin{" "}
                 <span className="relative inline-block">
                   <span className="relative z-10">operasyonel kaosunu,</span>
                   <motion.span
@@ -86,7 +86,7 @@ export default function AboutHero() {
               transition={{ duration: 0.5, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
               Bonero, karmaşık onay süreçlerini, dağınık iletişim kanallarını ve
-              zaman kaybını tarihe gömen; ajanslar için özel geliştirilmiş bir
+              zaman kaybını tarihe gömen; işletmeler için özel geliştirilmiş bir
               operasyonel zeka platformudur.
             </motion.p>
           </div>
