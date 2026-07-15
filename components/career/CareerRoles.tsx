@@ -13,56 +13,116 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "@/components/Reveal";
 import { goToCareerApply } from "@/lib/go-to-career-apply";
+import { useLocale } from "@/components/LocaleProvider";
+import type { CareerRoleId } from "@/lib/career-roles";
 
-type Role = {
-  icon: LucideIcon;
-  title: string;
-  line: string;
-  detail: string;
-  traits: string[];
-  stack: string[];
-};
+type ListedCareerRoleId = Exclude<CareerRoleId, "other">;
 
-const roles: Role[] = [
-  {
-    icon: Package,
-    title: "Ürün",
-    line: "Operasyonu ürün diline çevirenler",
-    detail:
-      "Saha geri bildirimini önceliklendirir, yol haritasını net tutar ve özelliğin iş gününde gerçekten işe yaradığını doğrularsınız.",
-    traits: ["Keşif", "Önceliklendirme", "Ölçüm"],
-    stack: ["Kullanıcı görüşmesi", "PRD", "Metrik"],
-  },
-  {
-    icon: Layout,
-    title: "Tasarım",
-    line: "Karmaşığı sade, güvenilir ve net gösterenler",
-    detail:
-      "Omnichannel karmaşayı sakin bir arayüze indirgersiniz. Tipografi, ritim ve etkileşim Bonero’nun güven dilini taşır.",
-    traits: ["Sistem", "Akış", "Detay"],
-    stack: ["UI sistemi", "Prototype", "Motion"],
-  },
-  {
-    icon: Code2,
-    title: "Mühendislik",
-    line: "Omnichannel altyapıyı sağlam ve hızlı kuranlar",
-    detail:
-      "Kanalları birleştiren, güvenli ve ölçeklenebilir sistemi kurarsınız. Temizlik, hız ve gözlemlenebilirlik vazgeçilmez.",
-    traits: ["Kalite", "Hız", "Güvenlik"],
-    stack: ["Next.js", "API", "Entegrasyon"],
-  },
-  {
-    icon: Headphones,
-    title: "Müşteri başarısı",
-    line: "Müşterileri canlıda başarıya taşıyanlar",
-    detail:
-      "Onboarding’den günlük kullanıma kadar müşterinin yanında olursunuz. Başarıyı aktivasyon ve tutmada ölçersiniz.",
-    traits: ["Empati", "Eğitim", "Büyüme"],
-    stack: ["Onboarding", "SLA", "Feedback"],
-  },
+const roleMeta: { id: ListedCareerRoleId; icon: LucideIcon }[] = [
+  { id: "product", icon: Package },
+  { id: "design", icon: Layout },
+  { id: "engineering", icon: Code2 },
+  { id: "customer-success", icon: Headphones },
 ];
 
+const copy = {
+  tr: {
+    eyebrow: "Alanlar",
+    title: "Şu an dinlediğimiz",
+    titleMuted: "yetenek alanları",
+    lead: "Açık ilan olmasa da doğru profili dinleriz. Satırı açın, ne aradığımızı görün — sonra başvuruya geçin.",
+    workSurface: "Çalışma yüzeyi",
+    apply: "Bu alana başvur",
+    footnoteBefore: "Başka bir alanda güçlüsünüz? Yine de başvurun —",
+    footnoteLink: "formu açın",
+    roles: {
+      product: {
+        title: "Ürün",
+        line: "Operasyonu ürün diline çevirenler",
+        detail:
+          "Saha geri bildirimini önceliklendirir, yol haritasını net tutar ve özelliğin iş gününde gerçekten işe yaradığını doğrularsınız.",
+        traits: ["Keşif", "Önceliklendirme", "Ölçüm"],
+        stack: ["Kullanıcı görüşmesi", "PRD", "Metrik"],
+      },
+      design: {
+        title: "Tasarım",
+        line: "Karmaşığı sade, güvenilir ve net gösterenler",
+        detail:
+          "Omnichannel karmaşayı sakin bir arayüze indirgersiniz. Tipografi, ritim ve etkileşim Bonero’nun güven dilini taşır.",
+        traits: ["Sistem", "Akış", "Detay"],
+        stack: ["UI sistemi", "Prototype", "Motion"],
+      },
+      engineering: {
+        title: "Mühendislik",
+        line: "Omnichannel altyapıyı sağlam ve hızlı kuranlar",
+        detail:
+          "Kanalları birleştiren, güvenli ve ölçeklenebilir sistemi kurarsınız. Temizlik, hız ve gözlemlenebilirlik vazgeçilmez.",
+        traits: ["Kalite", "Hız", "Güvenlik"],
+        stack: ["Next.js", "API", "Entegrasyon"],
+      },
+      "customer-success": {
+        title: "Müşteri başarısı",
+        line: "Müşterileri canlıda başarıya taşıyanlar",
+        detail:
+          "Onboarding’den günlük kullanıma kadar müşterinin yanında olursunuz. Başarıyı aktivasyon ve tutmada ölçersiniz.",
+        traits: ["Empati", "Eğitim", "Büyüme"],
+        stack: ["Onboarding", "SLA", "Feedback"],
+      },
+    },
+  },
+  en: {
+    eyebrow: "Areas",
+    title: "Talent areas",
+    titleMuted: "we are listening for",
+    lead: "Even without an open listing, we listen for the right profile. Expand a row to see what we look for — then apply.",
+    workSurface: "Work surface",
+    apply: "Apply for this area",
+    footnoteBefore: "Strong in another area? Apply anyway —",
+    footnoteLink: "open the form",
+    roles: {
+      product: {
+        title: "Product",
+        line: "Translating operations into product language",
+        detail:
+          "You prioritize field feedback, keep the roadmap clear, and verify that features truly work in a business day.",
+        traits: ["Discovery", "Prioritization", "Measurement"],
+        stack: ["User interviews", "PRD", "Metrics"],
+      },
+      design: {
+        title: "Design",
+        line: "Making complexity simple, trustworthy, and clear",
+        detail:
+          "You reduce omnichannel complexity into a calm interface. Typography, rhythm, and interaction carry Bonero’s trust language.",
+        traits: ["Systems", "Flow", "Detail"],
+        stack: ["UI system", "Prototype", "Motion"],
+      },
+      engineering: {
+        title: "Engineering",
+        line: "Building solid, fast omnichannel infrastructure",
+        detail:
+          "You build the system that unifies channels securely and at scale. Clean code, speed, and observability are non-negotiable.",
+        traits: ["Quality", "Speed", "Security"],
+        stack: ["Next.js", "API", "Integrations"],
+      },
+      "customer-success": {
+        title: "Customer success",
+        line: "Helping customers succeed in production",
+        detail:
+          "You stand with customers from onboarding through daily use. You measure success in activation and retention.",
+        traits: ["Empathy", "Enablement", "Growth"],
+        stack: ["Onboarding", "SLA", "Feedback"],
+      },
+    },
+  },
+};
+
 export default function CareerRoles() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+  const roles = roleMeta.map((meta) => ({
+    ...meta,
+    ...t.roles[meta.id],
+  }));
   const [active, setActive] = useState(1);
 
   return (
@@ -82,17 +142,16 @@ export default function CareerRoles() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="max-w-2xl">
           <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
-            Alanlar
+            {t.eyebrow}
           </p>
           <h2 className="font-heading mt-4 text-3xl !font-extrabold tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.75rem]">
-            Şu an dinlediğimiz
+            {t.title}
             <span className="mt-1.5 block text-bonero-dark/35">
-              yetenek alanları
+              {t.titleMuted}
             </span>
           </h2>
           <p className="mt-4 max-w-lg text-base leading-relaxed text-bonero-dark/55">
-            Açık ilan olmasa da doğru profili dinleriz. Satırı açın, ne
-            aradığımızı görün — sonra başvuruya geçin.
+            {t.lead}
           </p>
         </Reveal>
 
@@ -103,7 +162,7 @@ export default function CareerRoles() {
             const num = String(index + 1).padStart(2, "0");
 
             return (
-              <li key={role.title}>
+              <li key={role.id}>
                 <Reveal delay={0.04 * index}>
                   <button
                     type="button"
@@ -170,28 +229,28 @@ export default function CareerRoles() {
                               {role.detail}
                             </p>
                             <div className="mt-6 flex flex-wrap gap-2">
-                              {role.traits.map((t) => (
+                              {role.traits.map((trait) => (
                                 <span
-                                  key={t}
+                                  key={trait}
                                   className="border-b border-bonero-green/40 pb-0.5 text-sm font-semibold text-bonero-dark"
                                 >
-                                  {t}
+                                  {trait}
                                 </span>
                               ))}
                             </div>
                             <button
                               type="button"
-                              onClick={() => goToCareerApply(role.title)}
+                              onClick={() => goToCareerApply(role.id)}
                               className="mt-8 inline-flex items-center gap-2 rounded-xl bg-bonero-green px-5 py-3.5 text-sm font-semibold text-white shadow-sm shadow-bonero-green/20 transition-all hover:scale-[1.02] hover:bg-bonero-green/90"
                             >
-                              Bu alana başvur
+                              {t.apply}
                               <ArrowRight size={16} strokeWidth={2} />
                             </button>
                           </div>
 
                           <div className="sm:col-span-5">
                             <p className="text-[10px] font-semibold tracking-[0.16em] text-bonero-dark/35 uppercase">
-                              Çalışma yüzeyi
+                              {t.workSurface}
                             </p>
                             <ul className="mt-4 space-y-0 border-l border-bonero-dark/10">
                               {role.stack.map((item, i) => (
@@ -222,13 +281,13 @@ export default function CareerRoles() {
 
         <Reveal delay={0.12} className="mt-10">
           <p className="text-sm text-bonero-dark/45">
-            Başka bir alanda güçlüsünüz? Yine de başvurun —{" "}
+            {t.footnoteBefore}{" "}
             <button
               type="button"
               onClick={() => goToCareerApply()}
               className="font-semibold text-bonero-green hover:text-bonero-green/80"
             >
-              formu açın
+              {t.footnoteLink}
             </button>
             .
           </p>

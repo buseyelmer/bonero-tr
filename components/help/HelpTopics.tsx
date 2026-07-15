@@ -11,12 +11,31 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import { useLocale } from "@/components/LocaleProvider";
+import { pickL } from "@/lib/locale-copy";
 import {
   HELP_CATEGORIES,
   HELP_ARTICLES,
   helpArticleHref,
   type HelpCategoryId,
 } from "@/lib/help";
+
+const copy = {
+  tr: {
+    eyebrow: "Konular",
+    title: "Ne öğrenmek istiyorsunuz?",
+    lead: "Kategoriler, Bonero’nun tamamını kapsayacak şekilde büyür. Makalesi hazır olanlara gidin; diğerleri sırayla dolacak.",
+    articles: "makale",
+    comingSoon: "Yakında",
+  },
+  en: {
+    eyebrow: "Topics",
+    title: "What do you want to learn?",
+    lead: "Categories grow to cover all of Bonero. Jump to ready articles; the rest are on the way.",
+    articles: "articles",
+    comingSoon: "Coming soon",
+  },
+};
 
 const ICONS: Record<HelpCategoryId, LucideIcon> = {
   baslangic: Zap,
@@ -27,6 +46,9 @@ const ICONS: Record<HelpCategoryId, LucideIcon> = {
 };
 
 export default function HelpTopics() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+
   return (
     <section
       id="konular"
@@ -35,14 +57,13 @@ export default function HelpTopics() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="max-w-xl">
           <p className="text-sm font-medium tracking-wide text-bonero-green uppercase">
-            Konular
+            {t.eyebrow}
           </p>
           <h2 className="font-heading mt-3 text-3xl !font-extrabold tracking-wide text-bonero-dark sm:text-4xl">
-            Ne öğrenmek istiyorsunuz?
+            {t.title}
           </h2>
           <p className="mt-3 text-base leading-relaxed text-bonero-dark/55">
-            Kategoriler, Bonero’nun tamamını kapsayacak şekilde büyür. Makalesi
-            hazır olanlara gidin; diğerleri sırayla dolacak.
+            {t.lead}
           </p>
         </Reveal>
 
@@ -72,16 +93,16 @@ export default function HelpTopics() {
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <h3 className="font-heading text-lg text-bonero-dark transition-colors group-hover:text-bonero-green">
-                          {cat.title}
+                          {pickL(cat.title, locale)}
                         </h3>
                         <span className="rounded-full bg-bonero-dark/[0.05] px-2 py-0.5 text-[10px] font-semibold text-bonero-dark/45">
                           {articles.length > 0
-                            ? `${articles.length} makale`
-                            : "Yakında"}
+                            ? `${articles.length} ${t.articles}`
+                            : t.comingSoon}
                         </span>
                       </div>
                       <p className="mt-1 text-sm leading-relaxed text-bonero-dark/55">
-                        {cat.description}
+                        {pickL(cat.description, locale)}
                       </p>
                     </div>
                     <ArrowUpRight

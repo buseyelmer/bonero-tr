@@ -4,51 +4,96 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, ShieldCheck, Waypoints, type LucideIcon } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import { useLocale } from "@/components/LocaleProvider";
 
-type Value = {
-  icon: LucideIcon;
-  title: string;
-  tagline: string;
-  description: string;
-  beats: string[];
-  proof: string;
-  index: string;
-};
-
-const values: Value[] = [
-  {
-    icon: Waypoints,
-    title: "Saha gerçeği",
-    tagline: "Sahadan ürün",
-    description:
-      "Ürünü, sahadaki operasyon acılarından tasarlıyoruz — slayt değil, çalışan yazılım. Her özellik bir iş gününden doğar.",
-    beats: ["Saha görüşmesi", "Ağrı noktası", "Canlı özellik"],
-    proof: "Demo’da gerçek akış — sunum slaytı yok",
-    index: "01",
-  },
-  {
-    icon: Eye,
-    title: "Şeffaf tempo",
-    tagline: "Net sahiplik",
-    description:
-      "Küçük ekip, net sahiplik. Kararları hızlı alır, sonucu birlikte ölçeriz. Belirsizlik değil, görünür ilerleme.",
-    beats: ["Sahiplik", "Hızlı karar", "Ortak ölçüm"],
-    proof: "Haftalık ritim · görünür çıktı",
-    index: "02",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Güven önce",
-    tagline: "Veri omurgası",
-    description:
-      "Müşteri verisi omurgamız. Güvenlik ve KVKK bilinci her rolün parçası — pazarlama cümlesi değil, günlük pratik.",
-    beats: ["KVKK bilinci", "Rol erişimi", "İzolasyon"],
-    proof: "Güven, her teslimatın önkoşulu",
-    index: "03",
-  },
+const valueMeta: { key: string; icon: LucideIcon; index: string }[] = [
+  { key: "field", icon: Waypoints, index: "01" },
+  { key: "pace", icon: Eye, index: "02" },
+  { key: "trust", icon: ShieldCheck, index: "03" },
 ];
 
+const copy = {
+  tr: {
+    eyebrow: "Kültür",
+    titleBefore: "Nasıl çalışıyoruz —",
+    titleAccent: "neye bağlıyız",
+    lead: "Bonero’da her rol aynı omurgaya oturur: sahadan öğrenmek, hızlı karar almak, güveni bozmamak.",
+    activePrinciple: "Aktif ilke",
+    manifestoEyebrow: "Ekip manifestosu",
+    manifestoTitle: "Küçük ekip. Büyük sahiplik. Ölçülebilir sonuç.",
+    manifestoTags: ["Saha", "Hız", "Güven"],
+    values: {
+      field: {
+        title: "Saha gerçeği",
+        tagline: "Sahadan ürün",
+        description:
+          "Ürünü, sahadaki operasyon acılarından tasarlıyoruz — slayt değil, çalışan yazılım. Her özellik bir iş gününden doğar.",
+        beats: ["Saha görüşmesi", "Ağrı noktası", "Canlı özellik"],
+        proof: "Demo’da gerçek akış — sunum slaytı yok",
+      },
+      pace: {
+        title: "Şeffaf tempo",
+        tagline: "Net sahiplik",
+        description:
+          "Küçük ekip, net sahiplik. Kararları hızlı alır, sonucu birlikte ölçeriz. Belirsizlik değil, görünür ilerleme.",
+        beats: ["Sahiplik", "Hızlı karar", "Ortak ölçüm"],
+        proof: "Haftalık ritim · görünür çıktı",
+      },
+      trust: {
+        title: "Güven önce",
+        tagline: "Veri omurgası",
+        description:
+          "Müşteri verisi omurgamız. Güvenlik ve KVKK bilinci her rolün parçası — pazarlama cümlesi değil, günlük pratik.",
+        beats: ["KVKK bilinci", "Rol erişimi", "İzolasyon"],
+        proof: "Güven, her teslimatın önkoşulu",
+      },
+    },
+  },
+  en: {
+    eyebrow: "Culture",
+    titleBefore: "How we work —",
+    titleAccent: "what we stand for",
+    lead: "Every role at Bonero sits on the same spine: learn from the field, decide quickly, and never break trust.",
+    activePrinciple: "Active principle",
+    manifestoEyebrow: "Team manifesto",
+    manifestoTitle: "Small team. Big ownership. Measurable outcomes.",
+    manifestoTags: ["Field", "Speed", "Trust"],
+    values: {
+      field: {
+        title: "Field reality",
+        tagline: "Product from the field",
+        description:
+          "We design the product from real operational pain — working software, not slides. Every feature starts in a business day.",
+        beats: ["Field interview", "Pain point", "Live feature"],
+        proof: "Real flows in demos — no presentation decks",
+      },
+      pace: {
+        title: "Transparent pace",
+        tagline: "Clear ownership",
+        description:
+          "Small team, clear ownership. We decide fast and measure outcomes together. Visible progress, not ambiguity.",
+        beats: ["Ownership", "Fast decisions", "Shared metrics"],
+        proof: "Weekly rhythm · visible output",
+      },
+      trust: {
+        title: "Trust first",
+        tagline: "Data backbone",
+        description:
+          "Customer data is our backbone. Security and privacy awareness are part of every role — daily practice, not marketing copy.",
+        beats: ["Privacy awareness", "Role access", "Isolation"],
+        proof: "Trust is a prerequisite for every delivery",
+      },
+    },
+  },
+};
+
 export default function CareerCulture() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+  const values = valueMeta.map((meta) => ({
+    ...meta,
+    ...t.values[meta.key as keyof typeof t.values],
+  }));
   const [active, setActive] = useState(0);
   const current = values[active];
   const ActiveIcon = current.icon;
@@ -92,15 +137,14 @@ export default function CareerCulture() {
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-12">
           <Reveal className="lg:col-span-8">
             <p className="text-sm font-medium tracking-wide text-white/40 uppercase">
-              Kültür
+              {t.eyebrow}
             </p>
             <h2 className="font-heading mt-4 max-w-2xl text-3xl !font-extrabold tracking-wide text-white sm:text-4xl lg:text-[2.75rem]">
-              Nasıl çalışıyoruz —{" "}
-              <span className="text-bonero-green">neye bağlıyız</span>
+              {t.titleBefore}{" "}
+              <span className="text-bonero-green">{t.titleAccent}</span>
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/45">
-              Bonero’da her rol aynı omurgaya oturur: sahadan öğrenmek, hızlı
-              karar almak, güveni bozmamak.
+              {t.lead}
             </p>
           </Reveal>
 
@@ -111,7 +155,7 @@ export default function CareerCulture() {
               </span>
               <div>
                 <p className="text-[10px] font-semibold tracking-[0.16em] text-white/35 uppercase">
-                  Aktif ilke
+                  {t.activePrinciple}
                 </p>
                 <p className="mt-0.5 text-sm font-medium text-white/70">
                   {current.title}
@@ -129,7 +173,7 @@ export default function CareerCulture() {
                 const isActive = active === index;
                 return (
                   <button
-                    key={v.title}
+                    key={v.key}
                     type="button"
                     onClick={() => setActive(index)}
                     onMouseEnter={() => setActive(index)}
@@ -239,19 +283,19 @@ export default function CareerCulture() {
             <div className="relative flex flex-col gap-4 px-6 py-7 sm:flex-row sm:items-center sm:justify-between sm:px-8">
               <div>
                 <p className="text-[11px] font-semibold tracking-[0.18em] text-white/70 uppercase">
-                  Ekip manifestosu
+                  {t.manifestoEyebrow}
                 </p>
                 <p className="font-heading mt-1 text-xl !font-extrabold text-white sm:text-2xl">
-                  Küçük ekip. Büyük sahiplik. Ölçülebilir sonuç.
+                  {t.manifestoTitle}
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
-                {["Saha", "Hız", "Güven"].map((t) => (
+                {t.manifestoTags.map((tag) => (
                   <span
-                    key={t}
+                    key={tag}
                     className="rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white"
                   >
-                    {t}
+                    {tag}
                   </span>
                 ))}
               </div>

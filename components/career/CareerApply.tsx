@@ -5,26 +5,104 @@ import { motion } from "framer-motion";
 import { FileText, MailCheck, Shield } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import CareerApplicationForm from "@/components/CareerApplicationForm";
+import { useLocale } from "@/components/LocaleProvider";
 
-const steps = [
-  {
-    icon: FileText,
-    title: "Formu doldurun",
-    text: "Alan, CV ve kısa not yeterli.",
+const stepMeta = [
+  { key: "form", icon: FileText },
+  { key: "confirm", icon: MailCheck },
+  { key: "match", icon: Shield },
+] as const;
+
+const copy = {
+  tr: {
+    eyebrow: "Başvuru",
+    title: "Ekibimize dahil olmak",
+    titleMuted: "ister misiniz?",
+    lead: "Açık ilan olmasa da doğru kişiyi dinleriz. Formu doldurun; eşleşme gördüğümüzde dönüş yapalım.",
+    steps: {
+      form: { title: "Formu doldurun", text: "Alan, CV ve kısa not yeterli." },
+      confirm: {
+        title: "Onay alın",
+        text: "Başvuru alındı bilgisini hemen görürsünüz.",
+      },
+      match: {
+        title: "Eşleşme bekleyin",
+        text: "Uygun rolde ekip dönüş yapar.",
+      },
+    },
+    processNote: "Süreç notu",
+    processTitle: "Ne beklemelisiniz?",
+    processItems: [
+      {
+        t: "Hızlı onay",
+        d: "Gönderim sonrası anında başarı bildirimi",
+      },
+      {
+        t: "Seçici dinleme",
+        d: "Uygun eşleşmede ekip dönüşü",
+      },
+      {
+        t: "Veri güvenliği",
+        d: "CV ve iletişim yalnızca işe alım için",
+      },
+    ],
+    aboutBefore: "Önce Bonero’yu tanıyın:",
+    aboutLink: "Hakkımızda →",
+    openApplyEyebrow: "Açık ilan şart değil",
+    openApplyTitle: "Yine de yazın — dinliyoruz.",
+    openApplyText:
+      "Uygun eşleşme gördüğümüzde dönüş yaparız. Formu doldurmanız yeter.",
+    backToForm: "Forma dön",
   },
-  {
-    icon: MailCheck,
-    title: "Onay alın",
-    text: "Başvuru alındı bilgisini hemen görürsünüz.",
+  en: {
+    eyebrow: "Apply",
+    title: "Want to join",
+    titleMuted: "our team?",
+    lead: "Even without an open listing, we listen for the right people. Fill out the form and we will reach out when there is a fit.",
+    steps: {
+      form: {
+        title: "Complete the form",
+        text: "Area, CV, and a short note are enough.",
+      },
+      confirm: {
+        title: "Get confirmation",
+        text: "You will see an immediate success message.",
+      },
+      match: {
+        title: "Wait for a match",
+        text: "The team responds when a role fits.",
+      },
+    },
+    processNote: "Process note",
+    processTitle: "What to expect",
+    processItems: [
+      {
+        t: "Quick confirmation",
+        d: "Instant success message after submission",
+      },
+      {
+        t: "Selective review",
+        d: "Team follow-up when there is a strong fit",
+      },
+      {
+        t: "Data security",
+        d: "CV and contact details used for hiring only",
+      },
+    ],
+    aboutBefore: "Get to know Bonero first:",
+    aboutLink: "About →",
+    openApplyEyebrow: "No open listing required",
+    openApplyTitle: "Reach out anyway — we are listening.",
+    openApplyText:
+      "We will respond when we see a fit. Filling out the form is enough.",
+    backToForm: "Back to form",
   },
-  {
-    icon: Shield,
-    title: "Eşleşme bekleyin",
-    text: "Uygun rolde ekip dönüş yapar.",
-  },
-];
+};
 
 export default function CareerApply() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+
   return (
     <section
       id="basvuru"
@@ -47,20 +125,19 @@ export default function CareerApply() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
-            Başvuru
+            {t.eyebrow}
           </p>
           <h2
             id="basvuru-baslik"
             className="font-heading mt-4 text-3xl !font-extrabold tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.75rem]"
           >
-            Ekibimize dahil olmak
+            {t.title}
             <span className="mt-1.5 block text-bonero-dark/35">
-              ister misiniz?
+              {t.titleMuted}
             </span>
           </h2>
           <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-bonero-dark/60">
-            Açık ilan olmasa da doğru kişiyi dinleriz. Formu doldurun; eşleşme
-            gördüğümüzde dönüş yapalım.
+            {t.lead}
           </p>
         </Reveal>
 
@@ -70,47 +147,43 @@ export default function CareerApply() {
               className="pointer-events-none absolute top-7 right-[16%] left-[16%] hidden h-px bg-bonero-dark/10 sm:block"
               aria-hidden="true"
             />
-            {steps.map(({ icon: Icon, title, text }, i) => (
-              <li key={title} className="relative text-center">
-                <span className="relative z-10 mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-bonero-dark/10 bg-white text-bonero-dark/70 shadow-sm">
-                  <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-bonero-green text-[10px] font-bold text-white">
-                    {i + 1}
+            {stepMeta.map(({ key, icon: Icon }, i) => {
+              const step = t.steps[key];
+              return (
+                <li key={key} className="relative text-center">
+                  <span className="relative z-10 mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-bonero-dark/10 bg-white text-bonero-dark/70 shadow-sm">
+                    <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-bonero-green text-[10px] font-bold text-white">
+                      {i + 1}
+                    </span>
+                    <Icon size={20} strokeWidth={1.6} />
                   </span>
-                  <Icon size={20} strokeWidth={1.6} />
-                </span>
-                <p className="font-heading mt-4 text-base !font-extrabold text-bonero-dark">
-                  {title}
-                </p>
-                <p className="mt-1.5 text-sm text-bonero-dark/50">{text}</p>
-              </li>
-            ))}
+                  <p className="font-heading mt-4 text-base !font-extrabold text-bonero-dark">
+                    {step.title}
+                  </p>
+                  <p className="mt-1.5 text-sm text-bonero-dark/50">{step.text}</p>
+                </li>
+              );
+            })}
           </ol>
         </Reveal>
 
-        <div className="mt-14 grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
-          <Reveal className="lg:col-span-4">
-            <div className="rounded-[1.75rem] border border-bonero-dark/8 bg-white/70 p-6 backdrop-blur-sm sm:p-7">
+        <div className="mt-14 mx-auto max-w-2xl" id="basvuru-form">
+          <Reveal delay={0.1}>
+            <CareerApplicationForm />
+          </Reveal>
+        </div>
+
+        <div className="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
+          <Reveal delay={0.12}>
+            <div className="h-full rounded-[1.75rem] border border-bonero-dark/8 bg-white/70 p-6 backdrop-blur-sm sm:p-7">
               <p className="text-xs font-semibold tracking-[0.16em] text-bonero-green uppercase">
-                Süreç notu
+                {t.processNote}
               </p>
               <h3 className="font-heading mt-3 text-xl !font-extrabold text-bonero-dark">
-                Ne beklemelisiniz?
+                {t.processTitle}
               </h3>
               <ul className="mt-6 space-y-4">
-                {[
-                  {
-                    t: "Hızlı onay",
-                    d: "Gönderim sonrası anında başarı bildirimi",
-                  },
-                  {
-                    t: "Seçici dinleme",
-                    d: "Uygun eşleşmede ekip dönüşü",
-                  },
-                  {
-                    t: "Veri güvenliği",
-                    d: "CV ve iletişim yalnızca işe alım için",
-                  },
-                ].map((item, i) => (
+                {t.processItems.map((item, i) => (
                   <motion.li
                     key={item.t}
                     className="flex gap-3"
@@ -133,19 +206,35 @@ export default function CareerApply() {
               </ul>
 
               <p className="mt-8 border-t border-bonero-dark/8 pt-5 text-sm text-bonero-dark/50">
-                Önce Bonero’yu tanıyın:{" "}
+                {t.aboutBefore}{" "}
                 <Link
                   href="/hakkimizda"
                   className="font-semibold text-bonero-green transition-colors hover:text-bonero-green/80"
                 >
-                  Hakkımızda →
+                  {t.aboutLink}
                 </Link>
               </p>
             </div>
           </Reveal>
 
-          <Reveal delay={0.1} className="lg:col-span-8">
-            <CareerApplicationForm />
+          <Reveal delay={0.16}>
+            <div className="flex h-full flex-col justify-between rounded-[1.5rem] bg-bonero-green px-6 py-7 text-white sm:px-7">
+              <div>
+                <p className="text-xs font-semibold tracking-wide text-white/70 uppercase">
+                  {t.openApplyEyebrow}
+                </p>
+                <h3 className="font-heading mt-2 text-xl !font-extrabold">
+                  {t.openApplyTitle}
+                </h3>
+                <p className="mt-2 text-sm text-white/80">{t.openApplyText}</p>
+              </div>
+              <a
+                href="#basvuru-form"
+                className="mt-6 inline-flex w-fit items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-bonero-green"
+              >
+                {t.backToForm}
+              </a>
+            </div>
           </Reveal>
         </div>
       </div>

@@ -13,17 +13,18 @@ import {
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "./Reveal";
+import { useLocale } from "./LocaleProvider";
 import { FEATURE_PAGES, featureHref } from "@/lib/features";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 type Feature = {
   id: string;
   icon: LucideIcon;
-  name: string;
-  tag: string;
-  pain: string;
-  solution: string;
-  points: string[];
+  name: { tr: string; en: string };
+  tag: { tr: string; en: string };
+  pain: { tr: string; en: string };
+  solution: { tr: string; en: string };
+  points: { tr: string[]; en: string[] };
   detailSlug?: (typeof FEATURE_PAGES)[number]["slug"];
 };
 
@@ -31,56 +32,96 @@ const features: Feature[] = [
   {
     id: "ai",
     icon: Sparkles,
-    name: "AI İçerik Asistanı",
-    tag: "Yapay zeka",
-    pain: "Her müşteri için taslak üretmek günü yiyor.",
-    solution: "Marka sesine uygun taslak ve yanıt önerileri — dakikalar içinde.",
-    points: ["Yanıt önerisi", "Marka tonu", "Hızlı taslak"],
+    name: { tr: "AI İçerik Asistanı", en: "AI Content Assistant" },
+    tag: { tr: "Yapay zeka", en: "AI" },
+    pain: {
+      tr: "Her müşteri için taslak üretmek günü yiyor.",
+      en: "Drafting for every customer eats the day.",
+    },
+    solution: {
+      tr: "Marka sesine uygun taslak ve yanıt önerileri — dakikalar içinde.",
+      en: "Brand-voice drafts and reply suggestions — in minutes.",
+    },
+    points: {
+      tr: ["Yanıt önerisi", "Marka tonu", "Hızlı taslak"],
+      en: ["Reply suggestions", "Brand tone", "Fast drafts"],
+    },
     detailSlug: "yapay-zeka",
   },
   {
     id: "ads",
     icon: Megaphone,
-    name: "AI Reklam Üretimi",
-    tag: "AI Reklam",
-    pain: "Kampanya metni, varyasyon ve hook’lar manuel yazılıyor; tempo düşüyor.",
-    solution:
-      "Hedefe ve marka tonuna göre reklam metni + varyasyon — onay hattına hazır.",
-    points: ["Meta / IG taslağı", "A/B varyasyon", "Onaya düşen kreatif"],
+    name: { tr: "AI Reklam Üretimi", en: "AI Ad Generation" },
+    tag: { tr: "AI Reklam", en: "AI Ads" },
+    pain: {
+      tr: "Kampanya metni, varyasyon ve hook’lar manuel yazılıyor; tempo düşüyor.",
+      en: "Campaign copy, variants, and hooks are written by hand — tempo drops.",
+    },
+    solution: {
+      tr: "Hedefe ve marka tonuna göre reklam metni + varyasyon — onay hattına hazır.",
+      en: "Ad copy + variants for your goal and brand tone — ready for approval.",
+    },
+    points: {
+      tr: ["Meta / IG taslağı", "A/B varyasyon", "Onaya düşen kreatif"],
+      en: ["Meta / IG drafts", "A/B variants", "Creatives into approval"],
+    },
     detailSlug: "ai-reklam",
   },
   {
     id: "team",
     icon: Users,
-    name: "Ekip Yönetimi",
-    tag: "İşbirliği",
-    pain: "Onaylar ve görevler e-posta zincirinde kayboluyor.",
-    solution: "Rol bazlı onay ve görev atama — net sorumluluk, hızlı yayına çıkış.",
-    points: ["Rol & yetki", "Görev ata", "Onay hattı"],
+    name: { tr: "Ekip Yönetimi", en: "Team Management" },
+    tag: { tr: "İşbirliği", en: "Collaboration" },
+    pain: {
+      tr: "Onaylar ve görevler e-posta zincirinde kayboluyor.",
+      en: "Approvals and tasks get lost in email threads.",
+    },
+    solution: {
+      tr: "Rol bazlı onay ve görev atama — net sorumluluk, hızlı yayına çıkış.",
+      en: "Role-based approvals and task assignment — clear ownership, faster publish.",
+    },
+    points: {
+      tr: ["Rol & yetki", "Görev ata", "Onay hattı"],
+      en: ["Roles & permissions", "Assign tasks", "Approval line"],
+    },
     detailSlug: "isbirligi",
   },
   {
     id: "analytics",
     icon: BarChart3,
-    name: "Analitik & Raporlama",
-    tag: "Rapor",
-    pain: "Müşteri sunumu için veri toplamak zorlaşıyor.",
-    solution: "Performans tek panelde — sunuma hazır, ölçülebilir raporlar.",
-    points: ["Canlı metrik", "Müşteri özeti", "PDF’ye hazır"],
+    name: { tr: "Analitik & Raporlama", en: "Analytics & Reporting" },
+    tag: { tr: "Rapor", en: "Reports" },
+    pain: {
+      tr: "Müşteri sunumu için veri toplamak zorlaşıyor.",
+      en: "Pulling data for client presentations gets painful.",
+    },
+    solution: {
+      tr: "Performans tek panelde — sunuma hazır, ölçülebilir raporlar.",
+      en: "Performance in one panel — presentation-ready, measurable reports.",
+    },
+    points: {
+      tr: ["Canlı metrik", "Müşteri özeti", "PDF’ye hazır"],
+      en: ["Live metrics", "Client summary", "PDF-ready"],
+    },
     detailSlug: "raporlama",
   },
 ];
 
-/** One complete beat per feature — no mid-cycle phase flip */
 const CYCLE_MS = 5500;
 const ease = [0.22, 1, 0.36, 1] as const;
 
-function VisualAI() {
-  const lines = [
-    "Merhaba! Onayınızı aldık…",
-    "Kampanya takvimine ekledik.",
-    "Ek dosyayı paylaşıyorum.",
-  ];
+function VisualAI({ isEn }: { isEn: boolean }) {
+  const lines = isEn
+    ? [
+        "Hi! We’ve got your approval…",
+        "Added to the campaign calendar.",
+        "Sharing the extra file now.",
+      ]
+    : [
+        "Merhaba! Onayınızı aldık…",
+        "Kampanya takvimine ekledik.",
+        "Ek dosyayı paylaşıyorum.",
+      ];
   return (
     <div className="flex h-full flex-col items-center justify-center px-6">
       <motion.div
@@ -91,7 +132,9 @@ function VisualAI() {
       >
         <div className="flex items-center gap-2 border-b border-bonero-dark/6 bg-bonero-dark/[0.03] px-3 py-2">
           <Sparkles size={14} className="text-bonero-green" />
-          <span className="text-[11px] font-semibold text-bonero-dark">AI öneri</span>
+          <span className="text-[11px] font-semibold text-bonero-dark">
+            {isEn ? "AI suggestion" : "AI öneri"}
+          </span>
         </div>
         <div className="space-y-2 p-3">
           {lines.map((line, i) => (
@@ -114,18 +157,24 @@ function VisualAI() {
         transition={{ delay: 1.1, duration: 0.35 }}
       >
         <Check size={11} strokeWidth={2.5} />
-        Marka tonuna uygun
+        {isEn ? "Matches brand tone" : "Marka tonuna uygun"}
       </motion.span>
     </div>
   );
 }
 
-function VisualAds() {
-  const variants = [
-    { label: "A", hook: "Stok bitmeden yakala." },
-    { label: "B", hook: "Bu hafta %20 — sadece sen." },
-    { label: "C", hook: "Sepette bıraktın. Biz hatırlattık." },
-  ];
+function VisualAds({ isEn }: { isEn: boolean }) {
+  const variants = isEn
+    ? [
+        { label: "A", hook: "Grab it before stock runs out." },
+        { label: "B", hook: "20% this week — just for you." },
+        { label: "C", hook: "You left it in the cart. We reminded you." },
+      ]
+    : [
+        { label: "A", hook: "Stok bitmeden yakala." },
+        { label: "B", hook: "Bu hafta %20 — sadece sen." },
+        { label: "C", hook: "Sepette bıraktın. Biz hatırlattık." },
+      ];
   return (
     <div className="flex h-full flex-col items-center justify-center gap-3 px-5">
       <motion.div
@@ -137,10 +186,10 @@ function VisualAds() {
         <div className="flex items-center justify-between border-b border-bonero-dark/6 bg-bonero-dark/[0.03] px-3 py-2">
           <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-bonero-dark">
             <Megaphone size={13} className="text-bonero-green" />
-            AI reklam
+            {isEn ? "AI ads" : "AI reklam"}
           </span>
           <span className="text-[10px] font-medium text-bonero-dark/35">
-            3 varyasyon
+            {isEn ? "3 variants" : "3 varyasyon"}
           </span>
         </div>
         <div className="space-y-2 p-3">
@@ -169,16 +218,17 @@ function VisualAds() {
         transition={{ delay: 1.05, duration: 0.35 }}
       >
         <Check size={11} strokeWidth={2.5} />
-        Onaya hazır kreatif
+        {isEn ? "Creative ready for approval" : "Onaya hazır kreatif"}
       </motion.span>
     </div>
   );
 }
 
-function VisualTeam() {
+function VisualTeam({ isEn }: { isEn: boolean }) {
+  const roles = isEn ? ["You", "Editor", "Client"] : ["Sen", "Editör", "Müşteri"];
   return (
     <div className="flex h-full items-center justify-center gap-3 px-4 sm:gap-5">
-      {["Sen", "Editör", "Müşteri"].map((role, i) => (
+      {roles.map((role, i) => (
         <motion.div
           key={role}
           className="flex flex-col items-center gap-2"
@@ -204,7 +254,7 @@ function VisualTeam() {
   );
 }
 
-function VisualAnalytics() {
+function VisualAnalytics({ isEn }: { isEn: boolean }) {
   const bars = [35, 55, 42, 70, 58, 88];
   return (
     <div className="flex h-full flex-col items-center justify-center px-8">
@@ -225,7 +275,7 @@ function VisualAnalytics() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
       >
-        Haftalık performans · hazır
+        {isEn ? "Weekly performance · ready" : "Haftalık performans · hazır"}
       </motion.p>
     </div>
   );
@@ -233,7 +283,35 @@ function VisualAnalytics() {
 
 const visuals = [VisualAI, VisualAds, VisualTeam, VisualAnalytics];
 
+const chrome = {
+  tr: {
+    eyebrow: "Özellikler & Çözümler",
+    title: "Operasyon sorunlarına",
+    accent: "net cevaplar.",
+    lead: "Özellik listesi değil — günlük operasyonunuzdaki gerçek sorunlara canlı çözüm.",
+    pain: "Sorun",
+    withBonero: "Bonero ile",
+    detail: "Detayı gör",
+    packages: "Paketlere bak",
+    cta: "Hemen Başlayın",
+  },
+  en: {
+    eyebrow: "Features & solutions",
+    title: "Clear answers to",
+    accent: "ops problems.",
+    lead: "Not a feature list — live solutions for the real problems in your day-to-day operations.",
+    pain: "Problem",
+    withBonero: "With Bonero",
+    detail: "See details",
+    packages: "View packages",
+    cta: "Get Started",
+  },
+};
+
 export default function Features() {
+  const { locale } = useLocale();
+  const isEn = locale === "en";
+  const t = chrome[locale];
   const [active, setActive] = useState(0);
   const [inView, setInView] = useState(false);
   const current = features[active];
@@ -258,10 +336,10 @@ export default function Features() {
 
   useEffect(() => {
     if (!inView) return;
-    const t = window.setTimeout(() => {
+    const timer = window.setTimeout(() => {
       setActive((p) => (p + 1) % features.length);
     }, CYCLE_MS);
-    return () => clearTimeout(t);
+    return () => clearTimeout(timer);
   }, [active, inView]);
 
   return (
@@ -281,15 +359,14 @@ export default function Features() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="max-w-2xl">
           <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
-            Özellikler & Çözümler
+            {t.eyebrow}
           </p>
           <h2 className="font-heading mt-3 text-3xl !font-extrabold tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.75rem]">
-            Operasyon sorunlarına
-            <span className="mt-1 block text-bonero-green">net cevaplar.</span>
+            {t.title}
+            <span className="mt-1 block text-bonero-green">{t.accent}</span>
           </h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-bonero-dark/55">
-            Özellik listesi değil — günlük operasyonunuzdaki gerçek sorunlara
-            canlı çözüm.
+            {t.lead}
           </p>
         </Reveal>
 
@@ -309,7 +386,7 @@ export default function Features() {
                 }`}
               >
                 <FIcon size={15} strokeWidth={1.75} />
-                {f.tag}
+                {f.tag[locale]}
               </button>
             );
           })}
@@ -317,38 +394,36 @@ export default function Features() {
 
         <div className="mt-8 w-full min-w-0 overflow-hidden rounded-2xl border border-bonero-dark/8 bg-white shadow-[0_24px_60px_rgba(30,41,59,0.08)] sm:rounded-[1.5rem]">
           <div className="grid w-full min-w-0 lg:grid-cols-2 lg:items-stretch">
-            {/* Visual fills full left column height */}
             <div className="relative flex min-h-[240px] min-w-0 flex-col border-b border-bonero-dark/6 bg-[#f3f6f4] lg:min-h-full lg:border-r lg:border-b-0">
               <div className="flex shrink-0 items-center gap-2 px-4 pt-4 sm:px-5 sm:pt-5">
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-bonero-green text-white">
                   <Icon size={15} strokeWidth={1.75} />
                 </span>
                 <span className="truncate text-sm font-semibold text-bonero-dark">
-                  {current.name}
+                  {current.name[locale]}
                 </span>
               </div>
 
               <div className="relative min-h-[200px] flex-1">
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={active}
+                    key={`${active}-${locale}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                     className="absolute inset-0"
                   >
-                    <Visual />
+                    <Visual isEn={isEn} />
                   </motion.div>
                 </AnimatePresence>
               </div>
             </div>
 
-            {/* Copy — compact, no overflow */}
             <div className="flex min-w-0 flex-col justify-between gap-5 p-5 sm:gap-6 sm:p-6 lg:p-7">
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={active}
+                  key={`${active}-${locale}`}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
@@ -356,21 +431,21 @@ export default function Features() {
                   className="min-w-0"
                 >
                   <p className="text-[10px] font-semibold tracking-[0.18em] text-amber-600/70 uppercase">
-                    Sorun
+                    {t.pain}
                   </p>
                   <p className="mt-1 text-sm leading-snug text-bonero-dark/45">
-                    {current.pain}
+                    {current.pain[locale]}
                   </p>
 
                   <p className="mt-4 text-[10px] font-semibold tracking-[0.18em] text-bonero-green uppercase">
-                    Bonero ile
+                    {t.withBonero}
                   </p>
                   <h3 className="font-heading mt-1 text-xl !font-extrabold tracking-wide break-words text-bonero-dark sm:text-[1.35rem] sm:leading-snug">
-                    {current.solution}
+                    {current.solution[locale]}
                   </h3>
 
                   <ul className="mt-4 space-y-2">
-                    {current.points.map((p, i) => (
+                    {current.points[locale].map((p, i) => (
                       <motion.li
                         key={p}
                         initial={{ opacity: 0, x: 6 }}
@@ -394,21 +469,21 @@ export default function Features() {
                     href={featureHref(current.detailSlug)}
                     className="inline-flex items-center justify-center rounded-lg border border-bonero-dark/12 bg-white px-4 py-2 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/25"
                   >
-                    Detayı gör
+                    {t.detail}
                   </Link>
                 ) : (
                   <a
                     href="/paketler"
                     className="inline-flex items-center justify-center rounded-lg border border-bonero-dark/12 bg-white px-4 py-2 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/25"
                   >
-                    Paketlere bak
+                    {t.packages}
                   </a>
                 )}
                 <Link
                   href={PANEL_REGISTER_URL}
                   className="inline-flex items-center justify-center rounded-lg bg-bonero-green px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-bonero-green/90"
                 >
-                  Hemen Başlayın
+                  {t.cta}
                 </Link>
               </div>
             </div>

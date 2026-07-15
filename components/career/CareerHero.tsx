@@ -4,11 +4,40 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { goToCareerApply } from "@/lib/go-to-career-apply";
+import { useLocale } from "@/components/LocaleProvider";
 import CareerHeroVisual from "./CareerHeroVisual";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+const copy = {
+  tr: {
+    eyebrow: "Kariyer",
+    brand: "Bonero",
+    h1Before: "Operasyonu sadeleştiren",
+    h1Accent: "ekibe",
+    h1After: "katıl.",
+    lead: "Omnichannel AI platformunu ürün, tasarım, mühendislik ve müşteri başarısıyla birlikte büyütüyoruz.",
+    apply: "Başvuru yap",
+    roles: "Açık alanları gör",
+    note: "Açık ilan olmasa da doğru kişiyi dinliyoruz.",
+  },
+  en: {
+    eyebrow: "Careers",
+    brand: "Bonero",
+    h1Before: "Join the",
+    h1Accent: "team",
+    h1After: "simplifying operations.",
+    lead: "We are growing the omnichannel AI platform together across product, design, engineering, and customer success.",
+    apply: "Apply now",
+    roles: "See open areas",
+    note: "Even without an open listing, we listen to the right people.",
+  },
+};
+
 export default function CareerHero() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+
   return (
     <section className="relative overflow-x-clip bg-background pt-28 pb-14 sm:pt-32 sm:pb-16 lg:pb-20">
       <div
@@ -32,7 +61,7 @@ export default function CareerHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease }}
           >
-            Kariyer
+            {t.eyebrow}
           </motion.p>
 
           <motion.p
@@ -41,7 +70,7 @@ export default function CareerHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.04, ease }}
           >
-            Bonero
+            {t.brand}
           </motion.p>
 
           <motion.h1
@@ -50,8 +79,9 @@ export default function CareerHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.1, ease }}
           >
-            Operasyonu sadeleştiren{" "}
-            <span className="text-bonero-green">ekibe</span> katıl.
+            {t.h1Before}{" "}
+            <span className="text-bonero-green">{t.h1Accent}</span>{" "}
+            {t.h1After}
           </motion.h1>
 
           <motion.p
@@ -60,8 +90,7 @@ export default function CareerHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.22, ease }}
           >
-            Omnichannel AI platformunu ürün, tasarım, mühendislik ve müşteri
-            başarısıyla birlikte büyütüyoruz.
+            {t.lead}
           </motion.p>
 
           <motion.div
@@ -75,7 +104,7 @@ export default function CareerHero() {
               onClick={() => goToCareerApply()}
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-bonero-green px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-bonero-green/20 transition-colors hover:bg-bonero-green/90"
             >
-              Başvuru yap
+              {t.apply}
               <ArrowDown
                 size={16}
                 className="transition-transform group-hover:translate-y-0.5"
@@ -85,7 +114,7 @@ export default function CareerHero() {
               href="#roller"
               className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-bonero-dark/12 bg-white/80 px-5 py-3.5 text-sm font-medium text-bonero-dark/70 transition-colors hover:border-bonero-dark/20 hover:text-bonero-dark"
             >
-              Açık alanları gör
+              {t.roles}
               <ArrowRight size={15} />
             </Link>
           </motion.div>
@@ -96,7 +125,7 @@ export default function CareerHero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.45, duration: 0.4 }}
           >
-            Açık ilan olmasa da doğru kişiyi dinliyoruz.
+            {t.note}
           </motion.p>
         </div>
 

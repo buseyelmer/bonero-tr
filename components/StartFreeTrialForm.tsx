@@ -1,17 +1,52 @@
 "use client";
 
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Loader2 } from "lucide-react";
 import {
-  startFreeTrialSchema,
+  getStartFreeTrialSchema,
   type StartFreeTrialValues,
 } from "@/lib/start-free-trial-schema";
 import { useToast } from "@/components/ToastProvider";
+import { useLocale } from "@/components/LocaleProvider";
 
 type Props = {
   /** editorial = underline fields for contact split layout */
   variant?: "card" | "editorial";
+};
+
+const copy = {
+  tr: {
+    fullName: "Ad Soyad",
+    companyName: "Şirket adı",
+    email: "E-posta",
+    message: "Mesaj",
+    fullNamePlaceholder: "Adınız ve soyadınız",
+    companyPlaceholder: "Şirket adınız",
+    emailPlaceholder: "ornek@sirket.com",
+    messagePlaceholder: "İhtiyaçlarınızı kısaca yazın…",
+    submitting: "Gönderiliyor…",
+    submit: "Mesaj gönder",
+    toast: "Talebiniz bize ulaştı, en kısa sürede dönüş yapacağız.",
+    cardEyebrow: "İletişim formu",
+    cardLead: "Sorunuz veya işbirliği notunuz — 1 iş günü içinde dönüş yaparız.",
+  },
+  en: {
+    fullName: "Full name",
+    companyName: "Company name",
+    email: "Email",
+    message: "Message",
+    fullNamePlaceholder: "Your first and last name",
+    companyPlaceholder: "Your company name",
+    emailPlaceholder: "you@company.com",
+    messagePlaceholder: "Briefly describe what you need…",
+    submitting: "Sending…",
+    submit: "Send message",
+    toast: "We received your request and will get back to you shortly.",
+    cardEyebrow: "Contact form",
+    cardLead: "Your question or partnership note — we reply within 1 business day.",
+  },
 };
 
 const cardField =
@@ -21,14 +56,17 @@ const editorialField =
   "w-full border-0 border-b bg-transparent px-0 py-3 text-base text-bonero-dark outline-none transition-colors placeholder:text-bonero-dark/30 focus:border-bonero-green focus:ring-0 sm:text-sm";
 
 export default function StartFreeTrialForm({ variant = "card" }: Props) {
+  const { locale } = useLocale();
+  const t = copy[locale];
   const { toast } = useToast();
+  const schema = useMemo(() => getStartFreeTrialSchema(locale), [locale]);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<StartFreeTrialValues>({
-    resolver: zodResolver(startFreeTrialSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       fullName: "",
       companyName: "",
@@ -40,10 +78,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
   const onSubmit = async () => {
     await new Promise((resolve) => setTimeout(resolve, 700));
     reset();
-    toast(
-      "Talebiniz bize ulaştı, en kısa sürede dönüş yapacağız.",
-      "success",
-    );
+    toast(t.toast, "success");
   };
 
   if (variant === "editorial") {
@@ -55,7 +90,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
               htmlFor="fullName"
               className="block text-[10px] font-semibold tracking-[0.16em] text-bonero-dark/40 uppercase"
             >
-              Ad Soyad
+              {t.fullName}
             </label>
             <input
               id="fullName"
@@ -65,7 +100,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
               className={`${editorialField} ${
                 errors.fullName ? "border-red-400" : "border-bonero-dark/20"
               }`}
-              placeholder="Adınız ve soyadınız"
+              placeholder={t.fullNamePlaceholder}
               {...register("fullName")}
             />
             {errors.fullName && (
@@ -79,7 +114,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
               htmlFor="companyName"
               className="block text-[10px] font-semibold tracking-[0.16em] text-bonero-dark/40 uppercase"
             >
-              Şirket adı
+              {t.companyName}
             </label>
             <input
               id="companyName"
@@ -89,7 +124,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
               className={`${editorialField} ${
                 errors.companyName ? "border-red-400" : "border-bonero-dark/20"
               }`}
-              placeholder="Şirket adınız"
+              placeholder={t.companyPlaceholder}
               {...register("companyName")}
             />
             {errors.companyName && (
@@ -105,7 +140,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             htmlFor="email"
             className="block text-[10px] font-semibold tracking-[0.16em] text-bonero-dark/40 uppercase"
           >
-            E-posta
+            {t.email}
           </label>
           <input
             id="email"
@@ -115,7 +150,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             className={`${editorialField} ${
               errors.email ? "border-red-400" : "border-bonero-dark/20"
             }`}
-            placeholder="ornek@sirket.com"
+            placeholder={t.emailPlaceholder}
             {...register("email")}
           />
           {errors.email && (
@@ -130,7 +165,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             htmlFor="message"
             className="block text-[10px] font-semibold tracking-[0.16em] text-bonero-dark/40 uppercase"
           >
-            Mesaj
+            {t.message}
           </label>
           <textarea
             id="message"
@@ -139,7 +174,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             className={`${editorialField} resize-none ${
               errors.message ? "border-red-400" : "border-bonero-dark/20"
             }`}
-            placeholder="İhtiyaçlarınızı kısaca yazın…"
+            placeholder={t.messagePlaceholder}
             {...register("message")}
           />
           {errors.message && (
@@ -157,11 +192,11 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
           {isSubmitting ? (
             <>
               <Loader2 size={16} className="animate-spin" />
-              Gönderiliyor…
+              {t.submitting}
             </>
           ) : (
             <>
-              Mesaj gönder
+              {t.submit}
               <ArrowRight size={16} />
             </>
           )}
@@ -178,11 +213,9 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
     >
       <div className="border-b border-bonero-dark/6 px-6 py-5 sm:px-8">
         <p className="text-xs font-semibold tracking-[0.16em] text-bonero-green uppercase">
-          İletişim formu
+          {t.cardEyebrow}
         </p>
-        <p className="mt-1.5 text-sm text-bonero-dark/55">
-          Sorunuz veya işbirliği notunuz — 1 iş günü içinde dönüş yaparız.
-        </p>
+        <p className="mt-1.5 text-sm text-bonero-dark/55">{t.cardLead}</p>
       </div>
       <div className="grid gap-5 p-6 sm:grid-cols-2 sm:p-8">
         <div>
@@ -190,7 +223,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             htmlFor="fullName"
             className="mb-1.5 block text-sm font-medium text-bonero-dark"
           >
-            Ad Soyad
+            {t.fullName}
           </label>
           <input
             id="fullName"
@@ -199,7 +232,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             className={`${cardField} ${
               errors.fullName ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="Adınız ve soyadınız"
+            placeholder={t.fullNamePlaceholder}
             {...register("fullName")}
           />
           {errors.fullName && (
@@ -211,7 +244,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             htmlFor="companyName"
             className="mb-1.5 block text-sm font-medium text-bonero-dark"
           >
-            Şirket adı
+            {t.companyName}
           </label>
           <input
             id="companyName"
@@ -220,7 +253,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             className={`${cardField} ${
               errors.companyName ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="Şirket adınız"
+            placeholder={t.companyPlaceholder}
             {...register("companyName")}
           />
           {errors.companyName && (
@@ -234,7 +267,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             htmlFor="email"
             className="mb-1.5 block text-sm font-medium text-bonero-dark"
           >
-            E-posta
+            {t.email}
           </label>
           <input
             id="email"
@@ -243,7 +276,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             className={`${cardField} ${
               errors.email ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="ornek@sirket.com"
+            placeholder={t.emailPlaceholder}
             {...register("email")}
           />
           {errors.email && (
@@ -255,7 +288,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             htmlFor="message"
             className="mb-1.5 block text-sm font-medium text-bonero-dark"
           >
-            Mesaj
+            {t.message}
           </label>
           <textarea
             id="message"
@@ -263,7 +296,7 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
             className={`${cardField} resize-y ${
               errors.message ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="İhtiyaçlarınızı kısaca yazın…"
+            placeholder={t.messagePlaceholder}
             {...register("message")}
           />
           {errors.message && (
@@ -280,11 +313,11 @@ export default function StartFreeTrialForm({ variant = "card" }: Props) {
           {isSubmitting ? (
             <>
               <Loader2 size={16} className="animate-spin" />
-              Gönderiliyor…
+              {t.submitting}
             </>
           ) : (
             <>
-              Mesaj gönder
+              {t.submit}
               <ArrowRight size={16} />
             </>
           )}

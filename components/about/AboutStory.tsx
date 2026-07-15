@@ -11,55 +11,120 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "@/components/Reveal";
+import { useLocale } from "@/components/LocaleProvider";
 
 type StoryCard = {
   icon: LucideIcon;
   step: string;
-  label: string;
-  title: string;
-  description: string;
-  keyword: string;
-  beats: string[];
-  impact: string;
+  label: { tr: string; en: string };
+  title: { tr: string; en: string };
+  description: { tr: string; en: string };
+  keyword: { tr: string; en: string };
+  beats: { tr: string[]; en: string[] };
+  impact: { tr: string; en: string };
 };
 
 const cards: StoryCard[] = [
   {
     icon: Mail,
     step: "01",
-    label: "Sorun",
-    title: "E-posta Karmaşası",
-    description:
-      "İçerik e-posta zincirinde kaybolur. Onay süreci günlerce sürer. Müşteri teslimatı her seferinde gecikir.",
-    keyword: "e-posta zinciri",
-    beats: ["23 mail · 1 içerik", "CC kaos", "Onay kayıp"],
-    impact: "Ortalama 4.2 gün onay gecikmesi",
+    label: { tr: "Sorun", en: "Problem" },
+    title: { tr: "E-posta Karmaşası", en: "Email overload" },
+    description: {
+      tr: "İçerik e-posta zincirinde kaybolur. Onay süreci günlerce sürer. Müşteri teslimatı her seferinde gecikir.",
+      en: "Content gets lost in email threads. Approvals drag on for days. Client delivery slips every time.",
+    },
+    keyword: { tr: "e-posta zinciri", en: "email thread" },
+    beats: {
+      tr: ["23 mail · 1 içerik", "CC kaos", "Onay kayıp"],
+      en: ["23 emails · 1 asset", "CC chaos", "Approval lost"],
+    },
+    impact: {
+      tr: "Ortalama 4.2 gün onay gecikmesi",
+      en: "Average 4.2-day approval delay",
+    },
   },
   {
     icon: Workflow,
     step: "02",
-    label: "Sorun",
-    title: "Operasyonel Sürtünme",
-    description:
-      "Dağınık kanallar, tekrarlayan takip, belirsiz sorumluluk. Her müşteri teslimatı ayrı bir kriz gibi işler.",
-    keyword: "onay süreci",
-    beats: ["3 araç · 0 sahiplik", "Takip döngüsü", "Geciken yayın"],
-    impact: "Ekip zamanının %35’i takipte kaybolur",
+    label: { tr: "Sorun", en: "Problem" },
+    title: { tr: "Operasyonel Sürtünme", en: "Operational friction" },
+    description: {
+      tr: "Dağınık kanallar, tekrarlayan takip, belirsiz sorumluluk. Her müşteri teslimatı ayrı bir kriz gibi işler.",
+      en: "Scattered channels, endless follow-ups, unclear ownership. Every client delivery feels like a crisis.",
+    },
+    keyword: { tr: "onay süreci", en: "approval workflow" },
+    beats: {
+      tr: ["3 araç · 0 sahiplik", "Takip döngüsü", "Geciken yayın"],
+      en: ["3 tools · 0 ownership", "Follow-up loop", "Delayed publish"],
+    },
+    impact: {
+      tr: "Ekip zamanının %35'i takipte kaybolur",
+      en: "35% of team time lost to follow-ups",
+    },
   },
   {
     icon: Sparkles,
     step: "03",
-    label: "Çözüm",
-    title: "Bonero Basitliği",
-    description:
-      "Tek panel. Net onay süreci. Şeffaf müşteri teslimatı. Bağlan, üret, yayına al — öğrenme eğrisi yok.",
-    keyword: "müşteri teslimatı",
-    beats: ["Tek panel", "Anlık onay", "Şeffaf teslimat"],
-    impact: "Tek akış · sıfır sürtünme · ölçülebilir teslimat",
+    label: { tr: "Çözüm", en: "Solution" },
+    title: { tr: "Bonero Basitliği", en: "The Bonero way" },
+    description: {
+      tr: "Tek panel. Net onay süreci. Şeffaf müşteri teslimatı. Bağlan, üret, yayına al — öğrenme eğrisi yok.",
+      en: "One panel. Clear approvals. Transparent client delivery. Connect, create, publish — no learning curve.",
+    },
+    keyword: { tr: "müşteri teslimatı", en: "client delivery" },
+    beats: {
+      tr: ["Tek panel", "Anlık onay", "Şeffaf teslimat"],
+      en: ["Single panel", "Instant approval", "Transparent delivery"],
+    },
+    impact: {
+      tr: "Tek akış · sıfır sürtünme · ölçülebilir teslimat",
+      en: "One flow · zero friction · measurable delivery",
+    },
   },
 ];
 
-function MiniScene({ step, lit }: { step: string; lit: boolean }) {
+const sceneCopy = {
+  tr: {
+    unread: "+19 okunmamış",
+    flowActive: "Akış aktif",
+    flowSteps: ["Bağlan", "Üret", "Yayına al"],
+  },
+  en: {
+    unread: "+19 unread",
+    flowActive: "Flow active",
+    flowSteps: ["Connect", "Create", "Publish"],
+  },
+};
+
+const copy = {
+  tr: {
+    eyebrow: "Hikayemiz",
+    title: "Neden Bonero?",
+    subtitle:
+      "Üzerine geldiğiniz kart yeşile döner — sorun veya çözüm, aktif olan öne çıkar.",
+    cta: "Bizimle tanışın",
+  },
+  en: {
+    eyebrow: "Our story",
+    title: "Why Bonero?",
+    subtitle:
+      "Hover a card and it turns green — problem or solution, the active one takes center stage.",
+    cta: "Meet the team",
+  },
+};
+
+function MiniScene({
+  step,
+  lit,
+  locale,
+}: {
+  step: string;
+  lit: boolean;
+  locale: "tr" | "en";
+}) {
+  const s = sceneCopy[locale];
+
   if (step === "01") {
     return (
       <div
@@ -76,7 +141,7 @@ function MiniScene({ step, lit }: { step: string; lit: boolean }) {
               : "bg-red-500/10 text-red-500/80"
           }`}
         >
-          +19 okunmamış
+          {s.unread}
         </div>
         {[0, 1, 2].map((i) => (
           <motion.div
@@ -177,10 +242,10 @@ function MiniScene({ step, lit }: { step: string; lit: boolean }) {
             animate={{ scale: [1, 1.45, 1], opacity: [0.65, 1, 0.65] }}
             transition={{ duration: 1.4, repeat: Infinity }}
           />
-          <span className="text-[10px] font-medium text-white/65">Akış aktif</span>
+          <span className="text-[10px] font-medium text-white/65">{s.flowActive}</span>
         </div>
         <div className="space-y-2">
-          {["Bağlan", "Üret", "Yayına al"].map((label, i) => (
+          {s.flowSteps.map((label, i) => (
             <div key={label} className="flex items-center gap-2">
               <motion.span
                 className="h-1 flex-1 origin-left rounded-full bg-bonero-green/50"
@@ -201,11 +266,13 @@ function StoryCardItem({
   index,
   active,
   onActivate,
+  locale,
 }: {
   card: StoryCard;
   index: number;
   active: boolean;
   onActivate: () => void;
+  locale: "tr" | "en";
 }) {
   const Icon = card.icon;
 
@@ -262,7 +329,7 @@ function StoryCardItem({
                 animate={active ? { scale: [1, 1.6, 1] } : {}}
                 transition={{ duration: 1.2, repeat: Infinity }}
               />
-              {card.label}
+              {card.label[locale]}
             </span>
           </div>
           <motion.span
@@ -279,7 +346,7 @@ function StoryCardItem({
         </div>
 
         <div className="relative mt-5">
-          <MiniScene step={card.step} lit={active} />
+          <MiniScene step={card.step} lit={active} locale={locale} />
         </div>
 
         <div className="relative mt-6 flex flex-1 flex-col">
@@ -288,14 +355,14 @@ function StoryCardItem({
               active ? "text-white" : "text-bonero-dark"
             }`}
           >
-            {card.title}
+            {card.title[locale]}
           </h3>
           <p
             className={`mt-3 text-sm leading-relaxed ${
               active ? "text-white/65" : "text-bonero-dark/60"
             }`}
           >
-            {card.description}
+            {card.description[locale]}
           </p>
 
           <AnimatePresence>
@@ -306,14 +373,14 @@ function StoryCardItem({
                 exit={{ opacity: 0, height: 0, marginTop: 0 }}
                 className="overflow-hidden text-xs font-semibold text-bonero-green"
               >
-                → {card.impact}
+                → {card.impact[locale]}
               </motion.p>
             )}
           </AnimatePresence>
 
           <div className="mt-auto pt-5">
             <div className="flex flex-wrap gap-2">
-              {card.beats.map((beat) => (
+              {card.beats[locale].map((beat) => (
                 <span
                   key={beat}
                   className={`rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide ${
@@ -331,7 +398,7 @@ function StoryCardItem({
                 active ? "text-white/35" : "text-bonero-dark/30"
               }`}
             >
-              {card.keyword}
+              {card.keyword[locale]}
             </p>
           </div>
         </div>
@@ -348,6 +415,8 @@ function StoryCardItem({
 }
 
 export default function AboutStory() {
+  const { locale } = useLocale();
+  const t = copy[locale];
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -378,14 +447,13 @@ export default function AboutStory() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <Reveal className="max-w-2xl">
             <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
-              Hikayemiz
+              {t.eyebrow}
             </p>
             <h2 className="font-heading mt-4 text-3xl !font-extrabold tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.75rem]">
-              Neden Bonero?
+              {t.title}
             </h2>
             <p className="mt-5 text-base leading-relaxed text-bonero-dark/55">
-              Üzerine geldiğiniz kart yeşile döner — sorun veya çözüm, aktif olan
-              öne çıkar.
+              {t.subtitle}
             </p>
           </Reveal>
 
@@ -397,7 +465,7 @@ export default function AboutStory() {
                   type="button"
                   onClick={() => setActive(i)}
                   className="group flex flex-1 items-center gap-2 lg:flex-none"
-                  aria-label={`${c.step} ${c.title}`}
+                  aria-label={`${c.step} ${c.title[locale]}`}
                   aria-pressed={active === i}
                 >
                   <span
@@ -443,14 +511,14 @@ export default function AboutStory() {
             >
               <div className="flex items-center gap-3">
                 <span className="text-xs font-semibold tracking-[0.16em] text-bonero-green uppercase">
-                  {cards[active].step} · {cards[active].label}
+                  {cards[active].step} · {cards[active].label[locale]}
                 </span>
                 <span className="font-heading text-base !font-extrabold sm:text-lg">
-                  {cards[active].title}
+                  {cards[active].title[locale]}
                 </span>
               </div>
               <p className="text-sm font-medium text-bonero-green">
-                {cards[active].impact}
+                {cards[active].impact[locale]}
               </p>
             </motion.div>
           </AnimatePresence>
@@ -459,11 +527,12 @@ export default function AboutStory() {
         <div className="mt-8 grid gap-5 md:grid-cols-3 md:gap-6">
           {cards.map((card, index) => (
             <StoryCardItem
-              key={card.title}
+              key={card.step}
               card={card}
               index={index}
               active={active === index}
               onActivate={() => setActive(index)}
+              locale={locale}
             />
           ))}
         </div>
@@ -473,7 +542,7 @@ export default function AboutStory() {
             href="/iletisim"
             className="inline-flex items-center gap-2 rounded-xl bg-bonero-green px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-bonero-green/90"
           >
-            Bizimle tanışın
+            {t.cta}
             <ArrowRight size={16} strokeWidth={2} />
           </Link>
         </Reveal>

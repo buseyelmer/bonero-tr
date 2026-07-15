@@ -22,12 +22,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${article.title} — Yardım Merkezi`,
-    description: article.description,
+    title: `${article.title.tr} — Yardım Merkezi`,
+    description: article.description.tr,
     alternates: { canonical: `/yardim/${article.slug}` },
     openGraph: {
-      title: `${article.title} | Bonero Yardım`,
-      description: article.description,
+      title: `${article.title.tr} | Bonero Yardım`,
+      description: article.description.tr,
       url: `/yardim/${article.slug}`,
     },
   };

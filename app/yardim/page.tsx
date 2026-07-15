@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import HelpHero from "@/components/help/HelpHero";
-import HelpTopics from "@/components/help/HelpTopics";
-import HelpArticles from "@/components/help/HelpArticles";
+import HelpHub from "@/components/help/HelpHub";
 import HelpFaq from "@/components/help/HelpFaq";
 import HelpCta from "@/components/help/HelpCta";
 
@@ -15,9 +13,7 @@ export const metadata: Metadata = {
 export default function HelpCenterPage() {
   return (
     <main className="flex-1 bg-background">
-      <HelpHero />
-      <HelpArticles />
-      <HelpTopics />
+      <HelpHub />
       <HelpFaq />
       <HelpCta />
     </main>

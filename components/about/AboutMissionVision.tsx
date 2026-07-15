@@ -2,20 +2,97 @@
 
 import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
+import { useLocale } from "@/components/LocaleProvider";
 
-const missionSignals = [
-  { label: "Operasyonel yük", value: "↓", hint: "Tekrarlayan işler azalır" },
-  { label: "Strateji süresi", value: "↑", hint: "Ekip yaratıcılığa döner" },
-  { label: "Müşteri kalitesi", value: "↑", hint: "Teslimat netleşir" },
-];
+const missionSignals = {
+  tr: [
+    { label: "Operasyonel yük", value: "↓", hint: "Tekrarlayan işler azalır" },
+    { label: "Strateji süresi", value: "↑", hint: "Ekip yaratıcılığa döner" },
+    { label: "Müşteri kalitesi", value: "↑", hint: "Teslimat netleşir" },
+  ],
+  en: [
+    { label: "Operational load", value: "↓", hint: "Repetitive work drops" },
+    { label: "Strategy time", value: "↑", hint: "Teams return to creativity" },
+    { label: "Client quality", value: "↑", hint: "Delivery gets clearer" },
+  ],
+};
 
-const visionPillars = [
-  { title: "Omnichannel standart", body: "Her kanal, tek operasyon dili." },
-  { title: "Her ölçekte işletme", body: "Boutique’tan holding’e aynı kalite." },
-  { title: "Kurumsal kalite", body: "Süreç, şeffaflık, ölçülebilir sonuç." },
-];
+const visionPillars = {
+  tr: [
+    { title: "Omnichannel standart", body: "Her kanal, tek operasyon dili." },
+    { title: "Her ölçekte işletme", body: "Boutique'tan holding'e aynı kalite." },
+    { title: "Kurumsal kalite", body: "Süreç, şeffaflık, ölçülebilir sonuç." },
+  ],
+  en: [
+    { title: "Omnichannel standard", body: "Every channel, one operational language." },
+    { title: "Businesses of every size", body: "Boutique to holding — same quality." },
+    { title: "Enterprise-grade quality", body: "Process, transparency, measurable outcomes." },
+  ],
+};
+
+const copy = {
+  tr: {
+    eyebrow: "Kurumsal yön",
+    title: "Ne için varız —",
+    titleAccent: "nereye gidiyoruz",
+    subtitle:
+      "Müşteriye yansıyan kalite: yaratıcılığa alan, operasyonda kurumsal standart.",
+    cardLabel: "İki kutup · tek yön",
+    cardLine: "Bugünden yarına köprü",
+    missionEyebrow: "Misyon · Bugün",
+    missionTitle: "Yaratıcılığa alan açmak",
+    missionBody:
+      "Ekipleri operasyonel yükten arındırarak, yaratıcılığa ve stratejiye odaklanabilecekleri bir çalışma ortamı sunmak.",
+    howItWorks: "Nasıl çalışır",
+    steps: [
+      { t: "Operasyon", s: "yükü çıkar" },
+      { t: "Alan", s: "açılır" },
+      { t: "Yaratıcılık", s: "öne geçer" },
+    ],
+    missionQuote: "Ekip stratejiye döner — müşteri teslimatı netleşir.",
+    visionEyebrow: "Vizyon · Yarın",
+    visionTitle: "Operasyon standardı",
+    visionBody:
+      "Dijital dünyada omnichannel iletişimin standardını belirlemek; her büyüklükteki işletmenin, kurumsal bir operasyon kalitesine ulaşmasını sağlamak.",
+    manifestoEyebrow: "Manifesto",
+    manifestoTitle: "Her işletme — kurumsal operasyon kalitesinde.",
+    manifestoTags: ["Yaratıcılık", "Strateji", "Şeffaflık"],
+  },
+  en: {
+    eyebrow: "Corporate direction",
+    title: "Why we exist —",
+    titleAccent: "where we're headed",
+    subtitle:
+      "Quality your clients feel: room for creativity, enterprise standards in operations.",
+    cardLabel: "Two poles · one direction",
+    cardLine: "A bridge from today to tomorrow",
+    missionEyebrow: "Mission · Today",
+    missionTitle: "Make room for creativity",
+    missionBody:
+      "Free teams from operational burden so they can focus on creativity and strategy in a workspace built for both.",
+    howItWorks: "How it works",
+    steps: [
+      { t: "Operations", s: "load lifts" },
+      { t: "Space", s: "opens up" },
+      { t: "Creativity", s: "takes the lead" },
+    ],
+    missionQuote: "Teams return to strategy — client delivery gets clearer.",
+    visionEyebrow: "Vision · Tomorrow",
+    visionTitle: "The operations standard",
+    visionBody:
+      "Set the standard for omnichannel communication in the digital world — so businesses of every size reach enterprise-grade operational quality.",
+    manifestoEyebrow: "Manifesto",
+    manifestoTitle: "Every business — at enterprise operational quality.",
+    manifestoTags: ["Creativity", "Strategy", "Transparency"],
+  },
+};
 
 export default function AboutMissionVision() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+  const signals = missionSignals[locale];
+  const pillars = visionPillars[locale];
+
   return (
     <section className="relative overflow-hidden border-t border-bonero-dark/6 py-20 sm:py-28">
       <div
@@ -52,15 +129,14 @@ export default function AboutMissionVision() {
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-12">
           <Reveal className="lg:col-span-8">
             <p className="text-sm font-medium tracking-wide text-white/40 uppercase">
-              Kurumsal yön
+              {t.eyebrow}
             </p>
             <h2 className="font-heading mt-4 max-w-2xl text-3xl !font-extrabold tracking-wide text-white sm:text-4xl lg:text-[2.75rem]">
-              Ne için varız —{" "}
-              <span className="text-bonero-green">nereye gidiyoruz</span>
+              {t.title}{" "}
+              <span className="text-bonero-green">{t.titleAccent}</span>
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/45">
-              Müşteriye yansıyan kalite: yaratıcılığa alan, operasyonda
-              kurumsal standart.
+              {t.subtitle}
             </p>
           </Reveal>
 
@@ -78,17 +154,16 @@ export default function AboutMissionVision() {
               </div>
               <div>
                 <p className="text-[10px] font-semibold tracking-[0.16em] text-white/35 uppercase">
-                  İki kutup · tek yön
+                  {t.cardLabel}
                 </p>
                 <p className="mt-0.5 text-sm font-medium text-white/70">
-                  Bugünden yarına köprü
+                  {t.cardLine}
                 </p>
               </div>
             </div>
           </Reveal>
         </div>
 
-        {/* Axis connector — M → V */}
         <div
           className="relative mx-[8%] mt-12 mb-2 hidden h-4 lg:block"
           aria-hidden="true"
@@ -130,31 +205,25 @@ export default function AboutMissionVision() {
                   </motion.span>
                   <div>
                     <p className="text-xs font-semibold tracking-[0.2em] text-bonero-green uppercase">
-                      Misyon · Bugün
+                      {t.missionEyebrow}
                     </p>
                     <h3 className="font-heading mt-1 text-2xl !font-extrabold text-white sm:text-3xl">
-                      Yaratıcılığa alan açmak
+                      {t.missionTitle}
                     </h3>
                   </div>
                 </div>
               </div>
 
               <p className="relative mt-6 text-lg leading-relaxed text-white/70 sm:text-xl">
-                Ekipleri operasyonel yükten arındırarak, yaratıcılığa ve
-                stratejiye odaklanabilecekleri bir çalışma ortamı sunmak.
+                {t.missionBody}
               </p>
 
-              {/* Middle filler — closes the empty gap */}
               <div className="relative mt-7 rounded-2xl border border-white/10 bg-black/25 p-5">
                 <p className="text-[10px] font-semibold tracking-[0.16em] text-bonero-green uppercase">
-                  Nasıl çalışır
+                  {t.howItWorks}
                 </p>
                 <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-0">
-                  {[
-                    { t: "Operasyon", s: "yükü çıkar" },
-                    { t: "Alan", s: "açılır" },
-                    { t: "Yaratıcılık", s: "öne geçer" },
-                  ].map((step, i) => (
+                  {t.steps.map((step, i) => (
                     <div key={step.t} className="flex flex-1 items-center gap-3">
                       <div className="min-w-0">
                         <p className="font-heading text-sm !font-extrabold text-white">
@@ -172,12 +241,12 @@ export default function AboutMissionVision() {
                   ))}
                 </div>
                 <p className="mt-5 border-t border-white/8 pt-4 text-sm leading-relaxed text-white/55 italic">
-                  “Ekip stratejiye döner — müşteri teslimatı netleşir.”
+                  &ldquo;{t.missionQuote}&rdquo;
                 </p>
               </div>
 
               <div className="relative mt-6 grid grid-cols-3 gap-3">
-                {missionSignals.map((s, i) => (
+                {signals.map((s, i) => (
                   <motion.div
                     key={s.label}
                     className="rounded-2xl border border-white/8 bg-black/25 px-3 py-4 text-center transition-colors group-hover:border-bonero-green/25"
@@ -214,23 +283,21 @@ export default function AboutMissionVision() {
                   </span>
                   <div>
                     <p className="text-xs font-semibold tracking-[0.2em] text-bonero-green uppercase">
-                      Vizyon · Yarın
+                      {t.visionEyebrow}
                     </p>
                     <h3 className="font-heading mt-1 text-2xl !font-extrabold text-white sm:text-3xl">
-                      Operasyon standardı
+                      {t.visionTitle}
                     </h3>
                   </div>
                 </div>
               </div>
 
               <p className="relative mt-8 text-lg leading-relaxed text-white/70 sm:text-xl">
-                Dijital dünyada omnichannel iletişimin standardını belirlemek;
-                her büyüklükteki işletmenin, kurumsal bir operasyon kalitesine
-                ulaşmasını sağlamak.
+                {t.visionBody}
               </p>
 
               <div className="relative mt-auto space-y-3 pt-10">
-                {visionPillars.map((item, i) => (
+                {pillars.map((item, i) => (
                   <motion.div
                     key={item.title}
                     className="flex items-start gap-3 rounded-xl border border-white/8 bg-black/20 px-4 py-3.5"
@@ -265,19 +332,19 @@ export default function AboutMissionVision() {
             <div className="relative flex flex-col gap-4 px-6 py-7 sm:flex-row sm:items-center sm:justify-between sm:px-8">
               <div>
                 <p className="text-[11px] font-semibold tracking-[0.18em] text-white/70 uppercase">
-                  Manifesto
+                  {t.manifestoEyebrow}
                 </p>
                 <p className="font-heading mt-1 text-xl !font-extrabold text-white sm:text-2xl">
-                  Her işletme — kurumsal operasyon kalitesinde.
+                  {t.manifestoTitle}
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
-                {["Yaratıcılık", "Strateji", "Şeffaflık"].map((t) => (
+                {t.manifestoTags.map((tag) => (
                   <span
-                    key={t}
+                    key={tag}
                     className="rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white"
                   >
-                    {t}
+                    {tag}
                   </span>
                 ))}
               </div>

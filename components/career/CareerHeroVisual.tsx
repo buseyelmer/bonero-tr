@@ -10,38 +10,67 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { goToCareerApply } from "@/lib/go-to-career-apply";
+import { useLocale } from "@/components/LocaleProvider";
+import type { CareerRoleId } from "@/lib/career-roles";
+
+type ListedCareerRoleId = Exclude<CareerRoleId, "other">;
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const CYCLE_MS = 3800;
 
-const seats: {
-  icon: LucideIcon;
-  title: string;
-  focus: string;
-}[] = [
-  {
-    icon: Package,
-    title: "Ürün",
-    focus: "Sahayı yol haritasına çevirenler",
-  },
-  {
-    icon: Layout,
-    title: "Tasarım",
-    focus: "Karmaşığı sade ve güvenilir gösterenler",
-  },
-  {
-    icon: Code2,
-    title: "Mühendislik",
-    focus: "Omnichannel altyapıyı sağlam kuranlar",
-  },
-  {
-    icon: Headphones,
-    title: "Müşteri başarısı",
-    focus: "Ekipleri canlıda başarıya taşıyanlar",
-  },
+const seatMeta: { id: ListedCareerRoleId; icon: LucideIcon }[] = [
+  { id: "product", icon: Package },
+  { id: "design", icon: Layout },
+  { id: "engineering", icon: Code2 },
+  { id: "customer-success", icon: Headphones },
 ];
 
+const copy = {
+  tr: {
+    eyebrow: "Açık alanlar",
+    title: "Ekibe katıl",
+    roleLabel: "rol",
+    apply: "Bu alana başvur",
+    seats: {
+      product: { title: "Ürün", focus: "Sahayı yol haritasına çevirenler" },
+      design: { title: "Tasarım", focus: "Karmaşığı sade ve güvenilir gösterenler" },
+      engineering: {
+        title: "Mühendislik",
+        focus: "Omnichannel altyapıyı sağlam kuranlar",
+      },
+      "customer-success": {
+        title: "Müşteri başarısı",
+        focus: "Ekipleri canlıda başarıya taşıyanlar",
+      },
+    },
+  },
+  en: {
+    eyebrow: "Open areas",
+    title: "Join the team",
+    roleLabel: "roles",
+    apply: "Apply for this area",
+    seats: {
+      product: { title: "Product", focus: "Turning field insight into roadmap" },
+      design: { title: "Design", focus: "Making complexity simple and trustworthy" },
+      engineering: {
+        title: "Engineering",
+        focus: "Building reliable omnichannel infrastructure",
+      },
+      "customer-success": {
+        title: "Customer success",
+        focus: "Helping teams succeed in production",
+      },
+    },
+  },
+};
+
 export default function CareerHeroVisual() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+  const seats = seatMeta.map((meta) => ({
+    ...meta,
+    ...t.seats[meta.id],
+  }));
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -52,7 +81,7 @@ export default function CareerHeroVisual() {
       CYCLE_MS,
     );
     return () => clearInterval(id);
-  }, [paused, active]);
+  }, [paused, active, seats.length]);
 
   const current = seats[active];
   const ActiveIcon = current.icon;
@@ -90,10 +119,10 @@ export default function CareerHeroVisual() {
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-[10px] font-semibold tracking-[0.16em] text-bonero-dark/35 uppercase">
-                Açık alanlar
+                {t.eyebrow}
               </p>
               <p className="font-heading mt-0.5 text-lg tracking-wide text-bonero-dark">
-                Ekibe katıl
+                {t.title}
               </p>
             </div>
             <div className="rounded-xl bg-bonero-green/10 px-3 py-2 text-center">
@@ -101,7 +130,7 @@ export default function CareerHeroVisual() {
                 {String(seats.length).padStart(2, "0")}
               </p>
               <p className="mt-1 text-[9px] font-medium tracking-wide text-bonero-dark/40 uppercase">
-                rol
+                {t.roleLabel}
               </p>
             </div>
           </div>
@@ -110,7 +139,7 @@ export default function CareerHeroVisual() {
         <div className="relative p-5 sm:p-6">
           <AnimatePresence mode="wait">
             <motion.div
-              key={current.title}
+              key={current.id}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
@@ -136,10 +165,10 @@ export default function CareerHeroVisual() {
               </p>
               <button
                 type="button"
-                onClick={() => goToCareerApply(current.title)}
+                onClick={() => goToCareerApply(current.id)}
                 className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-bonero-green transition-opacity hover:opacity-80"
               >
-                Bu alana başvur
+                {t.apply}
                 <motion.span
                   animate={{ x: [0, 3, 0] }}
                   transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
@@ -156,7 +185,7 @@ export default function CareerHeroVisual() {
               const on = active === i;
               return (
                 <button
-                  key={seat.title}
+                  key={seat.id}
                   type="button"
                   onClick={() => setActive(i)}
                   aria-label={seat.title}

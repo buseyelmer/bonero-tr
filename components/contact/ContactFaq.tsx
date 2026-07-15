@@ -4,33 +4,70 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
+import { useLocale } from "@/components/LocaleProvider";
 
-const faqs = [
-  {
-    q: "Neredesiniz ve hangi saatlerde çalışıyorsunuz?",
-    a: "İstanbul, Türkiye. Pazartesi–Cuma 09:00–18:00 (GMT+3) arası yanıt veriyoruz.",
+const copy = {
+  tr: {
+    eyebrow: "SSS",
+    title: "Sık sorulanlar",
+    lead: "Çalışma saatleri, demo, kurulum ve destek — forma yazmadan önce bilmeniz gerekenler.",
+    faqs: [
+      {
+        q: "Neredesiniz ve hangi saatlerde çalışıyorsunuz?",
+        a: "İstanbul, Türkiye. Pazartesi–Cuma 09:00–18:00 (GMT+3) arası yanıt veriyoruz.",
+      },
+      {
+        q: "Demo ücretsiz mi?",
+        a: "Evet. İlk görüşme ve ürün demosu ücretsizdir. Formdan veya hello@bonero.tr üzerinden talep edin.",
+      },
+      {
+        q: "Hesap açtıktan sonra ne kadar sürede kullanırım?",
+        a: "Çoğu hesap yaklaşık 15 dakikada kanallarını bağlayıp Unified Inbox’a düşer.",
+      },
+      {
+        q: "Destek talep etmek için nereye yazmalıyım?",
+        a: "Bu form, hello@bonero.tr veya Yardım Merkezi yeterlidir. Teknik kurulum için Yardım sayfasındaki konulara da bakabilirsiniz.",
+      },
+      {
+        q: "Faturalama ve paket değişiklikleri?",
+        a: "Paketler sayfasından planları karşılaştırabilirsiniz. Yükseltme veya fatura soruları için forma yazın; 1 iş günü içinde dönüş yaparız.",
+      },
+    ],
   },
-  {
-    q: "Demo ücretsiz mi?",
-    a: "Evet. İlk görüşme ve ürün demosu ücretsizdir. Formdan veya hello@bonero.tr üzerinden talep edin.",
+  en: {
+    eyebrow: "FAQ",
+    title: "Frequently asked",
+    lead: "Hours, demos, setup, and support — what to know before you write.",
+    faqs: [
+      {
+        q: "Where are you based and what are your hours?",
+        a: "Istanbul, Turkey. We respond Monday–Friday, 09:00–18:00 (GMT+3).",
+      },
+      {
+        q: "Is the demo free?",
+        a: "Yes. The first call and product demo are free. Request one via the form or at hello@bonero.tr.",
+      },
+      {
+        q: "How soon can I use Bonero after signing up?",
+        a: "Most accounts connect channels and land in Unified Inbox in about 15 minutes.",
+      },
+      {
+        q: "Where should I go for support?",
+        a: "This form, hello@bonero.tr, or the Help Center. For technical setup, see the topics on the Help page.",
+      },
+      {
+        q: "Billing and plan changes?",
+        a: "Compare plans on the Pricing page. For upgrades or invoice questions, use the form — we reply within 1 business day.",
+      },
+    ],
   },
-  {
-    q: "Hesap açtıktan sonra ne kadar sürede kullanırım?",
-    a: "Çoğu hesap yaklaşık 15 dakikada kanallarını bağlayıp Unified Inbox’a düşer.",
-  },
-  {
-    q: "Destek talep etmek için nereye yazmalıyım?",
-    a: "Bu form, hello@bonero.tr veya Yardım Merkezi yeterlidir. Teknik kurulum için Yardım sayfasındaki konulara da bakabilirsiniz.",
-  },
-  {
-    q: "Faturalama ve paket değişiklikleri?",
-    a: "Paketler sayfasından planları karşılaştırabilirsiniz. Yükseltme veya fatura soruları için forma yazın; 1 iş günü içinde dönüş yaparız.",
-  },
-];
+};
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function ContactFaq() {
+  const { locale } = useLocale();
+  const t = copy[locale];
   const [open, setOpen] = useState(0);
 
   return (
@@ -45,20 +82,19 @@ export default function ContactFaq() {
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <Reveal className="lg:col-span-4">
             <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
-              SSS
+              {t.eyebrow}
             </p>
             <h2 className="font-heading mt-3 text-3xl tracking-wide text-bonero-dark sm:text-4xl">
-              Sık sorulanlar
+              {t.title}
             </h2>
             <p className="mt-4 text-base leading-relaxed text-bonero-dark/55">
-              Çalışma saatleri, demo, kurulum ve destek — forma yazmadan önce
-              bilmeniz gerekenler.
+              {t.lead}
             </p>
           </Reveal>
 
           <div className="lg:col-span-8">
             <ul className="space-y-2">
-              {faqs.map((item, i) => {
+              {t.faqs.map((item, i) => {
                 const isOpen = open === i;
                 return (
                   <Reveal key={item.q} delay={i * 0.04}>

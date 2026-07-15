@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
+import { useLocale } from "@/components/LocaleProvider";
+import { pickL } from "@/lib/locale-copy";
 import {
   HELP_ARTICLES,
   HELP_CATEGORIES,
@@ -8,7 +12,30 @@ import {
   type HelpArticle,
 } from "@/lib/help";
 
-function ArticleRow({ article }: { article: HelpArticle }) {
+const copy = {
+  tr: {
+    eyebrow: "Makaleler",
+    title: "Programı adım adım öğrenin",
+    lead: "Yardım Merkezi, Bonero’nun tamamını kullanmayı öğretmeniz için makalelerle büyür. Aşağıda ilk rehberler var — kategoriye göre de gezebilirsiniz.",
+    minRead: "dk",
+  },
+  en: {
+    eyebrow: "Articles",
+    title: "Learn the platform step by step",
+    lead: "The Help Center grows with articles to teach you all of Bonero. First guides are below — browse by category too.",
+    minRead: "min",
+  },
+};
+
+function ArticleRow({
+  article,
+  locale,
+  minRead,
+}: {
+  article: HelpArticle;
+  locale: "tr" | "en";
+  minRead: string;
+}) {
   const category = getHelpCategory(article.category);
 
   return (
@@ -19,20 +46,20 @@ function ArticleRow({ article }: { article: HelpArticle }) {
       <div className="min-w-0 flex-1">
         {category && (
           <p className="text-[11px] font-semibold tracking-[0.14em] text-bonero-green uppercase">
-            {category.title}
+            {pickL(category.title, locale)}
           </p>
         )}
         <h3 className="font-heading mt-1.5 text-xl text-bonero-dark transition-colors group-hover:text-bonero-green sm:text-2xl">
-          {article.title}
+          {pickL(article.title, locale)}
         </h3>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-bonero-dark/55 sm:text-base">
-          {article.description}
+          {pickL(article.description, locale)}
         </p>
       </div>
       <div className="flex shrink-0 items-center gap-3 text-sm text-bonero-dark/40">
         <span className="inline-flex items-center gap-1.5">
           <Clock size={14} />
-          {article.readingMinutes} dk
+          {article.readingMinutes} {minRead}
         </span>
         <ArrowRight
           size={16}
@@ -44,6 +71,9 @@ function ArticleRow({ article }: { article: HelpArticle }) {
 }
 
 export default function HelpArticles() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+
   return (
     <section
       id="makaleler"
@@ -52,15 +82,13 @@ export default function HelpArticles() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <p className="text-sm font-medium tracking-wide text-bonero-green uppercase">
-            Makaleler
+            {t.eyebrow}
           </p>
           <h2 className="font-heading mt-3 text-3xl !font-extrabold tracking-wide text-bonero-dark sm:text-4xl">
-            Programı adım adım öğrenin
+            {t.title}
           </h2>
           <p className="mt-3 text-base leading-relaxed text-bonero-dark/55">
-            Yardım Merkezi, Bonero’nun tamamını kullanmayı öğretmeniz için
-            makalelerle büyür. Aşağıda ilk rehberler var — kategoriye göre de
-            gezebilirsiniz.
+            {t.lead}
           </p>
         </div>
 
@@ -75,7 +103,7 @@ export default function HelpArticles() {
                 href={`#makaleler`}
                 className="inline-flex items-center gap-2 rounded-full border border-bonero-dark/10 bg-bonero-dark/[0.02] px-3.5 py-1.5 text-sm text-bonero-dark/70 transition-colors hover:border-bonero-green/30 hover:text-bonero-green"
               >
-                {cat.title}
+                {pickL(cat.title, locale)}
                 <span className="font-mono text-[11px] text-bonero-dark/35">
                   {count}
                 </span>
@@ -86,7 +114,12 @@ export default function HelpArticles() {
 
         <div className="mt-4 border-t border-bonero-dark/8">
           {HELP_ARTICLES.map((article) => (
-            <ArticleRow key={article.slug} article={article} />
+            <ArticleRow
+              key={article.slug}
+              article={article}
+              locale={locale}
+              minRead={t.minRead}
+            />
           ))}
         </div>
       </div>

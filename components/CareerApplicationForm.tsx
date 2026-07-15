@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useMemo } from "react";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowRight,
@@ -11,24 +11,90 @@ import {
   X,
 } from "lucide-react";
 import {
-  careerApplicationSchema,
+  getCareerApplicationSchema,
   type CareerApplicationValues,
 } from "@/lib/career-application-schema";
+import {
+  CAREER_ROLE_IDS,
+  careerRoleLabels,
+  resolveCareerRoleId,
+} from "@/lib/career-roles";
 import { useToast } from "@/components/ToastProvider";
+import { useLocale } from "@/components/LocaleProvider";
+
+const copy = {
+  tr: {
+    eyebrow: "Açık başvuru",
+    lead: "Ad, alan, CV ve kısa not — birkaç dakikada tamamlanır.",
+    fullName: "Ad Soyad",
+    email: "E-posta",
+    role: "İlgilendiğiniz alan",
+    linkedin: "LinkedIn",
+    optional: "(opsiyonel)",
+    cv: "CV",
+    cvReady: "hazır",
+    removeCv: "CV’yi kaldır",
+    cvDrop: "CV’nizi buraya bırakın veya seçin",
+    cvHint: "PDF, DOC veya DOCX · en fazla 5 MB",
+    whyBonero: "Neden Bonero?",
+    messagePlaceholder:
+      "Kısaca deneyiminizden ve birlikte ne inşa etmek istediğinizden bahsedin…",
+    privacyBefore: "Göndererek",
+    privacyLink: "KVKK",
+    privacyAfter: "bilgilendirmesini okuduğunuzu kabul edersiniz.",
+    submitting: "Gönderiliyor…",
+    submit: "Başvuruyu gönder",
+    toast: "Başvurunuz alındı — ekibimiz en kısa sürede dönüş yapacak.",
+    fullNamePlaceholder: "Adınız ve soyadınız",
+    emailPlaceholder: "ornek@mail.com",
+    linkedinPlaceholder: "https://linkedin.com/in/…",
+  },
+  en: {
+    eyebrow: "Open application",
+    lead: "Name, area, CV, and a short note — done in a few minutes.",
+    fullName: "Full name",
+    email: "Email",
+    role: "Area of interest",
+    linkedin: "LinkedIn",
+    optional: "(optional)",
+    cv: "CV",
+    cvReady: "ready",
+    removeCv: "Remove CV",
+    cvDrop: "Drop your CV here or browse",
+    cvHint: "PDF, DOC, or DOCX · up to 5 MB",
+    whyBonero: "Why Bonero?",
+    messagePlaceholder:
+      "Briefly share your experience and what you would like to build together…",
+    privacyBefore: "By submitting, you confirm that you have read the",
+    privacyLink: "Privacy Notice",
+    privacyAfter: ".",
+    submitting: "Sending…",
+    submit: "Submit application",
+    toast: "Application received — our team will get back to you shortly.",
+    fullNamePlaceholder: "Your first and last name",
+    emailPlaceholder: "you@email.com",
+    linkedinPlaceholder: "https://linkedin.com/in/…",
+  },
+};
 
 const fieldClass =
   "w-full rounded-xl border bg-white px-3.5 py-3 text-base text-bonero-dark outline-none transition-colors placeholder:text-bonero-dark/35 focus:border-bonero-green focus:ring-2 focus:ring-bonero-green/15 sm:text-sm";
 
-const roleOptions = [
-  "Ürün",
-  "Tasarım",
-  "Mühendislik",
-  "Müşteri başarısı",
-  "Diğer",
-] as const;
+type FormValues = {
+  fullName: string;
+  email: string;
+  role: CareerApplicationValues["role"] | "";
+  message: string;
+  linkedin: string;
+  cv: FileList;
+};
 
 export default function CareerApplicationForm() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+  const labels = careerRoleLabels[locale];
   const { toast } = useToast();
+  const schema = useMemo(() => getCareerApplicationSchema(locale), [locale]);
   const {
     register,
     handleSubmit,
@@ -36,8 +102,8 @@ export default function CareerApplicationForm() {
     watch,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<CareerApplicationValues>({
-    resolver: zodResolver(careerApplicationSchema),
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema) as Resolver<FormValues>,
     defaultValues: {
       fullName: "",
       email: "",
@@ -52,20 +118,21 @@ export default function CareerApplicationForm() {
   const selectedRole = watch("role");
 
   useEffect(() => {
-    const applyAlan = (alan: string | null) => {
-      if (alan && roleOptions.includes(alan as (typeof roleOptions)[number])) {
-        setValue("role", alan, { shouldValidate: true, shouldDirty: true });
+    const applyRole = (value: string | null) => {
+      const roleId = resolveCareerRoleId(value);
+      if (roleId) {
+        setValue("role", roleId, { shouldValidate: true, shouldDirty: true });
       }
     };
 
     const fromUrl = () => {
       const params = new URLSearchParams(window.location.search);
-      applyAlan(params.get("alan"));
+      applyRole(params.get("alan"));
     };
 
     const onCustom = (e: Event) => {
       const detail = (e as CustomEvent<{ alan: string | null }>).detail;
-      applyAlan(detail?.alan ?? null);
+      applyRole(detail?.alan ?? null);
     };
 
     fromUrl();
@@ -80,7 +147,7 @@ export default function CareerApplicationForm() {
   const onSubmit = async () => {
     await new Promise((resolve) => setTimeout(resolve, 700));
     reset();
-    toast("Başvurunuz alındı — ekibimiz en kısa sürede dönüş yapacak.", "success");
+    toast(t.toast, "success");
   };
 
   const clearCv = () => {
@@ -102,11 +169,9 @@ export default function CareerApplicationForm() {
 
       <div className="border-b border-bonero-dark/6 px-6 py-5 sm:px-8">
         <p className="text-xs font-semibold tracking-[0.16em] text-bonero-green uppercase">
-          Açık başvuru
+          {t.eyebrow}
         </p>
-        <p className="mt-1.5 text-sm text-bonero-dark/55">
-          Ad, alan, CV ve kısa not — birkaç dakikada tamamlanır.
-        </p>
+        <p className="mt-1.5 text-sm text-bonero-dark/55">{t.lead}</p>
       </div>
 
       <div className="grid gap-5 p-6 sm:grid-cols-2 sm:p-8">
@@ -115,7 +180,7 @@ export default function CareerApplicationForm() {
             htmlFor="career-fullName"
             className="mb-1.5 block text-sm font-medium text-bonero-dark"
           >
-            Ad Soyad
+            {t.fullName}
           </label>
           <input
             id="career-fullName"
@@ -125,7 +190,7 @@ export default function CareerApplicationForm() {
             className={`${fieldClass} ${
               errors.fullName ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="Adınız ve soyadınız"
+            placeholder={t.fullNamePlaceholder}
             {...register("fullName")}
           />
           {errors.fullName && (
@@ -140,7 +205,7 @@ export default function CareerApplicationForm() {
             htmlFor="career-email"
             className="mb-1.5 block text-sm font-medium text-bonero-dark"
           >
-            E-posta
+            {t.email}
           </label>
           <input
             id="career-email"
@@ -150,7 +215,7 @@ export default function CareerApplicationForm() {
             className={`${fieldClass} ${
               errors.email ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="ornek@mail.com"
+            placeholder={t.emailPlaceholder}
             {...register("email")}
           />
           {errors.email && (
@@ -162,17 +227,17 @@ export default function CareerApplicationForm() {
 
         <div className="sm:col-span-2">
           <p className="mb-2.5 text-sm font-medium text-bonero-dark">
-            İlgilendiğiniz alan
+            {t.role}
           </p>
           <div className="flex flex-wrap gap-2">
-            {roleOptions.map((role) => {
-              const selected = selectedRole === role;
+            {CAREER_ROLE_IDS.map((roleId) => {
+              const selected = selectedRole === roleId;
               return (
                 <button
-                  key={role}
+                  key={roleId}
                   type="button"
                   onClick={() =>
-                    setValue("role", role, {
+                    setValue("role", roleId, {
                       shouldValidate: true,
                       shouldDirty: true,
                     })
@@ -183,7 +248,7 @@ export default function CareerApplicationForm() {
                       : "border-bonero-dark/12 bg-white text-bonero-dark/65 hover:border-bonero-green/35 hover:text-bonero-dark"
                   }`}
                 >
-                  {role}
+                  {labels[roleId]}
                 </button>
               );
             })}
@@ -201,8 +266,8 @@ export default function CareerApplicationForm() {
             htmlFor="career-linkedin"
             className="mb-1.5 block text-sm font-medium text-bonero-dark"
           >
-            LinkedIn{" "}
-            <span className="font-normal text-bonero-dark/40">(opsiyonel)</span>
+            {t.linkedin}{" "}
+            <span className="font-normal text-bonero-dark/40">{t.optional}</span>
           </label>
           <input
             id="career-linkedin"
@@ -211,7 +276,7 @@ export default function CareerApplicationForm() {
             className={`${fieldClass} ${
               errors.linkedin ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="https://linkedin.com/in/…"
+            placeholder={t.linkedinPlaceholder}
             {...register("linkedin")}
           />
           {errors.linkedin && (
@@ -226,7 +291,7 @@ export default function CareerApplicationForm() {
             htmlFor="career-cv"
             className="mb-1.5 block text-sm font-medium text-bonero-dark"
           >
-            CV
+            {t.cv}
           </label>
           {cvFile ? (
             <div className="flex items-center justify-between gap-3 rounded-xl border border-bonero-green/25 bg-bonero-green/[0.04] px-4 py-4">
@@ -239,7 +304,7 @@ export default function CareerApplicationForm() {
                     {cvFile.name}
                   </p>
                   <p className="text-xs text-bonero-dark/45">
-                    {(cvFile.size / 1024).toFixed(0)} KB · hazır
+                    {(cvFile.size / 1024).toFixed(0)} KB · {t.cvReady}
                   </p>
                 </div>
               </div>
@@ -247,7 +312,7 @@ export default function CareerApplicationForm() {
                 type="button"
                 onClick={clearCv}
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-bonero-dark/40 transition-colors hover:bg-bonero-dark/5 hover:text-bonero-dark"
-                aria-label="CV’yi kaldır"
+                aria-label={t.removeCv}
               >
                 <X size={16} />
               </button>
@@ -265,11 +330,9 @@ export default function CareerApplicationForm() {
                 <FileUp size={18} strokeWidth={1.75} />
               </span>
               <span className="text-sm font-medium text-bonero-dark">
-                CV’nizi buraya bırakın veya seçin
+                {t.cvDrop}
               </span>
-              <span className="text-xs text-bonero-dark/45">
-                PDF, DOC veya DOCX · en fazla 5 MB
-              </span>
+              <span className="text-xs text-bonero-dark/45">{t.cvHint}</span>
             </label>
           )}
           <input
@@ -292,7 +355,7 @@ export default function CareerApplicationForm() {
             htmlFor="career-message"
             className="mb-1.5 block text-sm font-medium text-bonero-dark"
           >
-            Neden Bonero?
+            {t.whyBonero}
           </label>
           <textarea
             id="career-message"
@@ -301,7 +364,7 @@ export default function CareerApplicationForm() {
             className={`${fieldClass} resize-y ${
               errors.message ? "border-red-400" : "border-bonero-dark/15"
             }`}
-            placeholder="Kısaca deneyiminizden ve birlikte ne inşa etmek istediğinizden bahsedin…"
+            placeholder={t.messagePlaceholder}
             {...register("message")}
           />
           {errors.message && (
@@ -314,11 +377,11 @@ export default function CareerApplicationForm() {
 
       <div className="flex flex-col gap-4 border-t border-bonero-dark/6 bg-[#f8faf9] px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <p className="text-xs leading-relaxed text-bonero-dark/45">
-          Göndererek{" "}
+          {t.privacyBefore}{" "}
           <a href="/kvkk" className="underline hover:text-bonero-dark">
-            KVKK
+            {t.privacyLink}
           </a>{" "}
-          bilgilendirmesini okuduğunuzu kabul edersiniz.
+          {t.privacyAfter}
         </p>
         <button
           type="submit"
@@ -328,11 +391,11 @@ export default function CareerApplicationForm() {
           {isSubmitting ? (
             <>
               <Loader2 size={16} className="animate-spin" />
-              Gönderiliyor…
+              {t.submitting}
             </>
           ) : (
             <>
-              Başvuruyu gönder
+              {t.submit}
               <ArrowRight size={16} />
             </>
           )}

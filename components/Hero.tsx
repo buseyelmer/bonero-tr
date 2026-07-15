@@ -9,19 +9,19 @@ import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 const copy = {
   tr: {
-    badge: "Tüm işletmeler için",
-    h1: "Müşteri mesajları dağılmasın.",
-    h1Accent: "Tek panelde yönetin.",
-    lead: "WhatsApp, Instagram ve e-posta — Bonero’da birleşir. AI ilk yanıtı önerir; ekibiniz tek ekrandan gönderir. Dağınık paneller yerine ayda ortalama ~35 saat geri kalır.",
+    badge: "İşletme operasyon platformu",
+    h1: "İşletmeniz",
+    h1Accent: "emin ellerde.",
+    lead: "Mesaj, CRM ve randevu tek panelde. Siz müşteriye odaklanın — operasyon Bonero’da yürür.",
     cta: "Hemen Başlayın",
     secondary: "Ürünü görün",
     note: "Kayıt · ~15 dk kurulum · Aynı gün kullanın",
   },
   en: {
-    badge: "For every business",
-    h1: "Stop losing customer messages.",
-    h1Accent: "Run them in one panel.",
-    lead: "WhatsApp, Instagram, and email unify in Bonero. AI drafts the first reply; your team sends from one screen. Swap scattered tabs for ~35 hours back each month.",
+    badge: "Business operations platform",
+    h1: "Your business is in",
+    h1Accent: "safe hands.",
+    lead: "Messages, CRM, and bookings in one panel. You stay with the customer — Bonero runs the ops.",
     cta: "Get Started",
     secondary: "See the product",
     note: "Sign up · ~15 min setup · Start the same day",

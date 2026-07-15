@@ -5,44 +5,88 @@ import { ArrowUpRight, Shield, Plug, Users, Lock } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Reveal from "./Reveal";
+import { useLocale } from "./LocaleProvider";
 
 type FaqItem = {
-  q: string;
-  a: string;
-  tag: string;
+  q: { tr: string; en: string };
+  a: { tr: string; en: string };
+  tag: { tr: string; en: string };
   icon: typeof Shield;
 };
 
 const faqs: FaqItem[] = [
   {
-    tag: "Güvenlik",
+    tag: { tr: "Güvenlik", en: "Security" },
     icon: Lock,
-    q: "Tüm kanalları tek panelde toplamak güvenlik riski yaratır mı?",
-    a: "Hayır. Bonero tüm bağlantıları uçtan uca şifreli (SSL) API protokolleri üzerinden kurar. Veriler şifreli aktarılır ve saklanır; erişim rol bazlı yetkilendirme ile sınırlandırılır. Her çalışma alanı izole yönetilir.",
+    q: {
+      tr: "Tüm kanalları tek panelde toplamak güvenlik riski yaratır mı?",
+      en: "Does putting every channel in one panel create a security risk?",
+    },
+    a: {
+      tr: "Hayır. Bonero tüm bağlantıları uçtan uca şifreli (SSL) API protokolleri üzerinden kurar. Veriler şifreli aktarılır ve saklanır; erişim rol bazlı yetkilendirme ile sınırlandırılır. Her çalışma alanı izole yönetilir.",
+      en: "No. Bonero connects every channel through end-to-end encrypted (SSL) APIs. Data is encrypted in transit and at rest; access is limited with role-based permissions. Each workspace stays isolated.",
+    },
   },
   {
-    tag: "Veri",
+    tag: { tr: "Veri", en: "Data" },
     icon: Shield,
-    q: "Müşterilerimin verileri güvende mi?",
-    a: "Evet. Veriler şifreli aktarılır ve saklanır; erişim rol bazlı yetkilendirme ile sınırlandırılır. Her çalışma alanı izole yönetilir.",
+    q: {
+      tr: "Müşterilerimin verileri güvende mi?",
+      en: "Are my customers’ data safe?",
+    },
+    a: {
+      tr: "Evet. Veriler şifreli aktarılır ve saklanır; erişim rol bazlı yetkilendirme ile sınırlandırılır. Her çalışma alanı izole yönetilir.",
+      en: "Yes. Data is encrypted in transit and at rest; access is limited with role-based permissions. Each workspace stays isolated.",
+    },
   },
   {
-    tag: "Entegrasyon",
+    tag: { tr: "Entegrasyon", en: "Integrations" },
     icon: Plug,
-    q: "Hangi platformlarla entegre çalışıyor?",
-    a: "Instagram, Meta Business Suite, WhatsApp Business, Gmail, Outlook ve LinkedIn başta olmak üzere işletmelerin en çok kullandığı kanallarla entegre çalışır. Yeni entegrasyonlar düzenli olarak eklenir.",
+    q: {
+      tr: "Hangi platformlarla entegre çalışıyor?",
+      en: "Which platforms does it integrate with?",
+    },
+    a: {
+      tr: "Instagram, Meta Business Suite, WhatsApp Business, Gmail, Outlook ve LinkedIn başta olmak üzere işletmelerin en çok kullandığı kanallarla entegre çalışır. Yeni entegrasyonlar düzenli olarak eklenir.",
+      en: "It integrates with the channels businesses use most — including Instagram, Meta Business Suite, WhatsApp Business, Gmail, Outlook, and LinkedIn. New integrations ship regularly.",
+    },
   },
   {
-    tag: "Operasyon",
+    tag: { tr: "Operasyon", en: "Operations" },
     icon: Users,
-    q: "Birden fazla müşteri hesabı yönetebilir miyim?",
-    a: "Evet. Bonero çoklu müşteri yapısı için tasarlandı. Ekip rolleri, onay akışları ve raporları müşteri bazında ayrı ayrı yönetebilirsiniz.",
+    q: {
+      tr: "Birden fazla müşteri hesabı yönetebilir miyim?",
+      en: "Can I manage multiple client accounts?",
+    },
+    a: {
+      tr: "Evet. Bonero çoklu müşteri yapısı için tasarlandı. Ekip rolleri, onay akışları ve raporları müşteri bazında ayrı ayrı yönetebilirsiniz.",
+      en: "Yes. Bonero is built for multi-client work. Team roles, approval flows, and reports stay separate per client.",
+    },
   },
 ];
+
+const copy = {
+  tr: {
+    eyebrow: "SSS",
+    title: "Sıkça sorulan sorular",
+    lead: "Güvenlik, veri, entegrasyon ve operasyon — satışa yazmadan önce bilmeniz gerekenler.",
+    aria: "SSS",
+    still: "Hâlâ sorunuz mu var?",
+  },
+  en: {
+    eyebrow: "FAQ",
+    title: "Frequently asked questions",
+    lead: "Security, data, integrations, and operations — what to know before you reach out.",
+    aria: "FAQ",
+    still: "Still have a question?",
+  },
+};
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Faq() {
+  const { locale } = useLocale();
+  const t = copy[locale];
   const [active, setActive] = useState(0);
   const current = faqs[active];
   const Icon = current.icon;
@@ -60,28 +104,26 @@ export default function Faq() {
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <Reveal className="max-w-xl">
             <p className="text-sm font-medium tracking-wide text-bonero-green uppercase">
-              SSS
+              {t.eyebrow}
             </p>
             <h2 className="font-heading mt-3 text-3xl tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.65rem]">
-              Sıkça sorulan sorular
+              {t.title}
             </h2>
           </Reveal>
           <Reveal delay={0.06}>
             <p className="max-w-sm text-sm leading-relaxed text-bonero-dark/50">
-              Güvenlik, veri, entegrasyon ve operasyon — satışa yazmadan önce
-              bilmeniz gerekenler.
+              {t.lead}
             </p>
           </Reveal>
         </div>
 
         <div className="mt-12 grid gap-4 lg:grid-cols-12 lg:gap-6 lg:items-stretch">
-          {/* Question index */}
           <Reveal className="lg:col-span-5">
-            <ul className="flex flex-col gap-2" role="tablist" aria-label="SSS">
+            <ul className="flex flex-col gap-2" role="tablist" aria-label={t.aria}>
               {faqs.map((faq, i) => {
                 const on = active === i;
                 return (
-                  <li key={faq.q}>
+                  <li key={faq.q.en}>
                     <button
                       type="button"
                       role="tab"
@@ -106,14 +148,14 @@ export default function Faq() {
                             on ? "text-bonero-green" : "text-bonero-dark/35"
                           }`}
                         >
-                          {faq.tag}
+                          {faq.tag[locale]}
                         </span>
                         <span
                           className={`mt-1 block min-w-0 text-sm font-semibold leading-snug break-words sm:text-[0.95rem] ${
                             on ? "text-white" : "text-bonero-dark"
                           }`}
                         >
-                          {faq.q}
+                          {faq.q[locale]}
                         </span>
                       </span>
                     </button>
@@ -123,7 +165,6 @@ export default function Faq() {
             </ul>
           </Reveal>
 
-          {/* Answer stage */}
           <Reveal delay={0.08} className="lg:col-span-7">
             <div className="relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-[1.5rem] bg-white p-5 shadow-[0_24px_50px_-28px_rgba(30,41,59,0.2)] sm:min-h-[320px] sm:p-8">
               <div
@@ -149,15 +190,15 @@ export default function Faq() {
                       <Icon size={20} strokeWidth={1.75} />
                     </span>
                     <span className="rounded-full bg-bonero-dark/[0.05] px-3 py-1 text-[11px] font-bold tracking-wide text-bonero-dark/50 uppercase">
-                      {current.tag}
+                      {current.tag[locale]}
                     </span>
                   </div>
 
                   <h3 className="font-heading mt-6 text-xl tracking-wide break-words text-bonero-dark sm:text-2xl">
-                    {current.q}
+                    {current.q[locale]}
                   </h3>
                   <p className="mt-4 flex-1 text-base leading-relaxed break-words text-bonero-dark/60">
-                    {current.a}
+                    {current.a[locale]}
                   </p>
 
                   <div className="mt-8 flex items-center justify-between gap-4 border-t border-bonero-dark/6 pt-5">
@@ -168,7 +209,7 @@ export default function Faq() {
                       href="/iletisim"
                       className="group inline-flex items-center gap-1.5 text-sm font-semibold text-bonero-green transition-colors hover:text-bonero-dark"
                     >
-                      Hâlâ sorunuz mu var?
+                      {t.still}
                       <ArrowUpRight
                         size={15}
                         className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

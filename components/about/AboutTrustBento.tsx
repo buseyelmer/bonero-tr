@@ -12,58 +12,131 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "@/components/Reveal";
+import { useLocale } from "@/components/LocaleProvider";
 
 type Pillar = {
   icon: LucideIcon;
-  title: string;
-  line: string;
-  detail: string;
-  proof: string[];
+  title: { tr: string; en: string };
+  line: { tr: string; en: string };
+  detail: { tr: string; en: string };
+  proof: { tr: string[]; en: string[] };
 };
 
 const pillars: Pillar[] = [
   {
     icon: Radio,
-    title: "Her an yanınızda",
-    line: "Operasyonunuz hiçbir zaman durmasın.",
-    detail:
-      "İş temposuna ayak uyduran canlı destek — kesinti yok, bekleme yok. Operasyonunuz güvende kalsın.",
-    proof: ["Canlı destek hattı", "Operasyon SLA bilinci", "Hızlı eskalasyon"],
+    title: { tr: "Her an yanınızda", en: "Always by your side" },
+    line: {
+      tr: "Operasyonunuz hiçbir zaman durmasın.",
+      en: "Your operations never stop.",
+    },
+    detail: {
+      tr: "İş temposuna ayak uyduran canlı destek — kesinti yok, bekleme yok. Operasyonunuz güvende kalsın.",
+      en: "Live support that keeps pace with your business — no downtime, no waiting. Your operations stay protected.",
+    },
+    proof: {
+      tr: ["Canlı destek hattı", "Operasyon SLA bilinci", "Hızlı eskalasyon"],
+      en: ["Live support line", "Operations SLA awareness", "Fast escalation"],
+    },
   },
   {
     icon: Lock,
-    title: "Kurumsal Veri Koruma",
-    line: "Uçtan uca şifreleme · KVKK uyumlu altyapı.",
-    detail:
-      "Müşteri verileriniz izole çalışma alanlarında; erişim rol bazlı. Huzur, pazarlama cümlesi değil.",
-    proof: ["Uçtan uca şifreleme", "KVKK uyumu", "Rol bazlı erişim"],
+    title: { tr: "Kurumsal Veri Koruma", en: "Enterprise data protection" },
+    line: {
+      tr: "Uçtan uca şifreleme · KVKK uyumlu altyapı.",
+      en: "End-to-end encryption · GDPR-ready infrastructure.",
+    },
+    detail: {
+      tr: "Müşteri verileriniz izole çalışma alanlarında; erişim rol bazlı. Huzur, pazarlama cümlesi değil.",
+      en: "Client data lives in isolated workspaces with role-based access. Peace of mind — not just a tagline.",
+    },
+    proof: {
+      tr: ["Uçtan uca şifreleme", "KVKK uyumu", "Rol bazlı erişim"],
+      en: ["End-to-end encryption", "GDPR compliance", "Role-based access"],
+    },
   },
   {
     icon: Shield,
-    title: "Sorunsuz Geçiş",
-    line: "Tek tıkla veri aktarımı.",
-    detail:
-      "Mevcut hesaplarınızı yük olmadan Bonero’ya taşıyın. Geçiş günü stres değil, başlangıç olsun.",
-    proof: ["Tek tık taşıma", "Sıfır kesinti hedefi", "Rehberli onboarding"],
+    title: { tr: "Sorunsuz Geçiş", en: "Seamless migration" },
+    line: {
+      tr: "Tek tıkla veri aktarımı.",
+      en: "One-click data transfer.",
+    },
+    detail: {
+      tr: "Mevcut hesaplarınızı yük olmadan Bonero'ya taşıyın. Geçiş günü stres değil, başlangıç olsun.",
+      en: "Move your existing accounts to Bonero without the overhead. Migration day should feel like a fresh start, not stress.",
+    },
+    proof: {
+      tr: ["Tek tık taşıma", "Sıfır kesinti hedefi", "Rehberli onboarding"],
+      en: ["One-click migration", "Zero-downtime goal", "Guided onboarding"],
+    },
   },
 ];
 
-const signals = [
-  { label: "Şifreleme", value: "Aktif" },
-  { label: "KVKK", value: "Uyumlu" },
-  { label: "Destek", value: "Çevrimiçi" },
-  { label: "Uptime", value: "99.9%" },
-];
+const signals = {
+  tr: [
+    { label: "Şifreleme", value: "Aktif" },
+    { label: "KVKK", value: "Uyumlu" },
+    { label: "Destek", value: "Çevrimiçi" },
+    { label: "Uptime", value: "99.9%" },
+  ],
+  en: [
+    { label: "Encryption", value: "Active" },
+    { label: "GDPR", value: "Compliant" },
+    { label: "Support", value: "Online" },
+    { label: "Uptime", value: "99.9%" },
+  ],
+};
 
-const layers = [
-  { id: "edge", label: "Kenar", desc: "SSL / TLS · güvenli giriş kapısı" },
-  { id: "data", label: "Veri", desc: "Şifreli depolama · hesap izolasyonu" },
-  { id: "access", label: "Erişim", desc: "Rol · yetki · denetim izi" },
-];
+const layers = {
+  tr: [
+    { id: "edge", label: "Kenar", desc: "SSL / TLS · güvenli giriş kapısı" },
+    { id: "data", label: "Veri", desc: "Şifreli depolama · hesap izolasyonu" },
+    { id: "access", label: "Erişim", desc: "Rol · yetki · denetim izi" },
+  ],
+  en: [
+    { id: "edge", label: "Edge", desc: "SSL / TLS · secure entry gateway" },
+    { id: "data", label: "Data", desc: "Encrypted storage · account isolation" },
+    { id: "access", label: "Access", desc: "Role · permission · audit trail" },
+  ],
+};
+
+const copy = {
+  tr: {
+    ariaLabel: "SaaS Güven Merkezi",
+    eyebrow: "SaaS Güven Merkezi",
+    title: "Huzur satıyoruz.",
+    titleSub: "Teknik detaylar arka planda kalsın.",
+    subtitle:
+      "Operasyon kesintisiz, veri korunaklı, geçiş sorunsuz — müşteriniz güvende hissetsin, siz hissetmeyin.",
+    systemStatus: "Sistem durumu",
+    certificates: "Sertifikalar",
+    layerPrefix: "Katman",
+    protectionLayers: "Koruma katmanları",
+    cta: "Güven merkezi turu",
+  },
+  en: {
+    ariaLabel: "SaaS Trust Center",
+    eyebrow: "SaaS Trust Center",
+    title: "We sell peace of mind.",
+    titleSub: "Let the technical details stay in the background.",
+    subtitle:
+      "Uninterrupted operations, protected data, seamless migration — your clients feel secure, so you don't have to worry.",
+    systemStatus: "System status",
+    certificates: "Certifications",
+    layerPrefix: "Layer",
+    protectionLayers: "Protection layers",
+    cta: "Trust center tour",
+  },
+};
 
 const certs = ["AES-256", "TLS 1.3", "KVKK", "RBAC"];
 
 export default function AboutTrustBento() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+  const localeSignals = signals[locale];
+  const localeLayers = layers[locale];
   const [active, setActive] = useState(0);
   const [layer, setLayer] = useState(0);
   const [auto, setAuto] = useState(true);
@@ -73,15 +146,15 @@ export default function AboutTrustBento() {
     if (!auto) return;
     const id = window.setInterval(() => {
       setActive((p) => (p + 1) % pillars.length);
-      setLayer((p) => (p + 1) % layers.length);
+      setLayer((p) => (p + 1) % localeLayers.length);
     }, 5000);
     return () => window.clearInterval(id);
-  }, [auto]);
+  }, [auto, localeLayers.length]);
 
   return (
     <section
       id="guven-hakkimizda"
-      aria-label="SaaS Güven Merkezi"
+      aria-label={t.ariaLabel}
       className="relative overflow-hidden border-t border-bonero-dark/6 py-20 sm:py-28"
       onMouseEnter={() => setAuto(false)}
       onMouseLeave={() => setAuto(true)}
@@ -99,25 +172,23 @@ export default function AboutTrustBento() {
         <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-12">
           <Reveal className="lg:col-span-7">
             <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
-              SaaS Güven Merkezi
+              {t.eyebrow}
             </p>
             <h2 className="font-heading mt-4 text-3xl !font-extrabold tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.75rem]">
-              Huzur satıyoruz.
+              {t.title}
               <span className="mt-2 block text-bonero-dark/35">
-                Teknik detaylar arka planda kalsın.
+                {t.titleSub}
               </span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.1} className="lg:col-span-5">
             <p className="text-base leading-relaxed text-bonero-dark/55">
-              Operasyon kesintisiz, veri korunaklı, geçiş sorunsuz — müşteriniz
-              güvende hissetsin, siz hissetmeyin.
+              {t.subtitle}
             </p>
           </Reveal>
         </div>
 
-        {/* Status + certs */}
         <Reveal delay={0.12} className="mt-12">
           <div className="overflow-hidden rounded-2xl border border-bonero-dark/8 bg-white shadow-sm">
             <div className="flex flex-wrap items-center gap-3 px-4 py-3.5 sm:gap-6 sm:px-6">
@@ -130,11 +201,11 @@ export default function AboutTrustBento() {
                   <span className="absolute inset-0 animate-ping rounded-full bg-bonero-green/40" />
                   <span className="relative h-2.5 w-2.5 rounded-full bg-bonero-green" />
                 </motion.span>
-                Sistem durumu
+                {t.systemStatus}
               </span>
               <div className="hidden h-4 w-px bg-bonero-dark/10 sm:block" />
               <div className="flex flex-wrap gap-x-6 gap-y-2">
-                {signals.map((s) => (
+                {localeSignals.map((s) => (
                   <div key={s.label} className="flex items-center gap-2 text-sm">
                     <span className="text-bonero-dark/40">{s.label}</span>
                     <span className="font-semibold text-bonero-green">{s.value}</span>
@@ -144,7 +215,7 @@ export default function AboutTrustBento() {
             </div>
             <div className="flex flex-wrap gap-2 border-t border-bonero-dark/6 bg-[#f8faf9] px-4 py-3 sm:px-6">
               <span className="mr-1 self-center text-[10px] font-semibold tracking-[0.14em] text-bonero-dark/35 uppercase">
-                Sertifikalar
+                {t.certificates}
               </span>
               {certs.map((c) => (
                 <span
@@ -158,7 +229,6 @@ export default function AboutTrustBento() {
           </div>
         </Reveal>
 
-        {/* Command center */}
         <div className="mt-6 grid gap-5 lg:mt-8 lg:grid-cols-12 lg:gap-6">
           <Reveal className="lg:col-span-5">
             <div className="overflow-hidden rounded-[1.75rem] border border-bonero-dark/8 bg-white shadow-[0_16px_40px_rgba(30,41,59,0.05)]">
@@ -167,7 +237,7 @@ export default function AboutTrustBento() {
                 const isActive = active === index;
                 return (
                   <button
-                    key={p.title}
+                    key={p.title.tr}
                     type="button"
                     onClick={() => setActive(index)}
                     onMouseEnter={() => setActive(index)}
@@ -201,10 +271,10 @@ export default function AboutTrustBento() {
                     </span>
                     <div className="min-w-0">
                       <h3 className="font-heading text-base !font-extrabold text-bonero-dark sm:text-lg">
-                        {p.title}
+                        {p.title[locale]}
                       </h3>
                       <p className="mt-1 text-xs font-medium text-bonero-green sm:text-sm">
-                        {p.line}
+                        {p.line[locale]}
                       </p>
                     </div>
                   </button>
@@ -221,7 +291,6 @@ export default function AboutTrustBento() {
                   "linear-gradient(155deg, #123226 0%, #1e293b 48%, #0f172a 100%)",
               }}
             >
-              {/* Radar / shield visual */}
               <div
                 className="pointer-events-none absolute top-6 right-6 h-40 w-40 opacity-50 sm:h-48 sm:w-48"
                 aria-hidden="true"
@@ -263,22 +332,22 @@ export default function AboutTrustBento() {
                 >
                   <div className="max-w-md pr-28 sm:pr-36">
                     <p className="text-xs font-semibold tracking-[0.18em] text-bonero-green uppercase">
-                      Katman {String(active + 1).padStart(2, "0")}
+                      {t.layerPrefix} {String(active + 1).padStart(2, "0")}
                     </p>
                     <h3 className="font-heading mt-2 text-2xl !font-extrabold text-white sm:text-3xl">
-                      {pillars[active].title}
+                      {pillars[active].title[locale]}
                     </h3>
                     <p className="mt-3 text-sm leading-relaxed text-white/55">
-                      {pillars[active].detail}
+                      {pillars[active].detail[locale]}
                     </p>
                   </div>
 
                   <div className="mt-10">
                     <p className="mb-3 text-[10px] font-semibold tracking-[0.16em] text-white/35 uppercase">
-                      Koruma katmanları
+                      {t.protectionLayers}
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {layers.map((l, i) => (
+                      {localeLayers.map((l, i) => (
                         <button
                           key={l.id}
                           type="button"
@@ -301,12 +370,12 @@ export default function AboutTrustBento() {
                         exit={{ opacity: 0 }}
                         className="mt-3 text-sm text-white/60"
                       >
-                        {layers[layer].desc}
+                        {localeLayers[layer].desc}
                       </motion.p>
                     </AnimatePresence>
 
                     <div className="mt-5 space-y-2.5">
-                      {layers.map((l, i) => (
+                      {localeLayers.map((l, i) => (
                         <div key={l.id} className="flex items-center gap-3">
                           <span className="w-12 text-[10px] font-semibold tracking-wide text-white/30 uppercase">
                             {l.label}
@@ -328,7 +397,7 @@ export default function AboutTrustBento() {
 
                   <div className="mt-auto pt-8">
                     <ul className="mb-7 grid gap-2.5 sm:grid-cols-3">
-                      {pillars[active].proof.map((item) => (
+                      {pillars[active].proof[locale].map((item) => (
                         <li
                           key={item}
                           className="flex items-center gap-2 rounded-xl border border-white/8 bg-white/[0.04] px-3 py-2.5 text-xs text-white/70 sm:text-sm"
@@ -343,7 +412,7 @@ export default function AboutTrustBento() {
                       href="/iletisim"
                       className="inline-flex items-center gap-2 rounded-xl bg-bonero-green px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-bonero-green/90"
                     >
-                      Güven merkezi turu
+                      {t.cta}
                       <ArrowRight size={16} strokeWidth={2} />
                     </Link>
                   </div>

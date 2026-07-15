@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
   Bell,
   CalendarClock,
@@ -12,7 +11,7 @@ import {
   Send,
   type LucideIcon,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 import { useLocale } from "./LocaleProvider";
 
@@ -218,7 +217,6 @@ const copy = {
   },
 };
 
-const CYCLE = 6200;
 const ease = [0.22, 1, 0.36, 1] as const;
 
 function SceneOmnichannel({ locale }: { locale: Locale }) {
@@ -495,47 +493,18 @@ const scenes = [
 export default function UseCases() {
   const { locale } = useLocale();
   const t = copy[locale];
-  const [active, setActive] = useState(0);
-  const [inView, setInView] = useState(false);
-  const current = useCases[active];
-  const Icon = current.icon;
-  const Scene = scenes[active];
-
-  useEffect(() => {
-    const el = document.getElementById("kullanim-senaryolari");
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setInView(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.2 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!inView) return;
-    const next = window.setTimeout(() => {
-      setActive((p) => (p + 1) % useCases.length);
-    }, CYCLE);
-    return () => clearTimeout(next);
-  }, [active, inView]);
 
   return (
     <section
       id="kullanim-senaryolari"
-      className="relative overflow-hidden py-16 sm:py-24"
+      className="relative overflow-hidden py-20 sm:py-28"
       style={{
         background:
-          "linear-gradient(180deg, #f4f7f5 0%, #eef3f0 50%, #f7f9f8 100%)",
+          "linear-gradient(180deg, #f4f7f5 0%, #eef3f0 45%, #f7f9f8 100%)",
       }}
     >
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="max-w-xl">
+        <Reveal className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-medium tracking-wide text-bonero-dark/45 uppercase">
             {t.eyebrow}
           </p>
@@ -547,80 +516,62 @@ export default function UseCases() {
           </p>
         </Reveal>
 
-        <div className="mt-10 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mt-16 space-y-20 sm:mt-20 sm:space-y-28">
           {useCases.map((uc, i) => {
-            const on = active === i;
-            const UIcon = uc.icon;
+            const Icon = uc.icon;
+            const Scene = scenes[i];
+            const reverse = i % 2 === 1;
             return (
-              <button
-                key={uc.id}
-                type="button"
-                onClick={() => setActive(i)}
-                className={`inline-flex shrink-0 items-center gap-2.5 rounded-2xl px-4 py-3 text-left transition-colors ${
-                  on
-                    ? "bg-bonero-dark text-white shadow-lg shadow-bonero-dark/15"
-                    : "bg-white/80 text-bonero-dark/55 ring-1 ring-bonero-dark/8 hover:bg-white hover:text-bonero-dark"
-                }`}
-              >
-                <UIcon size={16} strokeWidth={1.75} />
-                <span className="text-sm font-semibold tracking-tight">
-                  {uc.title[locale]}
-                </span>
-              </button>
+              <Reveal key={uc.id} delay={0.04}>
+                <article className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+                  <div className={reverse ? "lg:order-2" : undefined}>
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-bonero-green text-white">
+                        <Icon size={18} strokeWidth={1.75} />
+                      </span>
+                      <p className="text-xs font-bold tracking-wide text-bonero-green uppercase">
+                        {uc.tagline[locale]}
+                      </p>
+                    </div>
+                    <h3 className="font-heading mt-5 text-2xl tracking-wide text-bonero-dark sm:text-3xl">
+                      {uc.title[locale]}
+                    </h3>
+                    <p className="mt-4 max-w-md text-base leading-relaxed text-bonero-dark/55">
+                      {uc.description[locale]}
+                    </p>
+                    <ul className="mt-8 space-y-4">
+                      {uc.beats.map((beat) => (
+                        <li key={beat.label[locale]} className="flex gap-3">
+                          <Check
+                            size={16}
+                            className="mt-0.5 shrink-0 text-bonero-green"
+                          />
+                          <span>
+                            <span className="block text-sm font-semibold text-bonero-dark">
+                              {beat.label[locale]}
+                            </span>
+                            <span className="mt-0.5 block text-sm text-bonero-dark/50">
+                              {beat.detail[locale]}
+                            </span>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-8 inline-flex rounded-full border border-bonero-green/20 bg-bonero-green/5 px-4 py-2 text-sm font-semibold text-bonero-green">
+                      {uc.outcome[locale]}
+                    </p>
+                  </div>
+                  <div
+                    className={`relative min-h-[280px] overflow-hidden rounded-[1.5rem] border border-bonero-dark/8 bg-white p-5 shadow-[0_24px_60px_rgba(30,41,59,0.08)] sm:min-h-[320px] sm:p-7 ${
+                      reverse ? "lg:order-1" : ""
+                    }`}
+                  >
+                    <Scene locale={locale} />
+                  </div>
+                </article>
+              </Reveal>
             );
           })}
-        </div>
-
-        <div className="mt-6 grid min-w-0 overflow-hidden rounded-[1.5rem] border border-bonero-dark/8 bg-white shadow-[0_20px_50px_-28px_rgba(30,41,59,0.25)] lg:grid-cols-12">
-          <div className="flex min-w-0 flex-col justify-center gap-6 border-b border-bonero-dark/6 p-6 sm:p-8 lg:col-span-5 lg:border-r lg:border-b-0">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.35, ease }}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-bonero-green text-white">
-                    <Icon size={18} strokeWidth={1.75} />
-                  </span>
-                  <p className="text-xs font-bold tracking-wide text-bonero-green uppercase">
-                    {current.tagline[locale]}
-                  </p>
-                </div>
-                <h3 className="font-heading mt-5 text-2xl tracking-wide text-bonero-dark sm:text-3xl">
-                  {current.title[locale]}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-bonero-dark/55 sm:text-base">
-                  {current.description[locale]}
-                </p>
-                <div className="mt-6 rounded-2xl border border-bonero-green/20 bg-bonero-green/5 px-4 py-3">
-                  <p className="text-[10px] font-bold tracking-wide text-bonero-green uppercase">
-                    {t.outcome}
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-bonero-dark">
-                    {current.outcome[locale]}
-                  </p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          <div className="relative min-h-[300px] overflow-hidden bg-[#f8faf9] p-5 sm:min-h-[340px] sm:p-7 lg:col-span-7">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current.id}
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.99 }}
-                transition={{ duration: 0.35, ease }}
-                className="relative h-full min-h-[240px]"
-              >
-                <Scene locale={locale} />
-              </motion.div>
-            </AnimatePresence>
-          </div>
         </div>
       </div>
     </section>

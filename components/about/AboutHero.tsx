@@ -2,8 +2,37 @@
 
 import { motion } from "framer-motion";
 import AboutHeroVisual from "./AboutHeroVisual";
+import { useLocale } from "@/components/LocaleProvider";
+
+const copy = {
+  tr: {
+    eyebrow: "Hakkımızda",
+    h1Line1: "İşletmelerin",
+    h1Highlight: "operasyonel kaosunu,",
+    h1Ai: "yapay zeka",
+    h1Mid: " ile ",
+    h1Shimmer: "şeffaf bir başarı hikayesine",
+    h1Suffix: " dönüştürüyoruz.",
+    lead:
+      "Bonero, karmaşık onay süreçlerini, dağınık iletişim kanallarını ve zaman kaybını tarihe gömen; işletmeler için özel geliştirilmiş bir operasyonel zeka platformudur.",
+  },
+  en: {
+    eyebrow: "About us",
+    h1Line1: "We turn",
+    h1Highlight: "operational chaos",
+    h1Ai: "AI",
+    h1Mid: " into a ",
+    h1Shimmer: "transparent success story",
+    h1Suffix: " for every business.",
+    lead:
+      "Bonero is an operational intelligence platform built for businesses — putting messy approval cycles, scattered channels, and wasted time in the past.",
+  },
+};
 
 export default function AboutHero() {
+  const { locale } = useLocale();
+  const t = copy[locale];
+
   return (
     <section className="relative min-h-[min(100svh,920px)] overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pb-24">
       <div
@@ -27,7 +56,6 @@ export default function AboutHero() {
 
       <div className="relative mx-auto grid min-h-[calc(min(100svh,920px)-8rem)] max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:px-8">
         <div className="relative max-w-xl min-w-0 pt-1">
-          {/* Vertical accent rail */}
           <motion.div
             className="absolute top-2 bottom-2 left-0 hidden w-[3px] origin-top rounded-full bg-gradient-to-b from-bonero-green via-bonero-green/50 to-transparent sm:block"
             initial={{ scaleY: 0 }}
@@ -43,7 +71,7 @@ export default function AboutHero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
-              Hakkımızda
+              {t.eyebrow}
             </motion.p>
 
             <h1 className="font-heading mt-4 text-[2rem] !font-extrabold leading-[1.14] tracking-wide text-bonero-dark sm:text-4xl lg:text-[2.75rem]">
@@ -53,9 +81,9 @@ export default function AboutHero() {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.65, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
               >
-                İşletmelerin{" "}
+                {t.h1Line1}{" "}
                 <span className="relative inline-block">
-                  <span className="relative z-10">operasyonel kaosunu,</span>
+                  <span className="relative z-10">{t.h1Highlight}</span>
                   <motion.span
                     className="absolute inset-x-0 bottom-1 -z-0 h-[0.35em] rounded-sm bg-bonero-green/15"
                     initial={{ scaleX: 0 }}
@@ -72,10 +100,10 @@ export default function AboutHero() {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
               >
-                <span className="text-bonero-green">yapay zeka</span>
-                {" ile "}
-                <span className="text-shimmer">şeffaf bir başarı hikayesine</span>
-                {" dönüştürüyoruz."}
+                <span className="text-bonero-green">{t.h1Ai}</span>
+                {t.h1Mid}
+                <span className="text-shimmer">{t.h1Shimmer}</span>
+                {t.h1Suffix}
               </motion.span>
             </h1>
 
@@ -85,9 +113,7 @@ export default function AboutHero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
-              Bonero, karmaşık onay süreçlerini, dağınık iletişim kanallarını ve
-              zaman kaybını tarihe gömen; işletmeler için özel geliştirilmiş bir
-              operasyonel zeka platformudur.
+              {t.lead}
             </motion.p>
           </div>
         </div>
