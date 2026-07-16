@@ -14,11 +14,11 @@ const copy = {
     faqs: [
       {
         q: "Neredesiniz ve hangi saatlerde çalışıyorsunuz?",
-        a: "İstanbul, Türkiye. Pazartesi–Cuma 09:00–18:00 (GMT+3) arası yanıt veriyoruz.",
+        a: "İzmir, Konak. Pazartesi–Cuma 09:00–18:00 (GMT+3) arası yanıt veriyoruz.",
       },
       {
         q: "Demo ücretsiz mi?",
-        a: "Evet. İlk görüşme ve ürün demosu ücretsizdir. Formdan veya hello@bonero.tr üzerinden talep edin.",
+        a: "Evet. İlk görüşme ve ürün demosu ücretsizdir. Formdan veya info@bonero.tr üzerinden talep edin.",
       },
       {
         q: "Hesap açtıktan sonra ne kadar sürede kullanırım?",
@@ -26,7 +26,7 @@ const copy = {
       },
       {
         q: "Destek talep etmek için nereye yazmalıyım?",
-        a: "Bu form, hello@bonero.tr veya Yardım Merkezi yeterlidir. Teknik kurulum için Yardım sayfasındaki konulara da bakabilirsiniz.",
+        a: "Bu form, info@bonero.tr veya Yardım Merkezi yeterlidir. Teknik kurulum için Yardım sayfasındaki konulara da bakabilirsiniz.",
       },
       {
         q: "Faturalama ve paket değişiklikleri?",
@@ -41,11 +41,11 @@ const copy = {
     faqs: [
       {
         q: "Where are you based and what are your hours?",
-        a: "Istanbul, Turkey. We respond Monday–Friday, 09:00–18:00 (GMT+3).",
+        a: "Izmir, Konak. We respond Monday–Friday, 09:00–18:00 (GMT+3).",
       },
       {
         q: "Is the demo free?",
-        a: "Yes. The first call and product demo are free. Request one via the form or at hello@bonero.tr.",
+        a: "Yes. The first call and product demo are free. Request one via the form or at info@bonero.tr.",
       },
       {
         q: "How soon can I use Bonero after signing up?",
@@ -53,7 +53,7 @@ const copy = {
       },
       {
         q: "Where should I go for support?",
-        a: "This form, hello@bonero.tr, or the Help Center. For technical setup, see the topics on the Help page.",
+        a: "This form, info@bonero.tr, or the Help Center. For technical setup, see the topics on the Help page.",
       },
       {
         q: "Billing and plan changes?",

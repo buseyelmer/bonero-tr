@@ -4,6 +4,14 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Clock, MapPin, Mail, Phone } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 import { useLocale } from "@/components/LocaleProvider";
+import {
+  CONTACT_CITY_EN,
+  CONTACT_CITY_TR,
+  CONTACT_EMAIL,
+  CONTACT_EMAIL_HREF,
+  CONTACT_PHONE_DISPLAY,
+  WHATSAPP_URL,
+} from "@/lib/contact";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -24,29 +32,32 @@ const copy = {
     status: [
       { label: "Çalışma saatleri", value: "Pzt–Cuma · 09:00–18:00" },
       { label: "Yanıt süresi", value: "1 iş günü içinde" },
-      { label: "Konum", value: "İstanbul, Türkiye" },
+      { label: "Konum", value: CONTACT_CITY_TR },
     ],
     channels: [
       {
         key: "email",
         label: "E-posta",
-        value: "hello@bonero.tr",
-        href: "mailto:hello@bonero.tr",
+        value: CONTACT_EMAIL,
+        href: CONTACT_EMAIL_HREF,
         action: "Yaz →",
+        external: true,
       },
       {
         key: "phone",
         label: "Telefon",
-        value: "+90 (212) 000 00 00",
-        href: "tel:+902120000000",
+        value: CONTACT_PHONE_DISPLAY,
+        href: WHATSAPP_URL,
         action: "Ara →",
+        external: true,
       },
       {
         key: "address",
         label: "Adres",
-        value: "İstanbul, Türkiye",
+        value: CONTACT_CITY_TR,
         href: undefined,
         action: undefined,
+        external: false,
       },
     ],
   },
@@ -65,29 +76,32 @@ const copy = {
     status: [
       { label: "Business hours", value: "Mon–Fri · 09:00–18:00" },
       { label: "Response time", value: "Within 1 business day" },
-      { label: "Location", value: "Istanbul, Turkey" },
+      { label: "Location", value: CONTACT_CITY_EN },
     ],
     channels: [
       {
         key: "email",
         label: "Email",
-        value: "hello@bonero.tr",
-        href: "mailto:hello@bonero.tr",
+        value: CONTACT_EMAIL,
+        href: CONTACT_EMAIL_HREF,
         action: "Write →",
+        external: true,
       },
       {
         key: "phone",
         label: "Phone",
-        value: "+90 (212) 000 00 00",
-        href: "tel:+902120000000",
+        value: CONTACT_PHONE_DISPLAY,
+        href: WHATSAPP_URL,
         action: "Call →",
+        external: true,
       },
       {
         key: "address",
         label: "Address",
-        value: "Istanbul, Turkey",
+        value: CONTACT_CITY_EN,
         href: undefined,
         action: undefined,
+        external: false,
       },
     ],
   },
@@ -177,9 +191,10 @@ export default function ContactHero() {
                 {t.ctaForm}
               </CtaButton>
               <CtaButton
-                href="mailto:hello@bonero.tr"
+                href={CONTACT_EMAIL_HREF}
                 variant="secondary"
                 size="md"
+                external
               >
                 {t.ctaEmail}
               </CtaButton>
@@ -233,8 +248,11 @@ export default function ContactHero() {
         >
           {t.channels.map((ch) => {
             const Icon = channelIcons[ch.key as keyof typeof channelIcons];
-            const inner = (
-              <>
+            const className =
+              "group flex items-center gap-3 rounded-2xl border border-bonero-dark/8 bg-white/90 px-4 py-4 transition-colors hover:border-bonero-green/30";
+
+            return (
+              <div key={ch.key} className={className}>
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-bonero-green/10 text-bonero-green">
                   <Icon size={18} strokeWidth={1.75} />
                 </span>
@@ -242,28 +260,31 @@ export default function ContactHero() {
                   <span className="block text-[10px] font-semibold tracking-[0.14em] text-bonero-dark/40 uppercase">
                     {ch.label}
                   </span>
-                  <span className="mt-0.5 block truncate text-sm font-semibold text-bonero-dark sm:text-base">
-                    {ch.value}
-                  </span>
+                  {ch.href ? (
+                    <a
+                      href={ch.href}
+                      target={ch.external ? "_blank" : undefined}
+                      rel={ch.external ? "noopener noreferrer" : undefined}
+                      className="mt-0.5 block truncate text-sm font-semibold text-bonero-dark transition-colors hover:text-bonero-green sm:text-base"
+                    >
+                      {ch.value}
+                    </a>
+                  ) : (
+                    <span className="mt-0.5 block truncate text-sm font-semibold text-bonero-dark sm:text-base">
+                      {ch.value}
+                    </span>
+                  )}
                 </span>
-                {ch.action && (
-                  <span className="shrink-0 text-xs font-semibold text-bonero-green">
+                {ch.action && ch.href && (
+                  <a
+                    href={ch.href}
+                    target={ch.external ? "_blank" : undefined}
+                    rel={ch.external ? "noopener noreferrer" : undefined}
+                    className="shrink-0 rounded-lg bg-bonero-green px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-bonero-dark"
+                  >
                     {ch.action}
-                  </span>
+                  </a>
                 )}
-              </>
-            );
-
-            const className =
-              "group flex items-center gap-3 rounded-2xl border border-bonero-dark/8 bg-white/90 px-4 py-4 transition-colors hover:border-bonero-green/30";
-
-            return ch.href ? (
-              <a key={ch.key} href={ch.href} className={className}>
-                {inner}
-              </a>
-            ) : (
-              <div key={ch.key} className={className}>
-                {inner}
               </div>
             );
           })}

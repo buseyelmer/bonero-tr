@@ -204,26 +204,26 @@ export default function Header() {
                         <motion.div
                           role="menu"
                           aria-label={t.features}
-                          className="absolute top-full left-1/2 z-[120] mt-0 w-[min(40rem,calc(100vw-2rem))] -translate-x-1/2 overflow-hidden rounded-b-2xl border border-t-0 border-bonero-dark/10 bg-white shadow-[0_24px_60px_-28px_rgba(30,41,59,0.4)]"
+                          className="absolute top-full left-0 z-[120] mt-0 w-[min(52rem,calc(100vw-2rem))] overflow-hidden rounded-b-2xl border border-t-0 border-bonero-dark/10 bg-white shadow-[0_24px_60px_-28px_rgba(30,41,59,0.4)]"
                           initial={{ opacity: 0, y: 6 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
                           transition={{ duration: 0.15 }}
                           onMouseLeave={() => setFeaturesOpen(false)}
                         >
-                          <div className="border-b border-bonero-dark/6 px-5 py-3">
+                          <div className="border-b border-bonero-dark/6 px-6 py-3.5">
                             <p className="text-[10px] font-semibold tracking-[0.16em] text-bonero-dark/35 uppercase">
                               {t.explore}
                             </p>
                           </div>
 
-                          <div className="grid gap-6 px-5 py-5 sm:grid-cols-3">
+                          <div className="grid gap-8 px-6 py-5 sm:grid-cols-[1fr_1fr_1.35fr] sm:pr-8">
                             {FEATURE_NAV_GROUPS.map((group) => (
-                              <div key={group.id}>
+                              <div key={group.id} className="min-w-0">
                                 <p className="mb-2.5 text-[10px] font-semibold tracking-[0.14em] text-bonero-dark/35 uppercase">
                                   {locale === "en" ? group.titleEn : group.title}
                                 </p>
-                                <ul className="space-y-0.5">
+                                <ul className="space-y-1">
                                   {group.items.map((item) => {
                                     const Icon = item.icon;
                                     const on = isFeatureItemActive(item.href);
@@ -232,7 +232,7 @@ export default function Header() {
                                         <Link
                                           href={item.href}
                                           role="menuitem"
-                                          className={`flex items-start gap-2.5 rounded-xl px-2 py-2 transition-colors ${
+                                          className={`flex items-start gap-3 rounded-xl px-2.5 py-2.5 transition-colors ${
                                             on
                                               ? "bg-bonero-green/8 text-bonero-green"
                                               : "text-bonero-dark/75 hover:bg-bonero-dark/[0.03] hover:text-bonero-dark"
@@ -248,13 +248,13 @@ export default function Header() {
                                           >
                                             <Icon size={15} strokeWidth={1.75} />
                                           </span>
-                                          <span className="min-w-0">
+                                          <span className="min-w-0 flex-1 pr-1">
                                             <span className="block text-sm font-semibold leading-snug">
                                               {locale === "en"
                                                 ? item.labelEn
                                                 : item.label}
                                             </span>
-                                            <span className="mt-0.5 block text-[11px] leading-snug text-bonero-dark/40">
+                                            <span className="mt-0.5 block text-[11px] leading-relaxed text-bonero-dark/40">
                                               {locale === "en"
                                                 ? item.descriptionEn
                                                 : item.description}
@@ -269,7 +269,7 @@ export default function Header() {
                             ))}
                           </div>
 
-                          <div className="flex items-center justify-between gap-3 border-t border-bonero-dark/8 bg-bonero-dark/[0.02] px-5 py-3">
+                          <div className="flex items-center justify-between gap-3 border-t border-bonero-dark/8 bg-bonero-dark/[0.02] px-6 py-3.5 sm:pr-8">
                             <Link
                               href="/features"
                               role="menuitem"
@@ -281,7 +281,7 @@ export default function Header() {
                             </Link>
                             <Link
                               href={PANEL_REGISTER_URL}
-                              className="inline-flex items-center gap-1 rounded-lg bg-bonero-green px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#1a9a52]"
+                              className="inline-flex items-center gap-1 rounded-lg bg-bonero-green px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#1a9a52]"
                               onClick={() => setFeaturesOpen(false)}
                             >
                               {t.cta}

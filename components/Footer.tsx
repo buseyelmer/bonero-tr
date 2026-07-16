@@ -6,6 +6,7 @@ import { Mail, MapPin } from "lucide-react";
 import BrandLogo from "./BrandLogo";
 import LanguageToggle from "./LanguageToggle";
 import { useLocale } from "./LocaleProvider";
+import { CONTACT_CITY_EN, CONTACT_CITY_TR, CONTACT_EMAIL } from "@/lib/contact";
 
 const footerByLocale = {
   tr: {
@@ -35,7 +36,8 @@ const footerByLocale = {
         ],
       },
     ],
-    rights: "Tüm hakları saklıdır.",
+    rights: "© 2026 BONERO®. TÜM HAKLARI SAKLIDIR.",
+    affiliate: "BONERO, BİR NEXİNE İŞTİRAKİDİR.",
     socialAria: "Sosyal medya",
   },
   en: {
@@ -65,7 +67,8 @@ const footerByLocale = {
         ],
       },
     ],
-    rights: "All rights reserved.",
+    rights: "© 2026 BONERO®. ALL RIGHTS RESERVED.",
+    affiliate: "BONERO IS A NEXINE AFFILIATE.",
     socialAria: "Social media",
   },
 };
@@ -163,15 +166,15 @@ export default function Footer() {
         <div className="flex flex-col gap-5 py-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-bonero-dark/45">
             <a
-              href="mailto:hello@bonero.tr"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="inline-flex items-center gap-2 hover:text-bonero-green"
             >
               <Mail size={14} className="text-bonero-green" />
-              hello@bonero.tr
+              {CONTACT_EMAIL}
             </a>
             <span className="inline-flex items-center gap-2">
               <MapPin size={14} className="text-bonero-green" />
-              İstanbul
+              {locale === "en" ? CONTACT_CITY_EN : CONTACT_CITY_TR}
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-3">
@@ -194,7 +197,12 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-bonero-dark/8 py-4">
-          <p className="text-xs text-bonero-dark/40">© 2026 Bonero. {t.rights}</p>
+          <p className="text-[11px] font-medium tracking-[0.06em] text-bonero-dark/40 uppercase">
+            {t.rights}
+          </p>
+          <p className="mt-1 text-[11px] font-medium tracking-[0.06em] text-bonero-dark/40 uppercase">
+            {t.affiliate}
+          </p>
         </div>
       </div>
     </footer>

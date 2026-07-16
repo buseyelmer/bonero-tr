@@ -36,7 +36,7 @@ const copy = {
     ],
     privacyBefore: "Göndererek",
     privacyLink: "KVKK",
-    privacyAfter: "metnini okuduğunuzu kabul edersiniz. Yanıt: hello@bonero.tr",
+    privacyAfter: "metnini okuduğunuzu kabul edersiniz. Yanıt: info@bonero.tr",
   },
   en: {
     eyebrow: "Message form",
@@ -65,7 +65,7 @@ const copy = {
     ],
     privacyBefore: "By submitting, you confirm that you have read the",
     privacyLink: "Privacy Notice",
-    privacyAfter: ". Replies go to hello@bonero.tr",
+    privacyAfter: ". Replies go to info@bonero.tr",
   },
 };
 
