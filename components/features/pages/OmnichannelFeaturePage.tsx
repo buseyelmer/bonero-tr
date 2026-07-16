@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Check, Inbox, MessageSquare, Tag, UserCheck } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Inbox, MessageSquare, Tag, UserCheck } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import FeatureCtaBlock from "@/components/ui/FeatureCtaBlock";
 import OmnichannelMock from "@/components/features/mocks/OmnichannelMock";
 import { useLocale } from "@/components/LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
@@ -155,37 +156,21 @@ export default function OmnichannelFeaturePage() {
         </div>
       </section>
 
-      <section className="border-t border-bonero-dark/8 py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[1.5rem] bg-bonero-green px-8 py-12 text-center sm:px-12">
-            <h2 className="font-heading text-2xl text-white sm:text-3xl">
-              {isEn
-                ? "Every channel. One queue. Full context."
-                : "Her kanal. Tek kuyruk. Tam bağlam."}
-            </h2>
-            <p className="mx-auto mt-4 max-w-lg text-sm text-white/75">
-              {isEn
-                ? "Stop copying messages between apps. Run customer conversations from one desk."
-                : "Mesajları uygulamalar arası kopyalamayı bırak. Müşteri konuşmalarını tek masadan yönet."}
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link
-                href={PANEL_REGISTER_URL}
-                className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-bonero-green"
-              >
-                {isEn ? "Start free" : "Ücretsiz başla"}
-                <ArrowUpRight size={15} />
-              </Link>
-              <Link
-                href="/paketler"
-                className="inline-flex items-center justify-center rounded-xl border border-white/30 px-5 py-3 text-sm font-medium text-white"
-              >
-                {isEn ? "View plans" : "Paketlere bak"}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FeatureCtaBlock
+        align="center"
+        title={
+          isEn
+            ? "Every channel. One queue. Full context."
+            : "Her kanal. Tek kuyruk. Tam bağlam."
+        }
+        body={
+          isEn
+            ? "Stop copying messages between apps. Run customer conversations from one desk."
+            : "Mesajları uygulamalar arası kopyalamayı bırak. Müşteri konuşmalarını tek masadan yönet."
+        }
+        primaryLabel={isEn ? "Start free" : "Ücretsiz başla"}
+        secondaryLabel={isEn ? "View plans" : "Paketlere bak"}
+      />
     </div>
   );
 }

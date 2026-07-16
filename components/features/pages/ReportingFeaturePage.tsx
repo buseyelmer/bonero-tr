@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, BarChart3, Lightbulb, Zap } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import FeatureCtaBlock from "@/components/ui/FeatureCtaBlock";
 import ReportingMock from "@/components/features/mocks/ReportingMock";
 import { useLocale } from "@/components/LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
@@ -148,39 +149,12 @@ export default function ReportingFeaturePage() {
         </div>
       </section>
 
-      <section className="border-t border-bonero-dark/8 py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <div className="grid items-center gap-8 rounded-[1.5rem] bg-bonero-green px-8 py-12 sm:px-12 lg:grid-cols-[1fr_auto] lg:gap-10">
-              <div>
-                <h2 className="font-heading text-2xl text-white sm:text-3xl">
-                  {isEn ? "Live metrics. Real moves." : "Canlı metrik. Gerçek hamle."}
-                </h2>
-                <p className="mt-3 text-sm text-white/80">
-                  {isEn
-                    ? "No spreadsheet export required."
-                    : "Tablo export’una gerek yok."}
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
-                <Link
-                  href={PANEL_REGISTER_URL}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-bonero-green"
-                >
-                  {isEn ? "Start with reporting" : "Raporlamayla başla"}
-                  <ArrowUpRight size={15} />
-                </Link>
-                <Link
-                  href="/paketler"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/30 px-5 py-3 text-sm font-medium text-white"
-                >
-                  {isEn ? "View plans" : "Paketlere bak"}
-                </Link>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <FeatureCtaBlock
+        title={isEn ? "Live metrics. Real moves." : "Canlı metrik. Gerçek hamle."}
+        body={isEn ? "No spreadsheet export required." : "Tablo export’una gerek yok."}
+        primaryLabel={isEn ? "Start with reporting" : "Raporlamayla başla"}
+        secondaryLabel={isEn ? "View plans" : "Paketlere bak"}
+      />
     </div>
   );
 }

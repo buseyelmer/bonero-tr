@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "./Reveal";
+import CtaButton from "./ui/CtaButton";
 import { useLocale } from "./LocaleProvider";
 import { FEATURE_PAGES, featureHref } from "@/lib/features";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
@@ -465,26 +466,25 @@ export default function Features() {
 
               <div className="flex flex-wrap gap-2">
                 {current.detailSlug ? (
-                  <Link
+                  <CtaButton
                     href={featureHref(current.detailSlug)}
-                    className="inline-flex items-center justify-center rounded-lg border border-bonero-dark/12 bg-white px-4 py-2 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/25"
+                    variant="secondary"
+                    size="md"
                   >
                     {t.detail}
-                  </Link>
+                  </CtaButton>
                 ) : (
-                  <a
-                    href="/paketler"
-                    className="inline-flex items-center justify-center rounded-lg border border-bonero-dark/12 bg-white px-4 py-2 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/25"
-                  >
+                  <CtaButton href="/paketler" variant="secondary" size="md">
                     {t.packages}
-                  </a>
+                  </CtaButton>
                 )}
-                <Link
+                <CtaButton
                   href={PANEL_REGISTER_URL}
-                  className="inline-flex items-center justify-center rounded-lg bg-bonero-green px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-bonero-green/90"
+                  variant="primary"
+                  size="md"
                 >
                   {t.cta}
-                </Link>
+                </CtaButton>
               </div>
             </div>
           </div>

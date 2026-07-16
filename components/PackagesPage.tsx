@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { Check } from "lucide-react";
 import TrustStrip from "@/components/TrustStrip";
+import CtaButton from "@/components/ui/CtaButton";
 import { useLocale } from "@/components/LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
 
@@ -177,16 +177,15 @@ export default function PackagesPage() {
                   ))}
                 </ul>
 
-                <Link
+                <CtaButton
                   href={PANEL_REGISTER_URL}
-                  className={`mt-8 inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition-colors ${
-                    plan.popular
-                      ? "bg-bonero-green text-white hover:bg-bonero-green/90"
-                      : "border border-bonero-dark/12 text-bonero-dark hover:border-bonero-dark/25"
-                  }`}
+                  variant={plan.popular ? "primary" : "secondary"}
+                  size="md"
+                  fullWidth
+                  className="mt-8"
                 >
                   {t.cta}
-                </Link>
+                </CtaButton>
               </article>
             ))}
           </div>

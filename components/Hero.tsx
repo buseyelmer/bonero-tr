@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import HeroTimeVisual from "./HeroTimeVisual";
+import CtaButton from "./ui/CtaButton";
 import { useLocale } from "./LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
 
@@ -87,19 +87,17 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Link
+            <CtaButton
               href={PANEL_REGISTER_URL}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-bonero-green px-6 py-3.5 text-sm font-semibold text-white shadow-sm shadow-bonero-green/25 transition-colors hover:bg-bonero-green/90"
+              variant="primary"
+              size="lg"
+              icon={<ArrowRight size={16} />}
             >
               {t.cta}
-              <ArrowRight size={16} />
-            </Link>
-            <a
-              href="#cozumler"
-              className="inline-flex items-center justify-center rounded-xl border border-bonero-dark/15 bg-white/70 px-6 py-3.5 text-sm font-medium text-bonero-dark transition-colors hover:border-bonero-dark/30 hover:bg-white"
-            >
+            </CtaButton>
+            <CtaButton href="#cozumler" variant="secondary" size="lg">
               {t.secondary}
-            </a>
+            </CtaButton>
           </motion.div>
 
           <motion.p

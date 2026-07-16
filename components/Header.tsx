@@ -7,6 +7,7 @@ import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import BrandLogo from "./BrandLogo";
 import LanguageToggle from "./LanguageToggle";
+import CtaButton from "./ui/CtaButton";
 import { useLocale } from "./LocaleProvider";
 import { FEATURE_NAV_GROUPS } from "@/lib/feature-nav";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
@@ -325,16 +326,15 @@ export default function Header() {
             <LanguageToggle variant="segment" />
           </div>
 
-          <Link
+          <CtaButton
             href={PANEL_REGISTER_URL}
-            className="group hidden items-center gap-1.5 rounded-xl bg-bonero-green px-3.5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1a9a52] sm:inline-flex"
+            variant="primary"
+            size="sm"
+            icon={<ArrowUpRight size={14} />}
+            className="hidden sm:inline-flex"
           >
             {t.cta}
-            <ArrowUpRight
-              size={14}
-              className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
-          </Link>
+          </CtaButton>
 
           <button
             type="button"
@@ -447,14 +447,17 @@ export default function Header() {
               <div className="mt-3 border-t border-bonero-dark/8 pt-4 md:hidden">
                 <LanguageToggle variant="segment" />
               </div>
-              <Link
+              <CtaButton
                 href={PANEL_REGISTER_URL}
-                className="mt-3 flex items-center justify-center gap-1.5 rounded-xl bg-bonero-green px-4 py-3 text-sm font-semibold text-white"
+                variant="primary"
+                size="md"
+                icon={<ArrowUpRight size={15} />}
+                className="mt-3 w-full"
+                fullWidth
                 onClick={() => setOpen(false)}
               >
                 {t.cta}
-                <ArrowUpRight size={15} />
-              </Link>
+              </CtaButton>
             </nav>
           </motion.div>
         )}

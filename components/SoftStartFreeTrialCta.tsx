@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import Reveal from "./Reveal";
+import CtaButton from "./ui/CtaButton";
 import { useLocale, type Locale } from "./LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
 
@@ -331,22 +331,18 @@ export default function SoftStartFreeTrialCta() {
             </p>
 
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link
+              <CtaButton
                 href={PANEL_REGISTER_URL}
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-bonero-green px-9 py-3.5 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(24,131,71,0.7)] transition-transform hover:scale-[1.03]"
+                variant="primary"
+                size="lg"
+                icon={<ArrowUpRight size={16} />}
+                className="!rounded-full px-9"
               >
                 {t.cta}
-                <ArrowUpRight
-                  size={16}
-                  className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
-              </Link>
-              <a
-                href="#paketler"
-                className="inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold text-bonero-dark/55 underline-offset-4 transition-colors hover:text-bonero-dark hover:underline"
-              >
+              </CtaButton>
+              <CtaButton href="#paketler" variant="ghost" size="lg">
                 {t.secondary}
-              </a>
+              </CtaButton>
             </div>
 
             <ul className="mx-auto mt-10 flex max-w-lg flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs font-medium tracking-wide text-bonero-dark/40 uppercase">

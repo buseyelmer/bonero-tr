@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import FeatureCtaBlock from "@/components/ui/FeatureCtaBlock";
+import CtaButton from "@/components/ui/CtaButton";
 import CrmMock from "@/components/features/mocks/CrmMock";
 import { useLocale } from "@/components/LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
@@ -60,19 +62,17 @@ export default function CrmFeaturePage() {
                   : "İlk dokunuştan kapanışa — sahiplik ve sonraki adım tek panoda kalır."}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link
+                <CtaButton
                   href={PANEL_REGISTER_URL}
-                  className="inline-flex items-center gap-2 rounded-xl bg-bonero-green px-5 py-3 text-sm font-semibold text-white hover:bg-bonero-green/90"
+                  variant="primary"
+                  size="md"
+                  icon={<ArrowUpRight size={15} />}
                 >
                   {isEn ? "Open pipeline" : "Pipeline’ı aç"}
-                  <ArrowUpRight size={15} />
-                </Link>
-                <a
-                  href="#eylemler"
-                  className="inline-flex items-center gap-2 rounded-xl border border-bonero-dark/12 bg-white px-5 py-3 text-sm font-medium text-bonero-dark/70"
-                >
+                </CtaButton>
+                <CtaButton href="#eylemler" variant="secondary" size="md">
                   {isEn ? "See the moves" : "Hamleleri gör"}
-                </a>
+                </CtaButton>
               </div>
             </div>
 
@@ -111,39 +111,16 @@ export default function CrmFeaturePage() {
         </div>
       </section>
 
-      <section className="border-t border-bonero-dark/8 py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <div className="grid items-center gap-8 rounded-[1.5rem] bg-bonero-green px-8 py-12 sm:px-12 lg:grid-cols-[1fr_auto] lg:gap-10">
-              <div>
-                <h2 className="font-heading text-2xl text-white sm:text-3xl">
-                  {isEn ? "Clear board. Clear owners." : "Net pano. Net sahipler."}
-                </h2>
-                <p className="mt-3 max-w-md text-sm text-white/80">
-                  {isEn
-                    ? "No more ‘who owns this?’ in group chat."
-                    : "Grup sohbetinde ‘bu kimin?’ sorusu biter."}
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
-                <Link
-                  href={PANEL_REGISTER_URL}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-bonero-green"
-                >
-                  {isEn ? "Build your pipeline" : "Pipeline’ını kur"}
-                  <ArrowUpRight size={15} />
-                </Link>
-                <Link
-                  href="/paketler"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/30 px-5 py-3 text-sm font-medium text-white"
-                >
-                  {isEn ? "View plans" : "Paketlere bak"}
-                </Link>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <FeatureCtaBlock
+        title={isEn ? "Clear board. Clear owners." : "Net pano. Net sahipler."}
+        body={
+          isEn
+            ? "No more ‘who owns this?’ in group chat."
+            : "Grup sohbetinde ‘bu kimin?’ sorusu biter."
+        }
+        primaryLabel={isEn ? "Build your pipeline" : "Pipeline’ını kur"}
+        secondaryLabel={isEn ? "View plans" : "Paketlere bak"}
+      />
     </div>
   );
 }

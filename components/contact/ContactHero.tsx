@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight, Clock, MapPin, Mail, Phone } from "lucide-react";
+import CtaButton from "@/components/ui/CtaButton";
 import { useLocale } from "@/components/LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
 
@@ -167,19 +168,21 @@ export default function ContactHero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.28, ease }}
             >
-              <a
+              <CtaButton
                 href="#form"
-                className="inline-flex items-center gap-2 rounded-xl bg-bonero-green px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-bonero-green/20 transition-colors hover:bg-bonero-green/90"
+                variant="primary"
+                size="md"
+                icon={<ArrowUpRight size={15} />}
               >
                 {t.ctaForm}
-                <ArrowUpRight size={15} />
-              </a>
-              <a
+              </CtaButton>
+              <CtaButton
                 href="mailto:hello@bonero.tr"
-                className="inline-flex items-center gap-2 rounded-xl border border-bonero-dark/12 bg-white/80 px-5 py-3 text-sm font-medium text-bonero-dark/70 transition-colors hover:border-bonero-dark/20 hover:text-bonero-dark"
+                variant="secondary"
+                size="md"
               >
                 {t.ctaEmail}
-              </a>
+              </CtaButton>
             </motion.div>
           </div>
 

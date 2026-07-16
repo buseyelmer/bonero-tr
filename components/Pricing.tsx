@@ -1,8 +1,9 @@
 "use client";
 
-import { Check, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { Check, ArrowRight } from "lucide-react";
 import Reveal from "./Reveal";
+import CtaButton from "./ui/CtaButton";
 import { useLocale } from "./LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
 
@@ -192,17 +193,16 @@ export default function Pricing() {
                     ))}
                   </ul>
 
-                  <Link
+                  <CtaButton
                     href={PANEL_REGISTER_URL}
-                    className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-semibold transition-opacity hover:opacity-90 ${
-                      featured
-                        ? "bg-bonero-green text-white"
-                        : "bg-bonero-dark text-white"
-                    }`}
+                    variant={featured ? "primary" : "dark"}
+                    size="md"
+                    icon={<ArrowRight size={15} />}
+                    fullWidth
+                    className="mt-8"
                   >
                     {t.cta}
-                    <ArrowRight size={15} />
-                  </Link>
+                  </CtaButton>
                 </article>
               </Reveal>
             );

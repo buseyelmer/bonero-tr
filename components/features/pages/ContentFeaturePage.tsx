@@ -5,12 +5,12 @@ import {
   ArrowLeft,
   ArrowUpRight,
   Calendar,
-  Check,
   Clock,
   PenLine,
   Send,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import FeatureCtaBlock from "@/components/ui/FeatureCtaBlock";
 import ContentMock from "@/components/features/mocks/ContentMock";
 import { useLocale } from "@/components/LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
@@ -169,40 +169,16 @@ export default function ContentFeaturePage() {
         </div>
       </section>
 
-      <section className="border-t border-bonero-dark/8 py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <div className="grid items-center gap-8 rounded-[1.5rem] bg-bonero-green px-8 py-12 sm:px-12 lg:grid-cols-[1fr_auto] lg:gap-10">
-              <div>
-                <h2 className="font-heading text-2xl text-white sm:text-3xl">
-                  {isEn ? "Planned. Shipped on time." : "Planlandı. Zamanında çıktı."}
-                </h2>
-                <p className="mt-3 flex items-center gap-2 text-sm text-white/80">
-                  <Check size={14} className="text-white" />
-                  {isEn
-                    ? "Schedule once — publish everywhere."
-                    : "Bir kez zamanla — her yere yayınla."}
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
-                <Link
-                  href={PANEL_REGISTER_URL}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-bonero-green"
-                >
-                  {isEn ? "Start publishing" : "Yayına başla"}
-                  <ArrowUpRight size={15} />
-                </Link>
-                <Link
-                  href="/paketler"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/30 px-5 py-3 text-sm font-medium text-white"
-                >
-                  {isEn ? "View plans" : "Paketlere bak"}
-                </Link>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <FeatureCtaBlock
+        title={isEn ? "Planned. Shipped on time." : "Planlandı. Zamanında çıktı."}
+        body={
+          isEn
+            ? "Schedule once — publish everywhere."
+            : "Bir kez zamanla — her yere yayınla."
+        }
+        primaryLabel={isEn ? "Start publishing" : "Yayına başla"}
+        secondaryLabel={isEn ? "View plans" : "Paketlere bak"}
+      />
     </div>
   );
 }

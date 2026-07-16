@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, ChevronRight } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import FeatureCtaBlock from "@/components/ui/FeatureCtaBlock";
 import AiAgentMock from "@/components/features/mocks/AiAgentMock";
 import { useLocale } from "@/components/LocaleProvider";
 import { PANEL_REGISTER_URL } from "@/lib/panel";
@@ -125,55 +126,31 @@ export default function AiAgentFeaturePage() {
         </div>
       </section>
 
-      <section className="border-t border-bonero-dark/8 py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <div className="grid items-center gap-10 rounded-[1.5rem] bg-bonero-green px-8 py-12 sm:px-12 lg:grid-cols-2 lg:px-12">
-              <div>
-                <h2 className="font-heading text-2xl text-white sm:text-3xl">
-                  {isEn
-                    ? "Always on. You stay in control."
-                    : "7/24 açık. Kontrol sende."}
-                </h2>
-                <ul className="mt-6 space-y-3">
-                  {(isEn
-                    ? [
-                        "Night and weekend coverage without extra headcount",
-                        "Handoff rules you control — not black-box AI",
-                        "Every escalation arrives with the full chat",
-                      ]
-                    : [
-                        "Gece ve hafta sonu ekstra personel olmadan",
-                        "Kontrol sende — kara kutu AI değil",
-                        "Her devir tam sohbet geçmişiyle gelir",
-                      ]
-                  ).map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-sm text-white/80">
-                      <Check size={16} className="mt-0.5 shrink-0 text-white" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
-                <Link
-                  href={PANEL_REGISTER_URL}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-bonero-green"
-                >
-                  {isEn ? "Launch agent" : "Ajanı başlat"}
-                  <ArrowUpRight size={15} />
-                </Link>
-                <Link
-                  href="/paketler"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/30 px-5 py-3 text-sm font-medium text-white"
-                >
-                  {isEn ? "View plans" : "Paketlere bak"}
-                </Link>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <FeatureCtaBlock
+        title={isEn ? "Always on. You stay in control." : "7/24 açık. Kontrol sende."}
+        primaryLabel={isEn ? "Launch agent" : "Ajanı başlat"}
+        secondaryLabel={isEn ? "View plans" : "Paketlere bak"}
+      >
+        <ul className="space-y-3">
+          {(isEn
+            ? [
+                "Night and weekend coverage without extra headcount",
+                "Handoff rules you control — not black-box AI",
+                "Every escalation arrives with the full chat",
+              ]
+            : [
+                "Gece ve hafta sonu ekstra personel olmadan",
+                "Kontrol sende — kara kutu AI değil",
+                "Her devir tam sohbet geçmişiyle gelir",
+              ]
+          ).map((item) => (
+            <li key={item} className="flex items-start gap-2.5 text-sm text-white/80">
+              <Check size={16} className="mt-0.5 shrink-0 text-white" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </FeatureCtaBlock>
     </div>
   );
 }
