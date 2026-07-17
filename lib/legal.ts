@@ -192,6 +192,270 @@ export const KVKK_DOCUMENT: LegalDocument = {
   ],
 };
 
+export const AYDINLATMA_DOCUMENT: LegalDocument = {
+  eyebrow: { tr: "Yasal", en: "Legal" },
+  title: {
+    tr: "Aydınlatma Metni",
+    en: "Clarification Notice",
+  },
+  updated: {
+    tr: "Son güncelleme: 17 Temmuz 2026",
+    en: "Last updated: July 17, 2026",
+  },
+  intro: {
+    tr: "6698 sayılı Kişisel Verilerin Korunması Kanunu’nun 10. maddesi uyarınca; Bonero web sitesi, iletişim formları ve hizmet süreçlerinde kişisel verilerinizin işlenmesine ilişkin bilgilendirme aşağıdadır.",
+    en: "Pursuant to Article 10 of Turkey’s Personal Data Protection Law (KVKK), this notice explains how Bonero processes personal data collected via our website, contact forms, and service processes.",
+  },
+  sections: [
+    {
+      title: {
+        tr: "1. Veri Sorumlusunun Kimliği",
+        en: "1. Identity of the Data Controller",
+      },
+      paragraphs: [
+        {
+          tr: "Veri sorumlusu Bonero’dur. İletişim: hello@bonero.tr — İstanbul, Türkiye. Bonero, NEXINE bünyesinde faaliyet gösterir.",
+          en: "The data controller is Bonero. Contact: hello@bonero.tr — Istanbul, Turkey. Bonero operates as part of NEXINE.",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "2. İşlenen Veri Kategorileri",
+        en: "2. Categories of Data Processed",
+      },
+      paragraphs: [
+        {
+          tr: "Hizmet ve iletişim kanallarımız üzerinden aşağıdaki kişisel veriler işlenebilir:",
+          en: "The following personal data may be processed through our services and communication channels:",
+        },
+      ],
+      bullets: [
+        {
+          tr: "Kimlik: ad, soyad, unvan",
+          en: "Identity: name, title",
+        },
+        {
+          tr: "İletişim: e-posta, telefon, şirket adı",
+          en: "Contact: email, phone, company name",
+        },
+        {
+          tr: "İşlem güvenliği: IP adresi, tarayıcı / cihaz bilgisi, log kayıtları",
+          en: "Transaction security: IP address, browser / device info, logs",
+        },
+        {
+          tr: "Müşteri işlem: destek talepleri, form içerikleri, abonelik kayıtları",
+          en: "Customer transaction: support requests, form content, subscription records",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "3. İşleme Amaçları",
+        en: "3. Purposes of Processing",
+      },
+      paragraphs: [
+        {
+          tr: "Kişisel verileriniz şu amaçlarla işlenir:",
+          en: "Your personal data is processed for the following purposes:",
+        },
+      ],
+      bullets: [
+        {
+          tr: "Web sitesi ziyareti, demo / iletişim taleplerinin yanıtlanması",
+          en: "Responding to website visits and demo / contact requests",
+        },
+        {
+          tr: "Hesap oluşturma, kimlik doğrulama ve hizmetin sunulması",
+          en: "Account creation, authentication, and service delivery",
+        },
+        {
+          tr: "Sözleşme süreçleri, faturalama ve müşteri desteği",
+          en: "Contract processes, billing, and customer support",
+        },
+        {
+          tr: "Güvenlik, dolandırıcılık önleme ve yasal yükümlülüklerin yerine getirilmesi",
+          en: "Security, fraud prevention, and compliance with legal obligations",
+        },
+        {
+          tr: "Açık rızanız varsa ürün bilgilendirmesi ve pazarlama iletişimi",
+          en: "Product updates and marketing communications where you have given explicit consent",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "4. Hukuki Sebepler",
+        en: "4. Legal Bases",
+      },
+      paragraphs: [
+        {
+          tr: "İşleme; KVKK’nın 5. ve 6. maddeleri kapsamında sözleşme kurulması / ifası, hukuki yükümlülük, meşru menfaat ve gerektiğinde açık rızanıza dayanır.",
+          en: "Processing is based on contract formation / performance, legal obligation, legitimate interest, and where required explicit consent, under KVKK Articles 5 and 6.",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "5. Aktarım",
+        en: "5. Transfers",
+      },
+      paragraphs: [
+        {
+          tr: "Verileriniz; hizmetin sunulması için gerekli olduğu ölçüde bulut / altyapı sağlayıcıları, ödeme ve iletişim altyapısı iş ortakları ile; yasal zorunluluk halinde yetkili kurumlarla paylaşılabilir. Yurt dışı aktarım söz konusu olduğunda KVKK’daki usullere uyulur.",
+          en: "Data may be shared with cloud / infrastructure providers, payment and communication partners as needed to deliver the service, and with competent authorities when legally required. Cross-border transfers follow KVKK procedures.",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "6. Saklama Süresi",
+        en: "6. Retention Period",
+      },
+      paragraphs: [
+        {
+          tr: "Veriler, işleme amacının gerektirdiği süre ve ilgili mevzuattaki zamanaşımı / saklama süreleri boyunca tutulur; süre sonunda silinir, yok edilir veya anonim hale getirilir.",
+          en: "Data is retained for as long as required by the processing purpose and applicable limitation / retention rules, then deleted, destroyed, or anonymized.",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "7. Haklarınız",
+        en: "7. Your Rights",
+      },
+      paragraphs: [
+        {
+          tr: "KVKK’nın 11. maddesi uyarınca; verilerinizin işlenip işlenmediğini öğrenme, düzeltme, silme, aktarımın bildirilmesini isteme, itiraz ve zararınızın giderilmesini talep etme haklarına sahipsiniz.",
+          en: "Under KVKK Article 11 you may request to learn whether your data is processed, request correction or deletion, be informed of transfers, object to processing, and claim compensation for unlawful processing.",
+        },
+        {
+          tr: "Başvurularınızı hello@bonero.tr adresine iletebilirsiniz. Talepleriniz KVKK’da öngörülen sürelerde yanıtlanır. Ayrıntılı gizlilik bilgisi için KVKK / Gizlilik metnine bakabilirsiniz.",
+          en: "Send requests to hello@bonero.tr. We respond within the periods set by KVKK. For a fuller privacy overview, see our Privacy / KVKK notice.",
+        },
+      ],
+    },
+  ],
+};
+
+export const REFUND_DOCUMENT: LegalDocument = {
+  eyebrow: { tr: "Yasal", en: "Legal" },
+  title: {
+    tr: "İade / İptal Koşulları",
+    en: "Refund & Cancellation Policy",
+  },
+  updated: {
+    tr: "Son güncelleme: 17 Temmuz 2026",
+    en: "Last updated: July 17, 2026",
+  },
+  intro: {
+    tr: "Bu metin, Bonero ücretli paketlerinin iptali, abonelik sonlandırma ve iade koşullarını açıklar. Kullanım Şartları ile birlikte geçerlidir.",
+    en: "This policy explains cancellation, subscription termination, and refunds for Bonero paid plans. It applies together with our Terms of Service.",
+  },
+  sections: [
+    {
+      title: {
+        tr: "1. Abonelik Modeli",
+        en: "1. Subscription Model",
+      },
+      paragraphs: [
+        {
+          tr: "Bonero, dönemsel (aylık / yıllık) abonelikle sunulan bir SaaS hizmetidir. Paket kapsamı, fiyat ve faturalama dönemi sipariş veya paketler sayfasında gösterilir.",
+          en: "Bonero is a SaaS service sold on a periodic (monthly / annual) subscription. Plan scope, price, and billing period are shown on the order or pricing page.",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "2. İptal",
+        en: "2. Cancellation",
+      },
+      paragraphs: [
+        {
+          tr: "Aboneliğinizi istediğiniz zaman panel üzerinden veya hello@bonero.tr / destek kanallarımız aracılığıyla iptal edebilirsiniz.",
+          en: "You may cancel your subscription at any time via the panel or by contacting hello@bonero.tr / our support channels.",
+        },
+      ],
+      bullets: [
+        {
+          tr: "İptal, yürürlükteki faturalama döneminin sonunda geçerli olur",
+          en: "Cancellation takes effect at the end of the current billing period",
+        },
+        {
+          tr: "Dönem sonuna kadar mevcut paketin özelliklerini kullanmaya devam edebilirsiniz",
+          en: "You keep access to your plan features until the period ends",
+        },
+        {
+          tr: "Otomatik yenileme iptal sonrası durdurulur; yeni dönem için ücret alınmaz",
+          en: "Auto-renewal stops after cancellation; no charge for a new period",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "3. İade",
+        en: "3. Refunds",
+      },
+      paragraphs: [
+        {
+          tr: "Dijital abonelik niteliği nedeniyle, aksi yazılı olarak kararlaştırılmadıkça veya aşağıda belirtilen istisnalar dışında kısmi / dönem içi iade yapılmaz.",
+          en: "Because this is a digital subscription, partial or mid-cycle refunds are not provided unless agreed in writing or covered by the exceptions below.",
+        },
+      ],
+      bullets: [
+        {
+          tr: "Çift tahsilat veya teknik hata kaynaklı yanlış ücretlendirme — düzeltme / iade yapılır",
+          en: "Duplicate charge or billing error due to a technical fault — corrected or refunded",
+        },
+        {
+          tr: "Hizmetin Bonero kaynaklı sürekli ve ciddi şekilde sunulamaması — durum değerlendirilerek kısmi iade veya süre uzatımı uygulanabilir",
+          en: "Service materially unavailable due to Bonero — may result in a partial refund or service credit after review",
+        },
+        {
+          tr: "Özel kurumsal sözleşmelerde iade / iptal maddeleri o sözleşmeye tabidir",
+          en: "Enterprise contracts follow their own cancellation and refund clauses",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "4. Paket Değişikliği",
+        en: "4. Plan Changes",
+      },
+      paragraphs: [
+        {
+          tr: "Daha yüksek bir pakete geçişte fark ücreti uygulanabilir. Daha düşük pakete geçiş genellikle bir sonraki faturalama döneminde geçerli olur; dönem içi fark iadesi yapılmaz.",
+          en: "Upgrades may incur a prorated difference. Downgrades usually take effect at the next billing period; mid-cycle difference refunds are not issued.",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "5. Deneme ve Promosyonlar",
+        en: "5. Trials & Promotions",
+      },
+      paragraphs: [
+        {
+          tr: "Ücretsiz deneme veya kampanya dönemlerinde ücret alınmaz. Deneme bitiminde ücretli plana geçmezseniz abonelik otomatik ücretlendirilmez; kampanya koşulları ayrıca duyurulur.",
+          en: "No charge during free trial or promo periods. If you do not convert to a paid plan after a trial, you are not billed automatically; promo terms are announced separately.",
+        },
+      ],
+    },
+    {
+      title: {
+        tr: "6. Başvuru",
+        en: "6. How to Request",
+      },
+      paragraphs: [
+        {
+          tr: "İptal veya iade taleplerinizi panelden veya hello@bonero.tr adresine hesap / fatura bilginizle iletin. Talepler makul süre içinde incelenir; iade onaylanırsa ödeme yönteminize veya banka hesabınıza yansıtılır (banka süreleri değişiklik gösterebilir).",
+          en: "Submit cancellation or refund requests in the panel or to hello@bonero.tr with your account / invoice details. Requests are reviewed within a reasonable time; approved refunds are returned to your payment method or bank (timing may vary by bank).",
+        },
+      ],
+    },
+  ],
+};
+
 export const TERMS_DOCUMENT: LegalDocument = {
   eyebrow: { tr: "Yasal", en: "Legal" },
   title: {

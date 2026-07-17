@@ -4,7 +4,7 @@ import FeaturesIndex from "@/components/features/FeaturesIndex";
 export const metadata: Metadata = {
   title: "Özellikler",
   description:
-    "Bonero özelliklerini keşfedin: Unified Inbox, yapay zeka, AI reklam, işbirliği ve raporlama. Omnichannel AI platformu — kaydolun ve hemen başlayın.",
+    "Bonero özellikleri: Omnichannel, AI Agent, CRM, randevu, içerik, e-posta, reklam ve raporlama. Tüm katmanları keşfedin — kaydolun ve başlayın.",
   alternates: { canonical: "/features" },
 };
 

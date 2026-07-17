@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Mail,
   Megaphone,
+  Users,
   UsersRound,
 } from "lucide-react";
 import { featureHref, type FeatureSlug } from "@/lib/features";
@@ -30,11 +31,7 @@ export type FeatureNavGroup = {
   items: FeatureNavItem[];
 };
 
-/**
- * Header mega-menu: ana ürün özellikleri.
- * Henüz detay sayfası olmayan maddeler /features indeksine gider;
- * sayfalar sırayla eklendikçe href güncellenir.
- */
+/** Header mega-menu: tüm özellik detay sayfalarına gider. */
 export const FEATURE_NAV_GROUPS: FeatureNavGroup[] = [
   {
     id: "kanallar",
@@ -104,6 +101,16 @@ export const FEATURE_NAV_GROUPS: FeatureNavGroup[] = [
         descriptionEn: "Customer and lead pipeline",
         href: featureHref("crm"),
         icon: UsersRound,
+      },
+      {
+        id: "isbirligi",
+        slug: "isbirligi",
+        label: "İşbirliği",
+        labelEn: "Collaboration",
+        description: "Rol, görev ve onay hattı",
+        descriptionEn: "Roles, tasks, and approval flow",
+        href: featureHref("isbirligi"),
+        icon: Users,
       },
       {
         id: "randevu",

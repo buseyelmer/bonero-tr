@@ -6,7 +6,7 @@ import HelpCta from "@/components/help/HelpCta";
 export const metadata: Metadata = {
   title: "Yardım Merkezi",
   description:
-    "Bonero Yardım Merkezi. Kurulum, Omnichannel, AI Agent ve operasyon rehberleriyle programı adım adım öğrenin.",
+    "Bonero Yardım Merkezi: hızlı başlangıç, gelen kutusu, AI Agent, CRM ve operasyon rehberleri. Arayın, kategori seçin veya destek yazın.",
   alternates: { canonical: "/yardim" },
 };
 
